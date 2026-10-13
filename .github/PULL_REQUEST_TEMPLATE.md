@@ -12,6 +12,7 @@ Describe the checks performed and their results, including any limitations.
 - [ ] The contribution follows CONTRIBUTING.md and the applicable licenses.
 - [ ] Copyright, attribution, and third-party notices are preserved or updated.
 - [ ] Relevant documentation, examples, and evaluation cases are updated.
+- [ ] The proposed skill has been validated and shown to improve LLM performance or efficiency.
 
 ## Maintainer Checklist
 
