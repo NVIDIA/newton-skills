@@ -13,6 +13,8 @@ supported Newton version range.
 - Recognize host syncs and Python state that a CUDA graph freezes.
 - Size collision and solver buffers correctly: pipeline capacities are totals
   across worlds, MuJoCo capacities are per world.
+- Identify the installed Newton version and route option and default questions
+  to the matching public documentation rather than restating them.
 - Distinguish advice from verified results and avoid claiming measurements.
 - Leave general setup and example discovery to `newton-usage`.
 

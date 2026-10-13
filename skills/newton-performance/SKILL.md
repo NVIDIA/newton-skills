@@ -9,7 +9,19 @@ Newton is built on NVIDIA Warp, so Warp's performance guidance applies to everyt
 - any installed Warp skills, including those published in the [Warp repository](https://github.com/NVIDIA/warp/tree/main/skills);
 - the Warp docs on [performance and execution](https://nvidia.github.io/warp/stable/user_guide/execution_and_performance.html), [profiling](https://nvidia.github.io/warp/stable/user_guide/execution_and_performance/profiling.html), and the [CUDA C++ Best Practices Guide](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/), most of which carries over to Warp kernels.
 
-Written against the released Newton 1.6.1 and Warp 1.18.0. APIs move quickly, so confirm signatures in the installed version (`python -c "import newton, warp; print(newton.__version__, warp.__version__)"`) before relying on any argument named here.
+This skill holds workflows and pitfalls; Newton's documentation holds the product facts (options, defaults, flags). It was checked against Newton 1.6.1 and Warp 1.18.0. A source checkout is not required.
+
+## Start here: version and documentation
+
+1. Identify the installed versions:
+   `python -c "from importlib.metadata import version; print(version('newton'), version('warp-lang'))"`.
+2. Use the [Newton documentation](https://newton-physics.github.io/newton/) for that release. Versioned docs live at `https://newton-physics.github.io/newton/<version>/`; the links in this skill use `stable/`, so substitute the installed version and flag any mismatch before relying on an option or default.
+3. Read only the pages the task needs:
+   - [Simulation tuning](https://newton-physics.github.io/newton/stable/concepts/simulation_tuning.html) and the [solver pages](https://newton-physics.github.io/newton/stable/solvers/index.html): substeps, iterations, per-solver options and the feature matrix.
+   - [Collisions](https://newton-physics.github.io/newton/stable/concepts/collisions.html): pipeline, broad phase, geometry, gap, hydroelastic contact.
+   - [Worlds](https://newton-physics.github.io/newton/stable/concepts/worlds.html), [Visualization](https://newton-physics.github.io/newton/stable/guide/visualization.html), and the [FAQ](https://newton-physics.github.io/newton/stable/faq.html).
+   - The [API reference](https://newton-physics.github.io/newton/stable/api/newton.html), or the installed docstrings (`python -c "import newton; help(newton.CollisionPipeline)"`), for exact arguments and defaults.
+4. Apply the practices below, then verify the result as described under the ground rules.
 
 ## Ground rules
 
@@ -114,7 +126,7 @@ Oversized buffers cost memory and time in sorts, clears, and scans. Undersized b
 - `CollisionPipeline(rigid_contact_max=..., shape_pairs_max=...)` are **totals across all worlds**. Size them from the measured peak at the target world count, plus about 25% headroom. The automatic estimate is not a worst-case bound, and the NxN/SAP pair default is the worst case, `N*(N-1)/2` per world.
 - After the sizes are known to be adequate, set `verify_buffers=False` in hot loops.
 - MuJoCo: `nconmax`, `njmax`, and `njmax_nnz` are **per world** and get multiplied by the world count. Size them for the busiest world. VBD's contact buffer sizes are per particle or body. Contact-free studies should disable contacts and remove collision geometry **before** `replicate()` rather than inflating `njmax`.
-- The default `rigid_gap` is 0.1 m, which generates speculative contacts that cost buffer space and time. Set `gap=0.0` on shapes that do not need it.
+- The default `rigid_gap` (0.1 m in Newton 1.6.1) generates speculative contacts that cost buffer space and time. Set `gap=0.0` on shapes that do not need it.
 
 ### 6. Make collision cheaper before making the solver cheaper
 
@@ -141,7 +153,7 @@ Oversized buffers cost memory and time in sorts, clears, and scans. Undersized b
 - Compare candidate settings against a high-accuracy reference using a physical metric: force balance, penetration, energy, or trajectory error. Do not rely on "the controller reached its target".
 - Equal `substeps × iterations` does not mean equal accuracy. Substeps also change `dt` and contact refresh, and with stiff contact they often beat iterations at equal cost.
 - Model changes such as mass, materials, gains, or gravity need `solver.notify_model_changed(newton.ModelFlags.<narrowest flag>)`. Call it outside the graph; recapture is not needed, because the graph reads the updated arrays.
-- Per-solver settings are in [references/solvers.md](references/solvers.md).
+- Per-solver performance notes are in [references/solvers.md](references/solvers.md); option lists and defaults are in the solver docs.
 
 ### 9. Batch worlds to the useful size, not the biggest size
 
@@ -171,5 +183,5 @@ Oversized buffers cost memory and time in sorts, clears, and scans. Undersized b
 
 - [references/step-loop-and-capture.md](references/step-loop-and-capture.md): the canonical loop, odd/even handling, frozen state, warm-up, resets, controls, actuators, and eager/graph parity tests.
 - [references/collisions-and-contacts.md](references/collisions-and-contacts.md): pipeline construction, buffer sizing and overflow, broad phase, filtering, SDF/mesh/hydroelastic costs, cadence, and contact readback.
-- [references/solvers.md](references/solvers.md): per-solver knobs (MuJoCo, XPBD, VBD, Featherstone, SemiImplicit, MPM, Kamino), `notify_model_changed` cost, and determinism.
-- [references/worlds-and-benchmarking.md](references/worlds-and-benchmarking.md): replication, per-world parameters and resets, memory scaling, viewers, examples' `--benchmark`, ASV, metrics, and reporting.
+- [references/solvers.md](references/solvers.md): performance implications of solver settings (MuJoCo, XPBD, VBD, Featherstone, SemiImplicit, MPM, Kamino), `notify_model_changed` cost, and determinism.
+- [references/worlds-and-benchmarking.md](references/worlds-and-benchmarking.md): replication, per-world parameters and resets, memory scaling, viewers, examples' `--benchmark`, metrics, and reporting.

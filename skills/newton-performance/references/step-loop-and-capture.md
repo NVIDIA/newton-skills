@@ -13,6 +13,8 @@
 
 ## Canonical structure
 
+The odd-substep pattern is documented on [`State.assign`](https://newton-physics.github.io/newton/stable/api/_generated/newton.State.html); graph capture itself is covered in Warp's [runtime docs](https://nvidia.github.io/warp/stable/user_guide/runtime.html).
+
 Newton examples use a single shape for the step loop:
 
 ```python

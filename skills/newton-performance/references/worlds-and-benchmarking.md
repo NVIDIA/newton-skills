@@ -86,7 +86,7 @@ These lessons come from system identification, policy replay, and parameter sear
 ## Benchmarking Newton
 
 - **Examples:** `python -m newton.examples <name> --benchmark [SECONDS]` forces the null viewer. It warms up for a few frames, synchronizes, and reports FPS. Use `--world-count N` to scale, and `--warp-config KEY=VALUE` to try Warp config options.
-- **ASV suites** in the Newton repository (`asv/benchmarks/`) cover MuJoCo, contacts, cloth, cables, MPM, selection, sensors, and others. They also include setup and compile-time benchmarks. Use them to check for regressions against `main`.
+- **ASV suites (optional, needs a Newton source checkout):** the Newton repository's `asv/benchmarks/` cover MuJoCo, contacts, cloth, cables, MPM, selection, sensors, and setup/compile time. They are useful when contributing to Newton or bisecting a regression; wheel users don't need them.
 - **Your own scripts:**
   - Build the model, capture, and replay once untimed.
   - Synchronize, time N replays with CUDA events or synchronized wall time, and synchronize again.

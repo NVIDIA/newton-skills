@@ -12,6 +12,8 @@
 
 Collision detection often costs as much as the solver, or more. Fix it first.
 
+The [Collisions](https://newton-physics.github.io/newton/stable/concepts/collisions.html) docs and the [`CollisionPipeline` API](https://newton-physics.github.io/newton/stable/api/_generated/newton.CollisionPipeline.html) for your release describe every option and default. This file covers cost and pitfalls.
+
 ## Pipeline construction
 
 ```python
@@ -66,11 +68,9 @@ for i in range(sim_substeps):
 
 ## Broad phase and filtering
 
-| Broad phase | Use when |
-|---|---|
-| `"explicit"` (default) | Pairs known at finalize (`model.shape_contact_pairs`). Cheapest when the candidate pair set is small and static. |
-| `"sap"` | Many shapes per world with spatial coherence. O(N log N). |
-| `"nxn"` | Small scenes. O(N²), with a simple, predictable cost. The crossover with SAP depends on the scene; measure both. |
+- **`"explicit"`:** pairs fixed at finalize. Cheapest when the candidate pair set is small and static.
+- **`"sap"`:** scales as O(N log N); suits many spatially coherent shapes per world.
+- **`"nxn"`:** O(N²) with a simple, predictable cost; suits small scenes. The crossover with SAP depends on the scene, so measure both.
 
 To reduce the number of candidate pairs:
 - **Separate worlds:** give each parallel environment its own world index. Shapes in different worlds never collide.
@@ -83,14 +83,14 @@ To reduce the number of candidate pairs:
 
 From cheapest to most expensive: analytic primitives, then convex hulls, then meshes with SDFs, then meshes without SDFs, then hydroelastic.
 
-- **Don't collide with visual meshes.** Use `builder.approximate_meshes(method=..., shape_indices=..., keep_visual_shapes=True)`. Methods include `"convex_hull"`, `"bounding_box"`, `"bounding_sphere"` and `"coacd"`/`"vhacd"`. Call it on the template builder **before** `replicate()`. Approximating afterwards repeats the work and allocates once per world.
+- **Don't collide with visual meshes.** Use `builder.approximate_meshes(...)` (see its docstring for the available methods) and keep the visual shapes for rendering. Call it on the template builder **before** `replicate()`. Approximating afterwards repeats the work and allocates once per world.
 - **Give every mesh that can touch another mesh an SDF:** `mesh.build_sdf(max_resolution=..., cache_dir=...)`. Without one, mesh-mesh falls back to BVH distance queries, which are much slower. Pass `cache_dir` so SDF baking is not repeated each launch.
-- **Opt shapes into hydroelastic contact individually.** Both shapes in a pair must opt in. Use it only where pressure distributions are actually needed. Its cost scales with SDF resolution and contact area. Hydroelastic buffers are sized by a buffer fraction in `HydroelasticSDF.Config`. Lower it to save memory and raise it if overflow warnings appear. Keep contact reduction on unless you need the dense field.
+- **Opt shapes into hydroelastic contact individually.** Both shapes in a pair must opt in. Use it only where pressure distributions are actually needed. Its cost scales with SDF resolution and contact area. Hydroelastic buffers are sized by a configurable fraction (see the collision docs); lower it to save memory and raise it if overflow warnings appear. Keep contact reduction on unless you need the dense field.
 - **Don't let contact reduction discard the field you analyze.** Dense contact fields (hydroelastic, full-surface) and the representative contacts handed to the solver are different things. If downstream analysis needs the dense field, validate that field, not just the reduced contact count.
 
 ## Gap, speculative contacts, determinism
 
-- **Default gap (`builder.rigid_gap = 0.1` m):** shapes with `gap=None` inherit it. A nonzero gap generates force-free speculative contacts ahead of impact. They use buffer space and narrow-phase time. Set `gap=0.0` (or a small value) on shapes that don't need early contacts. This also shrinks MuJoCo's required `nconmax`.
+- **Default gap (`builder.rigid_gap`, 0.1 m in Newton 1.6.1):** shapes with `gap=None` inherit it. A nonzero gap generates force-free speculative contacts ahead of impact. They use buffer space and narrow-phase time. Set `gap=0.0` (or a small value) on shapes that don't need early contacts. This also shrinks MuJoCo's required `nconmax`.
 - **Speculative contacts (`speculative_contact_gap_max`, opt-in)** enlarge the gap by velocity to catch fast objects. They require passing `dt` to `collide()`, and that value is frozen in a captured graph.
 - **`deterministic=True`** adds a sort-and-gather pass for reproducible contact ordering. It can be captured and its cost is usually small. It disables hydroelastic pre-pruning, so it can change the contact set. Contact matching (`contact_matching="latest"/"sticky"`) implies deterministic mode.
 - **Compare like with like.** Bit-repeatability is a separate requirement from accuracy. Don't benchmark deterministic and non-deterministic configurations as if they were the same workload.
