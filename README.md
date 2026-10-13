@@ -12,14 +12,14 @@ once registered, continuously synchronized to the NVIDIA Skills Catalog.
 
 ## Skills
 
-- [using-newton](skills/using-newton/SKILL.md): Find documentation and packaged
+- [newton-usage](skills/newton-usage/SKILL.md): Find documentation and packaged
   examples when setting up, building, or debugging a Newton simulation.
 
 ## Using the Skills
 
 Install Newton in your Python environment following its
 [installation guide](https://newton-physics.github.io/newton/latest/guide/installation.html).
-Install or copy `skills/using-newton/` into your agent's supported skill directory.
+Install or copy `skills/newton-usage/` into your agent's supported skill directory.
 A Newton source checkout is optional. Use documentation matching your installed
 Newton release.
 

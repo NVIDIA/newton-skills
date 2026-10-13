@@ -8,8 +8,8 @@ a pull request from a fork with a focused description and validation results.
 
 Target users of the released Newton wheel and public APIs. Keep stable product
 knowledge in Newton's documentation; skills should route agents to it and provide
-brief task workflows. Preserve version awareness and avoid requiring a source
-checkout or NVIDIA-internal tools at runtime.
+brief task workflows. Preserve version awareness, keep a source checkout optional,
+and refer only to publicly available tools.
 
 Check the skill format against the [Agent Skills specification](https://agentskills.io/specification).
 Verify documentation links and example commands against the intended Newton

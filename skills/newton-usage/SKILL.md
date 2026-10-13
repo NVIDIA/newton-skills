@@ -1,5 +1,5 @@
 ---
-name: using-newton
+name: newton-usage
 description: Set up, build, or debug physics simulations with the Newton Python package. Use when installing Newton, choosing simulation components, finding examples, or diagnosing simulation and runtime problems.
 ---
 
