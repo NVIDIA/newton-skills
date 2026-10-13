@@ -1,0 +1,58 @@
+{
+  "skill_name": "newton-performance",
+  "evals": [
+    {
+      "id": "newton-performance-explicit-review",
+      "prompt": "Use newton-performance to review this Newton step loop for performance and correctness problems. It is captured with wp.ScopedCapture once and replayed every frame.\n\n```python\nself.sim_substeps = 5\n\ndef simulate(self):\n    for _ in range(self.sim_substeps):\n        self.state_0.clear_forces()\n        self.pipeline.collide(self.state_0, self.contacts)\n        self.solver.step(self.state_0, self.state_1, self.control, self.contacts, self.sim_dt)\n        self.state_0, self.state_1 = self.state_1, self.state_0\n        n = self.contacts.rigid_contact_count.numpy()[0]\n        if n > self.max_seen:\n            self.max_seen = n\n```\n\nGive the findings and a corrected loop; do not run anything.",
+      "expected_skill": "newton-performance",
+      "expected_script": null,
+      "expected_output": "Identifies that with an odd substep count the Python swap inside a captured graph makes every replay restart from the wrong buffer, so the simulation advances fewer substeps per frame without an error, and fixes it with state_0.assign(state_1) on the last odd substep (or an even count). Identifies the .numpy() contact-count read as a host sync that cannot be captured and whose Python-side max tracking runs only once at capture time; moves overflow/peak tracking to the device or to occasional checks outside the graph. Provides a corrected loop and does not claim to have executed it.",
+      "assertions": [
+        "Routes to newton-performance.",
+        "Explains the odd-substep graph-replay bug and applies the assign-on-last-odd-substep fix or an even substep count.",
+        "Flags the per-substep .numpy() read as a host sync that is invalid or frozen inside capture.",
+        "Keeps collision, solver step, and force clearing inside the captured simulate().",
+        "Does not claim the corrected loop was run or benchmarked."
+      ]
+    },
+    {
+      "id": "newton-performance-implicit-slow-motion",
+      "prompt": "After I wrapped my Newton simulate() in a CUDA graph, objects fall noticeably slower than before, but nothing errors. Without the graph it looks right. I use 3 substeps per frame and SolverSemiImplicit. What is likely going on and how do I confirm it? Instructions only.",
+      "expected_skill": "newton-performance",
+      "expected_script": null,
+      "expected_output": "Diagnoses the odd-substep state-swap issue: the swap is Python and runs once at capture, so with 3 substeps each replay starts from the state after substep 2 and the simulation advances in slow motion. Proposes confirming with an eager-versus-graph parity check on odd and even substep counts, and the assign-on-last-odd-substep fix. Notes that other frozen Python state (counters, intervals) is worth checking as well.",
+      "assertions": [
+        "Routes to newton-performance without an explicit skill invocation.",
+        "Attributes the slow motion to odd substeps combined with a Python state swap inside the captured graph.",
+        "Proposes an eager-versus-graph comparison that includes an odd substep count.",
+        "Gives the state_0.assign(state_1) fix or an even substep count."
+      ]
+    },
+    {
+      "id": "newton-performance-context-many-worlds",
+      "prompt": "We scale a Newton robot scene from 64 to 8192 worlds with CollisionPipeline and SolverMuJoCo (use_mujoco_contacts=False). GPU memory explodes and each step got much slower than linear. We pass rigid_contact_max computed as our per-world peak plus 25%. What should we check and change? Do not change the environment.",
+      "expected_skill": "newton-performance",
+      "expected_script": null,
+      "expected_output": "Explains that CollisionPipeline rigid_contact_max and shape_pairs_max are totals across all worlds, so a per-world value is too small and silently drops contacts, while the default NxN/SAP shape_pairs_max is a per-world worst case that grows with world count. MuJoCo nconmax/njmax/njmax_nnz are per world and multiply by world count. Recommends measuring peaks at the target world count, checking overflow outside the hot loop, reviewing broad phase and collision geometry, keeping global shapes few, doing template work before replicate, and sweeping world count for throughput versus memory.",
+      "assertions": [
+        "Routes to newton-performance.",
+        "States that rigid_contact_max is a total across worlds, not a per-world capacity.",
+        "States that MuJoCo nconmax/njmax are per world and scale with world count.",
+        "Recommends sizing from measured peaks and checking overflow outside the per-step loop.",
+        "Does not claim measurements were taken."
+      ]
+    },
+    {
+      "id": "newton-performance-negative-usage",
+      "prompt": "I just installed the Newton physics wheel. How do I list and run one of the packaged examples? Give me the commands only.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "Gives python -m newton.examples --list and python -m newton.examples <name> (with --help). Does not discuss performance tuning, graph capture, or buffer sizing.",
+      "assertions": [
+        "Does not activate or read newton-performance.",
+        "Provides the example list and run commands.",
+        "Does not introduce performance-optimization advice."
+      ]
+    }
+  ]
+}

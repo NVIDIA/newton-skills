@@ -15,12 +15,18 @@ synchronized to the NVIDIA Skills Catalog.
 
 - [newton-usage](skills/newton-usage/SKILL.md): Find documentation and packaged
   examples when setting up, building, or debugging a Newton simulation.
+- [newton-performance](skills/newton-performance/SKILL.md): Speed up and review
+  Newton simulations without changing the physics: CUDA graph capture, the
+  odd-substep trap, host syncs, buffer sizing, collision cost, solver settings,
+  batched worlds, and benchmarking. Warp performance guidance also applies; use
+  Warp's skills and documentation for kernel-level work.
 
 ## Using the Skills
 
 Install Newton in your Python environment following its
 [installation guide](https://newton-physics.github.io/newton/latest/guide/installation.html).
-Install or copy `skills/newton-usage/` into your agent's supported skill directory.
+Install or copy the skill directories under `skills/` (for example
+`skills/newton-usage/`) into your agent's supported skill directory.
 A Newton source checkout is optional. Use documentation matching your installed
 Newton release.
 
