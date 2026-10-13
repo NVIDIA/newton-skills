@@ -54,6 +54,19 @@
         "Computes the first iteration as 1.5.",
         "Does not introduce the Newton physics package or simulation workflow."
       ]
+    },
+    {
+      "id": "newton-usage-negative-contributor-ci",
+      "prompt": "I am contributing to the Newton source repository. A GitHub Actions unit-test job failed on my pull request. Give me a brief plan for inspecting the CI failure and checking the repository's contributor instructions. This is repository maintenance, not setting up or debugging a user's simulation. Do not change files or rerun jobs.",
+      "expected_skill": null,
+      "expected_script": null,
+      "expected_output": "A contributor-focused plan to inspect the failing job and its logs, identify the tested revision and failure, and consult the repository's contributor instructions. Does not activate the wheel-consumer newton-usage skill, route through simulation-tuning examples without relevant failure evidence, change files, or rerun jobs.",
+      "assertions": [
+        "Does not activate or read newton-usage.",
+        "Focuses on the failing CI job, logs, tested revision, and contributor instructions.",
+        "Does not treat repository maintenance as a wheel-consumer simulation task.",
+        "Respects the restrictions on file changes and job reruns."
+      ]
     }
   ]
 }
