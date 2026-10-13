@@ -6,8 +6,10 @@ agents to public documentation and examples shipped in the Newton Python wheel.
 
 ## Status
 
-The first skill is an initial draft. Catalog validation, signing, and publication
-are not yet configured. Skills will be updated alongside Newton releases and,
+The first skill is an initial draft with a routing evaluation suite and an
+NVSkills CI request workflow. Live evaluation, signing, and catalog publication
+remain pending repository onboarding. Skills will be updated alongside Newton
+releases and,
 once registered, continuously synchronized to the NVIDIA Skills Catalog.
 
 ## Skills
