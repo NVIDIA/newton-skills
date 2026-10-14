@@ -4,6 +4,8 @@
 
 inheritance: true
 reviews:
+  auto_review:
+    enabled: true
   path_instructions:
     - path: "skills/**"
       instructions: |
