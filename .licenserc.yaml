@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+header:
+  license:
+    spdx-id: Apache-2.0
+    copyright-owner: NVIDIA CORPORATION & AFFILIATES
+    content: |
+      SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+      SPDX-License-Identifier: Apache-2.0
+    # SkyWalking normalizes case and replaces (c) with "copyright".
+    pattern: |
+      spdx-filecopyrighttext: copyright copyright \d{4} nvidia corporation & affiliates\. all rights reserved\.
+      spdx-license-identifier: apache-2\.0
+  paths:
+    - "**/*.py"
+    - "**/*.sh"
+    - "**/*.yaml"
+    - "**/*.yml"
+    - "**/*.toml"
+  # Imported material retains its own headers; REUSE checks its attribution.
+  paths-ignore:
+    - "third_party/**"
+  comment: never

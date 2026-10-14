@@ -6,11 +6,10 @@ agents to public documentation and examples shipped in the Newton Python wheel.
 
 ## Status
 
-The first skill is an initial draft with a routing evaluation suite and an
-NVSkills CI request workflow. Live evaluation, signing, and catalog publication
-remain pending repository onboarding. Skills will be updated alongside Newton
-releases and,
-once registered, continuously synchronized to the NVIDIA Skills Catalog.
+The first skill is an initial draft with a routing evaluation suite. NVSkills CI
+is configured for evaluation and signing; catalog publication is pending. Skills
+will be updated alongside Newton releases and, once registered, continuously
+synchronized to the NVIDIA Skills Catalog.
 
 ## Skills
 
@@ -27,6 +26,28 @@ Newton release.
 
 The skill instructions do not collect telemetry. Your agent, Python environment,
 and any tools it invokes have their own behavior and policies.
+
+## Skill Policy
+
+- Target consumers of released Newton wheels, public APIs, and publicly available
+  tools. Declare tested Newton versions; keep a source checkout optional.
+- Keep skills thin: triggers, context gathering, documentation/example routing,
+  ordered actions, verification, and recovery. Stable API facts, parameter
+  explanations, limitations, and human-useful troubleshooting belong in Newton
+  documentation. Link that documentation rather than maintaining a second copy.
+- Add a specialized skill only when it provides distinct, reusable orchestration
+  beyond the general router and existing examples. Keep triggers narrow and
+  demonstrate that unrelated prompts do not activate it.
+- Include realistic positive, contextual, and negative evaluations. Compare with
+  and without the skill on Codex and Claude Code, repeat trials, and report
+  correctness, total tokens including loading/retries, and elapsed time. Require
+  improved task performance or efficiency without correctness regressions.
+- Develop missing documentation and examples alongside the workflow. Executable
+  simulation claims need executable checks; GPU claims need GPU-backed evidence.
+  Routing scores and a pipeline PASS alone do not prove simulation correctness.
+- Keep generated benchmark, card, and signature files intact. Revalidate and
+  re-sign changed content before catalog publication, and recheck compatibility
+  on Newton releases.
 
 ## Contributions and Support
 

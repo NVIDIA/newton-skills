@@ -1,0 +1,38 @@
+# SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+version = 1
+
+# Explicit paths keep newly added material from inheriting NVIDIA attribution.
+[[annotations]]
+path = [
+  "README.md", "AGENTS.md", "SECURITY.md", "NOTICE", "THIRD_PARTY_NOTICES.md",
+  ".github/PULL_REQUEST_TEMPLATE.md",
+  "skills/newton-usage/SKILL.md",
+  "skills/newton-usage/evals/EVAL.md",
+  "skills/newton-usage/evals/evals.json",
+  "skills/newton-usage/BENCHMARK.md",
+  "skills/newton-usage/skill-card.md",
+  "skills/newton-usage/skill.oms.sig",
+]
+SPDX-FileCopyrightText = "Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved."
+SPDX-License-Identifier = "CC-BY-4.0"
+
+[[annotations]]
+path = "CONTRIBUTING.md"
+SPDX-FileCopyrightText = [
+  "Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.",
+  "Copyright (C) 2004, 2006 The Linux Foundation and its contributors.",
+]
+# The embedded DCO retains its verbatim-copy terms; the surrounding guidance is CC-BY-4.0.
+SPDX-License-Identifier = "CC-BY-4.0 AND LicenseRef-DCO-1.1"
+
+[[annotations]]
+path = "LICENSE"
+SPDX-FileCopyrightText = "Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved."
+SPDX-License-Identifier = "CC-BY-4.0 AND Apache-2.0"
+
+[[annotations]]
+path = ".github/license-checksums.sha256"
+SPDX-FileCopyrightText = "Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved."
+SPDX-License-Identifier = "Apache-2.0"

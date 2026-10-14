@@ -6,16 +6,9 @@ a pull request from a fork with a focused description and validation results.
 
 ## Scope and Validation
 
-Target users of the released Newton wheel and public APIs. Keep stable product
-knowledge in Newton's documentation; skills should route agents to it and provide
-brief task workflows. Preserve version awareness, keep a source checkout optional,
-and refer only to publicly available tools.
-
-Check the skill format against the [Agent Skills specification](https://agentskills.io/specification).
-Verify documentation links and example commands against the intended Newton
-release. Describe the checks performed and anything not exercised. Changes that
-are published to the catalog also need functional evaluation and the required
-validation and signing artifacts.
+Follow the [skill policy](README.md#skill-policy) and
+[Agent Skills specification](https://agentskills.io/specification). Describe
+validation results and anything not exercised in your pull request.
 
 ## Licensing and Attribution
 
@@ -24,17 +17,27 @@ in [LICENSE](LICENSE): CC-BY-4.0 for documentation, skills, and assets; Apache-2
 for code-only files. Preserve existing copyright, license, and attribution
 notices. Disclose third-party material and its origin, and update
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) with the applicable licenses.
+Preserve original third-party headers. Keep imported files under `third_party/`
+and include their full licenses in `LICENSES/`. REUSE checks each file's copyright
+and license; use an adjacent `.license` file or an explicit `REUSE.toml` annotation
+when a header is inappropriate. Never assign NVIDIA copyright to imported material.
 
 New NVIDIA-authored code-only files use the following header, with the actual
 copyright year and appropriate comment syntax:
 
+<!-- REUSE-IgnoreStart -->
 ```python
 # SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 ```
+<!-- REUSE-IgnoreEnd -->
 
-Documentation and Markdown skill files do not need a copyright/license header;
-the top-level license and notices apply. Preserve third-party headers verbatim.
+Documentation, Markdown skills, and textual eval data do not need headers; their
+attribution is recorded by explicit paths in `REUSE.toml`. Add entries for new
+files with their actual copyright and applicable license. CI checks the prescribed
+license texts, source headers, attribution coverage, and full bundled licenses.
+Dependency additions also require an updated third-party inventory and license
+review; the file-level checks do not establish rights to copied material.
 
 ## Review and Publication
 
@@ -46,6 +49,11 @@ release approvals; catalog publication requires validation and signing.
 
 Report security vulnerabilities privately using [SECURITY.md](SECURITY.md).
 Treat contributors respectfully and keep review discussions constructive.
+
+CI checks author and co-author sign-offs on every contributed commit, with no bot
+exemptions. NVSkills-generated commits must pass the same check. Sign-off is a DCO
+certification, not a cryptographic signature. See [AGENTS.md](AGENTS.md) for local
+validation commands.
 
 #### Signing Off Your Work
 
