@@ -3,6 +3,7 @@
 
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -94,6 +95,16 @@ class DCOTests(unittest.TestCase):
 
 
 class AttributionTests(unittest.TestCase):
+    def skill_project(self, root, licenses=("Apache-2.0.txt", "CC-BY-4.0.txt")):
+        source = DCO_CHECK.parents[1]
+        shutil.copy(source / "REUSE.toml", root)
+        (root / "LICENSES").mkdir()
+        for license_name in licenses:
+            shutil.copy(source / "LICENSES" / license_name, root / "LICENSES")
+        skill = root / "skills" / "another-skill"
+        (skill / "evals").mkdir(parents=True)
+        return skill
+
     def lint(self, root):
         return subprocess.run(
             [sys.executable, "-m", "reuse", "--root", str(root), "lint"],
@@ -107,6 +118,57 @@ class AttributionTests(unittest.TestCase):
             result = self.lint(root)
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("new-document.md", result.stdout + result.stderr)
+
+    def test_new_skill_uses_defaults_without_registration(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            skill = self.skill_project(root, licenses=("CC-BY-4.0.txt",))
+            (skill / "SKILL.md").write_text("# Another skill\n")
+            (skill / "BENCHMARK.md").write_text("Measured results\n")
+            (skill / "skill-card.md").write_text("Skill card\n")
+            (skill / "skill.oms.sig").write_text("Generated signature fixture\n")
+            (skill / "evals" / "EVAL.md").write_text("Evaluation guidance\n")
+            (skill / "evals" / "evals.json").write_text('{}\n')
+            result = self.lint(root)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_code_does_not_inherit_documentation_defaults(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            skill = self.skill_project(root)
+            (skill / "helper.py").write_text("print('example')\n")
+            result = self.lint(root)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("helper.py", result.stdout + result.stderr)
+
+    def test_explicit_third_party_metadata_overrides_defaults(self):
+        for sidecar in (False, True):
+            with self.subTest(sidecar=sidecar), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                skill = self.skill_project(root)
+                document = skill / "SKILL.md"
+                # REUSE-IgnoreStart
+                metadata = (
+                    "SPDX-FileCopyrightText: 2026 Example Author\n"
+                    "SPDX-License-Identifier: Apache-2.0\n"
+                )
+                # REUSE-IgnoreEnd
+                if sidecar:
+                    document.write_text("Third-party documentation\n")
+                    document.with_suffix(".md.license").write_text(metadata)
+                else:
+                    document.write_text("<!--\n" + metadata + "-->\nThird-party documentation\n")
+                result = subprocess.run(
+                    [sys.executable, "-m", "reuse", "--root", str(root), "spdx"],
+                    text=True, capture_output=True,
+                )
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                section = result.stdout.split("FileName: ./skills/another-skill/SKILL.md\n", 1)[1]
+                section = section.split("\n\n", 1)[0]
+                self.assertIn("Example Author", section)
+                self.assertIn("Apache-2.0", section)
+                self.assertNotIn("NVIDIA", section)
+                self.assertNotIn("CC-BY-4.0", section)
 
     def test_third_party_license_text_required(self):
         with tempfile.TemporaryDirectory() as directory:

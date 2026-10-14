@@ -17,6 +17,7 @@ reviews:
     - path: "**"
       instructions: |
         Apply CONTRIBUTING.md and AGENTS.md. Check actual third-party attribution,
-        license preservation, and narrow REUSE annotations. Do not request headers
+        license preservation, and scoped REUSE defaults that preserve explicit
+        third-party metadata. Do not request headers
         on documentation or textual eval data. AI review does not establish IP
         clearance or replace a maintainer's final review.

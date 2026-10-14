@@ -32,9 +32,12 @@ copyright year and appropriate comment syntax:
 ```
 <!-- REUSE-IgnoreEnd -->
 
-Documentation, Markdown skills, and textual eval data do not need headers; their
-attribution is recorded by explicit paths in `REUSE.toml`. Add entries for new
-files with their actual copyright and applicable license. CI checks the prescribed
+Documentation, Markdown skills, and textual eval data do not need headers.
+`REUSE.toml` provides defaults for first-party skill Markdown, eval JSON, and
+generated signatures without listing individual skills. Record different
+ownership or licensing in preserved headers, `.license` sidecars, or a nearer
+`REUSE.toml`; these take priority over defaults. Other files need their actual
+copyright and applicable license. CI checks the prescribed
 license texts, source headers, attribution coverage, and full bundled licenses.
 Dependency additions also require an updated third-party inventory and license
 review; the file-level checks do not establish rights to copied material.

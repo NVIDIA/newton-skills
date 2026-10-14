@@ -3,18 +3,19 @@
 
 version = 1
 
-# Explicit paths keep newly added material from inheriting NVIDIA attribution.
+# Repository documentation is covered without adding headers to prose.
 [[annotations]]
 path = [
   "README.md", "AGENTS.md", "SECURITY.md", "NOTICE", "THIRD_PARTY_NOTICES.md",
   ".github/PULL_REQUEST_TEMPLATE.md",
-  "skills/newton-usage/SKILL.md",
-  "skills/newton-usage/evals/EVAL.md",
-  "skills/newton-usage/evals/evals.json",
-  "skills/newton-usage/BENCHMARK.md",
-  "skills/newton-usage/skill-card.md",
-  "skills/newton-usage/skill.oms.sig",
 ]
+SPDX-FileCopyrightText = "Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved."
+SPDX-License-Identifier = "CC-BY-4.0"
+
+[[annotations]]
+path = ["skills/*/*.md", "skills/*/evals/*.md", "skills/*/evals/*.json", "skills/*/skill.oms.sig"]
+# Embedded notices, sidecars, and nearer annotations take priority over these defaults.
+precedence = "closest"
 SPDX-FileCopyrightText = "Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved."
 SPDX-License-Identifier = "CC-BY-4.0"
 
