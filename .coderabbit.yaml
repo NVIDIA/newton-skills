@@ -3,9 +3,21 @@
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 
 inheritance: true
+knowledge_base:
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - "AGENTS.md"
+      - "CONTRIBUTING.md"
+      - "README.md"
 reviews:
+  profile: chill
+  request_changes_workflow: false
+  poem: false
+  collapse_walkthrough: true
   auto_review:
     enabled: true
+    drafts: false
   path_instructions:
     - path: "skills/**"
       instructions: |
@@ -23,3 +35,11 @@ reviews:
         third-party metadata. Do not request headers
         on documentation or textual eval data. AI review does not establish IP
         clearance or replace a maintainer's final review.
+    - path: "**/*.py"
+      instructions: |
+        Flag verbose or redundant inline code comments, not docstrings. Comments
+        should be brief and explain non-obvious reasoning rather than narrating
+        what the code already shows.
+issue_enrichment:
+  auto_enrich:
+    enabled: false
