@@ -1,0 +1,8 @@
+# CI workflows, compliance policy, and checker scripts require maintainer review.
+/.github/workflows/ @jcarius-nv @eric-heiden @adenzler-nvidia
+/.licenserc.yaml @jcarius-nv @eric-heiden @adenzler-nvidia
+/.github/scripts/ @jcarius-nv @eric-heiden @adenzler-nvidia
+/scripts/ @jcarius-nv @eric-heiden @adenzler-nvidia
+
+# Protect ownership rules in every supported CODEOWNERS location.
+CODEOWNERS @jcarius-nv @eric-heiden @adenzler-nvidia
