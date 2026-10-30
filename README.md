@@ -27,6 +27,50 @@ Newton release.
 The skill instructions do not collect telemetry. Your agent, Python environment,
 and any tools it invokes have their own behavior and policies.
 
+## Skill Policy
+
+These are minimum contribution requirements. Maintainers also review usefulness,
+correctness, and overall quality before accepting changes.
+
+### Skill Design
+
+- Target consumers of released Newton wheels, public APIs, and publicly available
+  tools. Declare tested Newton versions, or explicitly state that compatibility
+  has not been validated. Keep a source checkout optional.
+- Keep skills thin: triggers, context gathering, documentation/example routing,
+  ordered actions, verification, and recovery. Stable API facts, parameter
+  explanations, limitations, and human-useful troubleshooting belong in Newton
+  documentation. Link that documentation rather than maintaining a second copy.
+- Add a specialized skill only when it provides distinct, reusable orchestration
+  beyond the general router and existing examples. Keep triggers narrow and
+  demonstrate that unrelated prompts do not activate it.
+- Develop missing documentation and examples alongside the workflow.
+
+### Validation and Review
+
+- Match validation to the change. Documentation-only corrections need relevant
+  link or command checks; changes to triggers or workflow behavior need relevant
+  behavioral evaluations. Report checks performed and validation limitations.
+- Use realistic positive, contextual, and negative prompts near the skill's scope
+  boundary. Do not rely solely on prompts that name the skill or explicitly state
+  whether it should apply. Add ambiguous negatives and multi-turn cases where
+  relevant; use held-out cases when assessing generalization.
+- Claims of improved quality or efficiency require repeated paired comparisons
+  with and without the skill on Codex and Claude Code. Follow the
+  [comparison protocol](skills/newton-usage/evals/EVAL.md): define correctness
+  criteria first; record agent/model versions, Newton/environment versions,
+  evaluator revision, and per-case outcomes. Report correctness, total tokens
+  including loading/retries, elapsed time, and variability. Demonstrate the
+  claimed improvement without correctness regressions.
+- Judge task outcomes independently of skill activation and prescribed workflow;
+  credit equally correct alternative approaches. CI establishes only the results
+  of its configured checks. Maintainers separately assess task usefulness,
+  correctness, and claimed improvements. Executable simulation claims need
+  executable checks; GPU claims need GPU-backed evidence.
+- Keep generated benchmark, card, and signature files intact. Revalidate and
+  re-sign changed content before catalog publication, and recheck compatibility
+  on Newton releases.
+
 ## Contributions and Support
 
 Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow,
