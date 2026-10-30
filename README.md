@@ -27,28 +27,6 @@ Newton release.
 The skill instructions do not collect telemetry. Your agent, Python environment,
 and any tools it invokes have their own behavior and policies.
 
-## Skill Policy
-
-- Target consumers of released Newton wheels, public APIs, and publicly available
-  tools. Declare tested Newton versions; keep a source checkout optional.
-- Keep skills thin: triggers, context gathering, documentation/example routing,
-  ordered actions, verification, and recovery. Stable API facts, parameter
-  explanations, limitations, and human-useful troubleshooting belong in Newton
-  documentation. Link that documentation rather than maintaining a second copy.
-- Add a specialized skill only when it provides distinct, reusable orchestration
-  beyond the general router and existing examples. Keep triggers narrow and
-  demonstrate that unrelated prompts do not activate it.
-- Include realistic positive, contextual, and negative evaluations. Compare with
-  and without the skill on Codex and Claude Code, repeat trials, and report
-  correctness, total tokens including loading/retries, and elapsed time. Require
-  improved task performance or efficiency without correctness regressions.
-- Develop missing documentation and examples alongside the workflow. Executable
-  simulation claims need executable checks; GPU claims need GPU-backed evidence.
-  Routing scores and a pipeline PASS alone do not prove simulation correctness.
-- Keep generated benchmark, card, and signature files intact. Revalidate and
-  re-sign changed content before catalog publication, and recheck compatibility
-  on Newton releases.
-
 ## Contributions and Support
 
 Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow,
@@ -57,6 +35,25 @@ Use this repository's issues for skill bugs and suggestions. For Newton simulati
 questions, consult the [Newton documentation](https://newton-physics.github.io/newton/)
 or [Newton discussions](https://github.com/newton-physics/newton/discussions).
 This early skill does not yet have a validated Newton version compatibility range.
+
+### NVSkills Validation
+
+For PRs changing `skills/`, a repository maintainer or admin must post a new
+`/nvskills-ci` comment to start evaluation and signing. Post it again after further
+skill or evaluation changes. Opening or updating a PR only checks validation
+status; it does not start evaluation. Changes outside the watched paths
+(`skills/` and `team-skills/`) do not require a new evaluation.
+
+Wait for successful NVSkills CI validation and inspect the generated benchmark,
+card, and signature commit before merging. Do not edit generated artifacts by
+hand. If the validation-status check failed before validation started, rerun that
+failed check after validation succeeds; rerunning the check alone does not start
+evaluation.
+
+For fork PRs, the signing service account `svc-nvskills-signing` needs write access
+to the fork to commit generated artifacts. A maintainer or admin of this repository
+must still post the command. See the
+[shared request workflow](https://github.com/NVIDIA/skills/blob/main/.github/workflows/team-request.yml).
 
 ## Security
 

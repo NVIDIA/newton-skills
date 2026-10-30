@@ -18,7 +18,7 @@ header:
     - "**/*.yaml"
     - "**/*.yml"
     - "**/*.toml"
-  # Imported material retains its own headers; REUSE checks its attribution.
+  # Imported material retains its own headers and requires maintainer review.
   paths-ignore:
     - "third_party/**"
   comment: never
