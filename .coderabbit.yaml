@@ -18,6 +18,14 @@ reviews:
   auto_review:
     enabled: true
     drafts: false
+  path_filters:
+    # Generated and signed by NVSkills CI.
+    - "!skills/**/BENCHMARK.md"
+    - "!skills/**/skill-card.md"
+    - "!skills/**/skill.oms.sig"
+    - "!team-skills/**/BENCHMARK.md"
+    - "!team-skills/**/skill-card.md"
+    - "!team-skills/**/skill.oms.sig"
   path_instructions:
     - path: "skills/**"
       instructions: |
