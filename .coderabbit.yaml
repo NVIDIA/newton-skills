@@ -1,0 +1,48 @@
+# SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+inheritance: true
+knowledge_base:
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - "AGENTS.md"
+      - "CONTRIBUTING.md"
+      - "README.md"
+reviews:
+  profile: chill
+  request_changes_workflow: false
+  poem: false
+  collapse_walkthrough: true
+  auto_review:
+    enabled: true
+    drafts: false
+  path_instructions:
+    - path: "skills/**"
+      instructions: |
+        Apply the README Skill Policy. Flag durable product knowledge that belongs
+        in Newton documentation, unsupported APIs or versions, checkout-only
+        assumptions, private runtime tools, and overlapping or overly broad triggers.
+        Match validation to the change: relevant link or command checks for
+        documentation corrections, behavioral cases for trigger/workflow changes,
+        and repeated paired comparisons for quality/efficiency claims. Check natural
+        prompts near scope boundaries; do not rely solely on explicit routing cues.
+        Distinguish missing evidence from demonstrated defects, and routing results
+        from task correctness. CI covers its configured checks; maintainers assess
+        usefulness, correctness, and claimed improvements separately. Preserve
+        generated artifacts; request regeneration when needed rather than manual edits.
+    - path: "**"
+      instructions: |
+        Apply CONTRIBUTING.md and AGENTS.md. Check actual third-party attribution
+        and license preservation. Do not request headers on documentation or
+        textual eval data. AI review does not establish IP clearance or replace
+        a maintainer's final review.
+    - path: "**/*.py"
+      instructions: |
+        Flag verbose or redundant inline code comments, not docstrings. Comments
+        should be brief and explain non-obvious reasoning rather than narrating
+        what the code already shows.
+issue_enrichment:
+  auto_enrich:
+    enabled: false

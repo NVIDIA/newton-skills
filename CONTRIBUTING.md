@@ -6,16 +6,11 @@ a pull request from a fork with a focused description and validation results.
 
 ## Scope and Validation
 
-Target users of the released Newton wheel and public APIs. Keep stable product
-knowledge in Newton's documentation; skills should route agents to it and provide
-brief task workflows. Preserve version awareness, keep a source checkout optional,
-and refer only to publicly available tools.
-
-Check the skill format against the [Agent Skills specification](https://agentskills.io/specification).
-Verify documentation links and example commands against the intended Newton
-release. Describe the checks performed and anything not exercised. Changes that
-are published to the catalog also need functional evaluation and the required
-validation and signing artifacts.
+Follow the [skill policy](README.md#skill-policy) and
+[Agent Skills specification](https://agentskills.io/specification). The policy sets
+minimum requirements; maintainers also assess usefulness and correctness. Match
+validation to the change, verify affected links and commands against the intended
+Newton release, and report results and anything not exercised in your pull request.
 
 ## Licensing and Attribution
 
@@ -24,6 +19,10 @@ in [LICENSE](LICENSE): CC-BY-4.0 for documentation, skills, and assets; Apache-2
 for code-only files. Preserve existing copyright, license, and attribution
 notices. Disclose third-party material and its origin, and update
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) with the applicable licenses.
+Preserve original third-party headers. Keep imported files under `third_party/`
+and distribute their full licenses and attribution alongside them. Never assign
+NVIDIA copyright to imported material. Maintainers review third-party material
+and dependency additions; header checks do not establish ownership or license rights.
 
 New NVIDIA-authored code-only files use the following header, with the actual
 copyright year and appropriate comment syntax:
@@ -33,8 +32,9 @@ copyright year and appropriate comment syntax:
 # SPDX-License-Identifier: Apache-2.0
 ```
 
-Documentation and Markdown skill files do not need a copyright/license header;
-the top-level license and notices apply. Preserve third-party headers verbatim.
+Documentation, Markdown skills, and textual eval data do not need headers.
+The top-level license and notices apply. CI checks NVIDIA-authored code and
+configuration headers using Apache SkyWalking Eyes, as in Newton.
 
 ## Review and Publication
 
