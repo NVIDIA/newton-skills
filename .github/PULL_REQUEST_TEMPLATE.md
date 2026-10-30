@@ -16,6 +16,7 @@ Describe the checks performed and their results, including any limitations.
 
 ## Maintainer Checklist
 
+- [ ] For skill changes, a maintainer or admin posted `/nvskills-ci` after the latest skill/evaluation changes and validation succeeded (see README.md#nvskills-validation).
 - [ ] Required IP review is complete for all contributed material before public distribution.
 - [ ] Licensing and third-party use are covered by the project's approvals.
 - [ ] For catalog publication, validation passed and generated benchmark, card, and signatures match the final skill content.

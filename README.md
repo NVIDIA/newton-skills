@@ -6,11 +6,10 @@ agents to public documentation and examples shipped in the Newton Python wheel.
 
 ## Status
 
-The first skill is an initial draft with a routing evaluation suite and an
-NVSkills CI request workflow. Live evaluation, signing, and catalog publication
-remain pending repository onboarding. Skills will be updated alongside Newton
-releases and,
-once registered, continuously synchronized to the NVIDIA Skills Catalog.
+The first skill is an initial draft with a routing evaluation suite. NVSkills CI
+is configured for evaluation and signing; catalog publication is pending. Skills
+will be updated alongside Newton releases and, once registered, continuously
+synchronized to the NVIDIA Skills Catalog.
 
 ## Skills
 
@@ -36,6 +35,25 @@ Use this repository's issues for skill bugs and suggestions. For Newton simulati
 questions, consult the [Newton documentation](https://newton-physics.github.io/newton/)
 or [Newton discussions](https://github.com/newton-physics/newton/discussions).
 This early skill does not yet have a validated Newton version compatibility range.
+
+### NVSkills Validation
+
+For PRs changing `skills/`, a repository maintainer or admin must post a new
+`/nvskills-ci` comment to start evaluation and signing. Post it again after further
+skill or evaluation changes. Opening or updating a PR only checks validation
+status; it does not start evaluation. Changes outside the watched paths
+(`skills/` and `team-skills/`) do not require a new evaluation.
+
+Wait for successful NVSkills CI validation and inspect the generated benchmark,
+card, and signature commit before merging. Do not edit generated artifacts by
+hand. If the validation-status check failed before validation started, rerun that
+failed check after validation succeeds; rerunning the check alone does not start
+evaluation.
+
+For fork PRs, the signing service account `svc-nvskills-signing` needs write access
+to the fork to commit generated artifacts. A maintainer or admin of this repository
+must still post the command. See the
+[shared request workflow](https://github.com/NVIDIA/skills/blob/main/.github/workflows/team-request.yml).
 
 ## Security
 

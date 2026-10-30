@@ -24,6 +24,10 @@ in [LICENSE](LICENSE): CC-BY-4.0 for documentation, skills, and assets; Apache-2
 for code-only files. Preserve existing copyright, license, and attribution
 notices. Disclose third-party material and its origin, and update
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) with the applicable licenses.
+Preserve original third-party headers. Keep imported files under `third_party/`
+and distribute their full licenses and attribution alongside them. Never assign
+NVIDIA copyright to imported material. Maintainers review third-party material
+and dependency additions; header checks do not establish ownership or license rights.
 
 New NVIDIA-authored code-only files use the following header, with the actual
 copyright year and appropriate comment syntax:
@@ -33,8 +37,9 @@ copyright year and appropriate comment syntax:
 # SPDX-License-Identifier: Apache-2.0
 ```
 
-Documentation and Markdown skill files do not need a copyright/license header;
-the top-level license and notices apply. Preserve third-party headers verbatim.
+Documentation, Markdown skills, and textual eval data do not need headers.
+The top-level license and notices apply. CI checks NVIDIA-authored code and
+configuration headers using Apache SkyWalking Eyes, as in Newton.
 
 ## Review and Publication
 
