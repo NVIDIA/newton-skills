@@ -6,16 +6,10 @@ a pull request from a fork with a focused description and validation results.
 
 ## Scope and Validation
 
-Target users of the released Newton wheel and public APIs. Keep stable product
-knowledge in Newton's documentation; skills should route agents to it and provide
-brief task workflows. Preserve version awareness, keep a source checkout optional,
-and refer only to publicly available tools.
-
-Check the skill format against the [Agent Skills specification](https://agentskills.io/specification).
-Verify documentation links and example commands against the intended Newton
-release. Describe the checks performed and anything not exercised. Changes that
-are published to the catalog also need functional evaluation and the required
-validation and signing artifacts.
+Follow the [skill policy](README.md#skill-policy) and
+[Agent Skills specification](https://agentskills.io/specification). Verify
+documentation links and example commands against the intended Newton release.
+Describe validation results and anything not exercised in your pull request.
 
 ## Licensing and Attribution
 
