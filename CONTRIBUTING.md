@@ -7,9 +7,10 @@ a pull request from a fork with a focused description and validation results.
 ## Scope and Validation
 
 Follow the [skill policy](README.md#skill-policy) and
-[Agent Skills specification](https://agentskills.io/specification). Verify
-documentation links and example commands against the intended Newton release.
-Describe validation results and anything not exercised in your pull request.
+[Agent Skills specification](https://agentskills.io/specification). The policy sets
+minimum requirements; maintainers also assess usefulness and correctness. Match
+validation to the change, verify affected links and commands against the intended
+Newton release, and report results and anything not exercised in your pull request.
 
 ## Licensing and Attribution
 
