@@ -31,7 +31,8 @@ and any tools it invokes have their own behavior and policies.
 ## Skill Policy
 
 - Target consumers of released Newton wheels, public APIs, and publicly available
-  tools. Declare tested Newton versions; keep a source checkout optional.
+  tools. Declare tested Newton versions, or explicitly state that compatibility
+  has not been validated. Keep a source checkout optional.
 - Keep skills thin: triggers, context gathering, documentation/example routing,
   ordered actions, verification, and recovery. Stable API facts, parameter
   explanations, limitations, and human-useful troubleshooting belong in Newton
