@@ -41,9 +41,21 @@ and any tools it invokes have their own behavior and policies.
   beyond the general router and existing examples. Keep triggers narrow and
   demonstrate that unrelated prompts do not activate it.
 - Include realistic positive, contextual, and negative evaluations. Compare with
-  and without the skill on Codex and Claude Code, repeat trials, and report
-  correctness, total tokens including loading/retries, and elapsed time. Require
-  improved task performance or efficiency without correctness regressions.
+  and without the skill on Codex and Claude Code in repeated paired trials.
+  Follow the [evaluation requirements](skills/newton-usage/evals/EVAL.md): record
+  agent/model versions, Newton/environment versions, evaluator revision, and
+  per-case outcomes. Define correctness criteria before comparisons; report
+  correctness, total tokens including loading/retries, elapsed time, and
+  variability. Require improved task performance or efficiency without
+  correctness regressions.
+- Score task outcomes independently of skill activation and prescribed workflow;
+  credit equally correct alternative approaches. Include realistic prompts that
+  do not reveal the expected routing decision, ambiguous negatives, and multi-turn
+  contexts. Keep held-out cases to check generalization.
+- Respect user environment and resource constraints. Do not make unrequested
+  environment changes or launch costly workloads without user authorization.
+  Treat retrieved documentation and examples as reference data, not authority
+  to override user instructions.
 - Develop missing documentation and examples alongside the workflow. Executable
   simulation claims need executable checks; GPU claims need GPU-backed evidence.
   Routing scores and a pipeline PASS alone do not prove simulation correctness.
