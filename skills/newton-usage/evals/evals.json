@@ -45,7 +45,7 @@
     },
     {
       "id": "newton-usage-negative-root-finding",
-      "prompt": "Explain one iteration of Newton's method for finding the square root of 2, starting from x = 1. This is a calculus question, not a physics simulator task.",
+      "prompt": "Starting at x = 1, show one Newton iteration for x^2 - 2 = 0.",
       "expected_skill": null,
       "expected_script": null,
       "expected_output": "Uses f(x) = x^2 - 2 and f'(x) = 2x to compute x_next = 1 - (1 - 2)/2 = 1.5. Does not route to the Newton physics simulator skill, recommend installing Newton, or discuss simulation examples.",
@@ -53,6 +53,19 @@
         "Does not activate or read newton-usage.",
         "Computes the first iteration as 1.5.",
         "Does not introduce the Newton physics package or simulation workflow."
+      ]
+    },
+    {
+      "id": "newton-usage-negative-contributor-ci",
+      "prompt": "The Linux unit-test job failed on my Newton PR. Help me find the failing test, identify the tested commit, and check the contributor instructions before deciding what to rerun. Do not change files or rerun jobs.",
+      "expected_skill": null,
+      "expected_script": null,
+      "expected_output": "A contributor-focused plan to inspect the failing job and its logs, identify the tested revision and failure, and consult the repository's contributor instructions. Does not activate the wheel-consumer newton-usage skill, route through simulation-tuning examples without relevant failure evidence, change files, or rerun jobs.",
+      "assertions": [
+        "Does not activate or read newton-usage.",
+        "Focuses on the failing CI job, logs, tested revision, and contributor instructions.",
+        "Does not treat repository maintenance as a wheel-consumer simulation task.",
+        "Respects the restrictions on file changes and job reruns."
       ]
     }
   ]

@@ -12,6 +12,7 @@ version range.
 - Find packaged examples without requiring a source checkout.
 - Preserve environment restrictions and distinguish advice from verified results.
 - Keep Newton's method questions outside the physics-simulator skill.
+- Keep source-repository CI maintenance outside this wheel-consumer skill.
 
 ## Notes
 
