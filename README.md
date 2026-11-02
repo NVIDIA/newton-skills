@@ -9,7 +9,8 @@ agents to public documentation and examples shipped in the Newton Python wheel.
 The first skill is an initial draft with a routing evaluation suite. NVSkills CI
 is configured for evaluation and signing; catalog publication is pending. Skills
 will be updated alongside Newton releases and, once registered, continuously
-synchronized to the NVIDIA Skills Catalog.
+synchronized to the NVIDIA Skills Catalog. Repository checks validate the
+skill/evaluation contract and the installed Newton wheel.
 
 ## Skills
 

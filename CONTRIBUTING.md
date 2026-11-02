@@ -27,14 +27,17 @@ and dependency additions; header checks do not establish ownership or license ri
 New NVIDIA-authored code-only files use the following header, with the actual
 copyright year and appropriate comment syntax:
 
+<!-- REUSE-IgnoreStart -->
 ```python
 # SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 ```
+<!-- REUSE-IgnoreEnd -->
 
 Documentation, Markdown skills, and textual eval data do not need headers.
 The top-level license and notices apply. CI checks NVIDIA-authored code and
-configuration headers using Apache SkyWalking Eyes, as in Newton.
+configuration headers using Apache SkyWalking Eyes, as in Newton, and checks
+file attribution with REUSE (defaults are in `REUSE.toml`) and commit sign-offs.
 
 ## Review and Publication
 

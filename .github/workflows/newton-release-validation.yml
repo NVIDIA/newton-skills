@@ -1,0 +1,45 @@
+# SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+name: Newton Release Validation
+
+on:
+  pull_request:
+    paths:
+      - "skills/**"
+      - "scripts/check_newton_wheel.py"
+      - "tests/test_skills.py"
+      - ".github/workflows/newton-release-validation.yml"
+  workflow_dispatch:
+    inputs:
+      newton-version:
+        description: Released Newton version to validate
+        required: true
+        default: "1.7.0"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  released-wheel:
+    runs-on: ubuntu-latest
+    env:
+      NEWTON_VERSION: ${{ inputs['newton-version'] || '1.7.0' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          persist-credentials: false
+      - name: Set up uv
+        uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
+      - name: Validate repository skill contracts
+        run: uv run --no-project --python 3.12 python -m unittest discover -s tests -p test_skills.py
+      - name: Validate released Newton wheel discovery interfaces
+        run: >-
+          uv run --no-project --python 3.12
+          --with "newton==${NEWTON_VERSION}"
+          python scripts/check_newton_wheel.py --expected-version "${NEWTON_VERSION}"

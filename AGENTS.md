@@ -8,4 +8,7 @@
 - Match validation to the change under the skill policy; report checks performed
   and limitations. CI results do not replace maintainer assessment of usefulness
   and correctness.
+- Run `uv run --no-project --python 3.12 --with reuse==5.1.1 reuse lint`,
+  `sha256sum --check .github/license-checksums.sha256`, and
+  `uv run --no-project --python 3.12 --with reuse==5.1.1 python -m unittest discover -s tests`.
 - Sign off commits with `git commit -s`.

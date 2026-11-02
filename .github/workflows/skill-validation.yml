@@ -1,0 +1,57 @@
+# SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+name: Skill Validation
+
+on:
+  pull_request:
+    paths:
+      - "skills/**"
+      - ".github/workflows/skill-validation.yml"
+  push:
+    branches: [main]
+    paths:
+      - "skills/**"
+      - ".github/workflows/skill-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          persist-credentials: false
+      - name: Set up uv
+        uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
+      - name: Install pinned validation tools
+        run: |
+          mkdir -p "${RUNNER_TEMP}/bin"
+          GOBIN="${RUNNER_TEMP}/bin" go install github.com/zricethezav/gitleaks/v8@v8.24.3
+          echo "${RUNNER_TEMP}/bin" >> "${GITHUB_PATH}"
+          uv tool install --python 3.12 "skillevaluator[all] @ git+https://github.com/NVIDIA/SkillEvaluator.git@99e0cadfc5e6ca8ca8dfc2ceac20cb26c34d0fa5"
+          uv tool install --python 3.12 "skillspector @ https://github.com/NVIDIA/SkillSpector/releases/download/v2.12.0/skillspector-2.12.0-py3-none-any.whl#sha256=62973f6254d30c871480246869f88a01e17dff6f12e9d43010962eb0d7e305f4"
+      - name: Verify validation tool versions
+        run: |
+          skillevaluator --version
+          skillspector --version
+      - name: Validate skills and evaluation datasets
+        run: |
+          for skill in skills/*; do
+            skill_name="${skill##*/}"
+            skill_under_test="${RUNNER_TEMP}/skills/${skill_name}"
+            mkdir -p "${skill_under_test}"
+            # Public SkillEvaluator 0.5 predates OMS signature metadata support.
+            # Validate all content while leaving signature verification to NVSkills CI.
+            rsync -a --exclude "skill.oms.sig" "${skill}/" "${skill_under_test}/"
+            skillevaluator validate "${skill_under_test}" --tiers 1 --external --no-llm --no-dedup -r cli -o "${RUNNER_TEMP}/skill-validation"
+            skillevaluator tier3 validate "${skill}" --strict
+          done
