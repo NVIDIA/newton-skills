@@ -3,56 +3,55 @@
   "evals": [
     {
       "id": "newton-usage-explicit-setup",
-      "prompt": "Use newton-usage to help me get started with the Newton physics simulator from PyPI. I do not have a source checkout. Give me a short plan and commands to discover and run a suitable packaged example. Do not install packages or run simulations in this task.",
+      "prompt": "Use newton-usage to help me get started with the released Newton package. I do not have a source checkout. Give me the commands to identify the version and discover a packaged example, but do not execute those commands, install packages, or run a simulation.",
       "expected_skill": "newton-usage",
       "expected_script": null,
-      "expected_output": "A concise wheel-based setup plan using public Newton documentation, a command to identify the installed package version, python -m newton.examples --list, and commands to inspect and run a discovered example. Example dependencies are obtained through the examples extra while preserving the selected Newton version. A Git checkout is optional. No installation or simulation is claimed to have been performed.",
+      "expected_output": "The response supplies the version and wheel-packaged-example discovery commands plus the direct Newton 1.7.0 installation route, without executing commands, opening documentation, requiring a checkout, or claiming discovered values.",
       "assertions": [
-        "Routes to newton-usage.",
-        "Points to public Newton documentation and accounts for the installed package version.",
-        "Provides python -m newton.examples --list and the example launcher and --help patterns.",
-        "Does not require a source checkout or change packages.",
-        "Does not claim a successful simulation run."
+        "Reads newton-usage before answering.",
+        "Supplies the installed-version and packaged-example discovery commands without executing them.",
+        "Returns the direct version-matched installation URL without searching or opening the documentation site.",
+        "Keeps a source checkout optional and preserves the environment.",
+        "Reports that installation and simulation execution were not performed."
       ]
     },
     {
-      "id": "newton-usage-implicit-debug",
-      "prompt": "My simulation built with the Newton Python wheel sometimes lets a falling body pass through the ground. I have not provided a reproducer, package version, or solver yet. What should we inspect first? Give me a short diagnostic plan; do not invent a fix or execute a simulation.",
+      "id": "newton-usage-implicit-discovery",
+      "prompt": "I have Newton installed from PyPI. Check my active Python environment now and report where the package and its examples live, then give me the matching solver documentation without cloning anything.",
       "expected_skill": "newton-usage",
       "expected_script": null,
-      "expected_output": "A focused diagnostic plan requesting the Newton version, solver, CPU/GPU environment, and minimal reproducer. It routes to the matching collision/contact and simulation-tuning documentation and relevant wheel-shipped examples, proposes discriminating checks grounded in those sources, and identifies the original symptom as the verification target. The cause and resolution remain unverified without evidence.",
+      "expected_output": "The response uses one bounded discovery probe for the active Python executable, installed Newton version, package path, examples path, and packaged example list, then returns the direct matching solver documentation without cloning or broad environment searches.",
       "assertions": [
-        "Routes to newton-usage without an explicit skill invocation.",
-        "Requests the package version, solver, execution environment, and reproducer.",
-        "Routes to collision/contact and simulation-tuning documentation for the relevant version and solver.",
-        "Uses packaged example discovery without requiring a checkout.",
-        "Does not assert a root cause, universal parameter value, or verified fix without evidence."
-      ]
-    },
-    {
-      "id": "newton-usage-context-version",
-      "prompt": "A teammate sent me a Newton example from the latest online docs, but our project uses an older pinned Newton wheel. We cannot upgrade it or clone the source repository. How should I find a compatible example and check whether the referenced API exists? Give instructions only; do not change the environment.",
-      "expected_skill": "newton-usage",
-      "expected_script": null,
-      "expected_output": "Instructions to discover the installed Newton version, select matching documentation where available, and explicitly flag any unresolved documentation-version mismatch. It uses the pinned wheel's example list, example --help, and installed example source as compatibility evidence. It does not assume that latest APIs exist, require a checkout, upgrade packages, or claim verification not performed.",
-      "assertions": [
-        "Routes to newton-usage in the project context.",
-        "Accounts for the pinned installed version and flags unmatched documentation.",
-        "Provides wheel-based example discovery and installed-source inspection.",
-        "Does not assume latest documentation proves compatibility with the older wheel.",
-        "Respects the restrictions on upgrading, cloning, and environment changes."
+        "Selects the general Newton documentation-and-example router.",
+        "Uses one bounded probe for the Python executable, version, package location, examples location, and example list.",
+        "Routes directly to public solver documentation for the installed release without opening the generic documentation root.",
+        "Does not repeat environment probes or search alternate interpreters and repositories.",
+        "Does not clone a repository or silently change versions."
       ]
     },
     {
       "id": "newton-usage-negative-root-finding",
-      "prompt": "Starting at x = 1, show one Newton iteration for x^2 - 2 = 0.",
+      "prompt": "Explain one iteration of Newton's method for finding the square root of 2, starting from x = 1. This is a calculus question.",
       "expected_skill": null,
       "expected_script": null,
-      "expected_output": "Uses f(x) = x^2 - 2 and f'(x) = 2x to compute x_next = 1 - (1 - 2)/2 = 1.5. Does not route to the Newton physics simulator skill, recommend installing Newton, or discuss simulation examples.",
+      "expected_output": "The response computes the next estimate as 1.5 without using the Newton physics skill.",
       "assertions": [
-        "Does not activate or read newton-usage.",
-        "Computes the first iteration as 1.5.",
-        "Does not introduce the Newton physics package or simulation workflow."
+        "Does not read a Newton physics skill.",
+        "Computes the Newton-method iteration correctly.",
+        "Does not discuss simulator installation or examples."
+      ]
+    },
+    {
+      "id": "newton-usage-negative-specialized-debug",
+      "prompt": "My Newton simulation is reproducibly tunneling through the ground. Diagnose it and verify the fix.",
+      "expected_skill": "newton-debug-simulation",
+      "expected_script": null,
+      "expected_output": "The response treats tunneling as a reproducible correctness failure, checks once for the expected reproducer, and, when it is absent, reports the missing inputs without claiming a cause or fix while preserving ground penetration as the verification target.",
+      "assertions": [
+        "Treats reproducible tunneling as a correctness failure and preserves ground penetration as the verification target.",
+        "Requests only the missing reproducer, launch command, Newton version, solver, backend, and simulation cadence needed for diagnosis.",
+        "If the reproducer is absent, inspects its expected location once, reports the missing input, and stops without a broad search.",
+        "Does not claim a cause, correction, or successful verification without reproducing the failure."
       ]
     },
     {
