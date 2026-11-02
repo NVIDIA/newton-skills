@@ -1,0 +1,43 @@
+{
+  "skill_name": "newton-build-simulation",
+  "evals": [
+  {
+    "id": "newton-build-explicit-minimal",
+    "prompt": "Use newton-build-simulation to outline a minimal Newton 1.7 simulation for a free-falling sphere contacting a ground plane. Use public APIs and give a runnable verification plan.",
+    "expected_skill": "newton-build-simulation",
+    "expected_script": null,
+    "expected_output": "The response confirms version and environment, cites the direct documentation route, describes the minimal public model and solver workflow, and defines a proposed command plus contact and finite-state checks. A plan does not need source code or live API retrieval.",
+    "assertions": [
+      "Reads newton-build-simulation.",
+      "Cites the direct stable Newton 1.7 documentation route and uses a supported packaged example or public API without unnecessary browsing.",
+      "Chooses the smallest model, collision, solver, and stepping configuration.",
+      "Defines observable checks and reports assumptions."
+    ]
+  },
+  {
+    "id": "newton-build-implicit-coupling",
+    "prompt": "I need a Newton model containing rigid and deformable components. Help me decide whether a single supported solver or a coupled approach is warranted before writing code.",
+    "expected_skill": "newton-build-simulation",
+    "expected_script": null,
+    "expected_output": "The response gathers workload requirements, cites the direct solver or coupling route, ranks supported options, and starts with the simplest configuration that preserves required behavior. A decision plan does not need live documentation retrieval.",
+    "assertions": [
+      "Selects newton-build-simulation from the modeling request.",
+      "Cites the direct stable solver or coupling route without searching unrelated documentation.",
+      "Ranks only relevant supported options with tradeoffs.",
+      "Does not claim compatibility from similar APIs alone."
+    ]
+  },
+  {
+    "id": "newton-build-negative-other-simulator",
+    "prompt": "Build a new scene in Isaac Sim using PhysX. Newton is not part of this project.",
+    "expected_skill": null,
+    "expected_script": null,
+    "expected_output": "The response stays with the requested simulator and does not load or recommend a Newton skill.",
+    "assertions": [
+      "Does not read newton-build-simulation.",
+      "Does not replace the requested simulator with Newton.",
+      "Keeps the response scoped to the named project."
+    ]
+  }
+  ]
+}
