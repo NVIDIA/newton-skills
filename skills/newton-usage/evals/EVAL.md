@@ -8,7 +8,10 @@ version range.
 
 ## Behaviors
 
-- Discover the installed version and use matching public documentation.
+- Discover the installed version and prefer its bundled documentation when
+  available; use matching hosted docs for older wheels and report offline gaps.
+- Locate the generated local index and API pages without requiring Sphinx,
+  a source checkout, network access, or a simulation run.
 - Find packaged examples without requiring a source checkout.
 - Preserve environment restrictions and distinguish advice from verified results.
 - Keep Newton's method questions outside the physics-simulator skill.

@@ -12,10 +12,19 @@ source checkout is optional.
 1. Identify the installed Newton version with
    `python -c "from importlib.metadata import version; print(version('newton'))"`.
    Establish the user's goal or failure, solver, and CPU/GPU environment.
-2. Start at the [Newton documentation](https://newton-physics.github.io/newton/).
-   Select documentation matching the installed release where available; flag
-   any version mismatch before relying on an API or feature. Read only the
-   sections relevant to the task:
+2. Try `python -m newton.docs` in the user's environment. When available,
+   it reports the installed version, local documentation directory, and index.
+   Prefer the matching bundled snapshot: read `llms.txt`, then search and open
+   only relevant Markdown pages. Use `python -m newton.docs --path` for the
+   directory, `newton.info(newton.ModelBuilder)` for object help, or
+   `newton.info("ModelBuilder")` for symbol lookup.
+   Older wheels may lack this interface; editable installs report unrendered
+   source documentation. Fall back to the
+   [Newton documentation](https://newton-physics.github.io/newton/) and its
+   generated `llms.txt` entrypoint when needed. Select the installed release
+   where available; flag any mismatch before relying on an API or feature.
+   If offline and matching docs are unavailable, report that limitation.
+   Read only the sections relevant to the task:
    - Setup and modeling: installation, tutorials, conventions, solver guides,
      and the API reference.
    - Debugging: FAQ, simulation tuning, collisions and contacts, and viewers
