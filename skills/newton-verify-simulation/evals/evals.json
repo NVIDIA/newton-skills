@@ -1,0 +1,43 @@
+{
+  "skill_name": "newton-verify-simulation",
+  "evals": [
+  {
+    "id": "newton-verify-implicit-sensitivity",
+    "prompt": "The final pose looks right. What evidence would show the result is not an artifact of one timestep or one random seed?",
+    "expected_skill": "newton-verify-simulation",
+    "expected_script": null,
+    "expected_output": "The response recognizes a verification request, checks the full trajectory, defines timestep/substep and repeated-seed comparisons, and uses fixed acceptance criteria.",
+    "assertions": [
+      "Selects the verification skill.",
+      "Does not rely only on the final pose.",
+      "Uses sensitivity and repeated-seed evidence when applicable.",
+      "Keeps acceptance criteria fixed during comparison."
+    ]
+  },
+  {
+    "id": "newton-verify-displayport-invalid-success",
+    "prompt": "A Newton 1.7 DisplayPort insertion run reports a high success rate, but some trajectories exceed the actuator travel limit or show excessive connector penetration. Verify the simulation result and state what would still be needed for a sim-to-real claim.",
+    "expected_skill": "newton-verify-simulation",
+    "expected_script": null,
+    "expected_output": "The response rejects task-success labels that violate physical constraints, checks complete trajectories against fixed travel and penetration bounds, reports simulation validity separately, and requires corresponding hardware evidence for sim-to-real conclusions.",
+    "assertions": [
+      "Rejects nominal successes that violate actuator or penetration bounds.",
+      "Checks complete trajectories rather than aggregate success alone.",
+      "Separates simulation validity from sim-to-real validity.",
+      "Requires hardware evidence for real-world claims."
+    ]
+  },
+  {
+    "id": "newton-verify-negative-file-integrity",
+    "prompt": "Verify the SHA-256 checksum of a downloaded archive. It contains no Newton model or simulation result.",
+    "expected_skill": null,
+    "expected_script": null,
+    "expected_output": "The response uses ordinary file-integrity verification and does not load a Newton simulation verification skill.",
+    "assertions": [
+      "Does not read newton-verify-simulation.",
+      "Keeps the task scoped to checksum verification.",
+      "Does not invent physical acceptance criteria."
+    ]
+  }
+  ]
+}
