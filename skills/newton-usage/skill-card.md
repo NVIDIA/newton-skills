@@ -9,7 +9,7 @@ NVIDIA <br>
 ### License/Terms of Use: <br>
 CC-BY-4.0 AND Apache 2.0 <br>
 ## Use Case: <br>
-Developers and engineers using the released Newton Python wheel use this skill to find version-matched public documentation and packaged examples, set up and adapt simulations, and diagnose simulation and runtime problems with small reproducers. <br>
+Developers and engineers using the released Newton Python wheel use this skill to find version-matched installed or public documentation and packaged examples, set up and adapt simulations, and diagnose simulation and runtime problems with small reproducers. <br>
 
 ### Deployment Geography for Use: <br>
 Global <br>
@@ -43,7 +43,7 @@ Mitigation: Review and scan skill before deployment. <br>
 
 
 ## Evaluation Tasks: <br>
-5 evaluation tasks (3 positive, 2 negative) covering documentation and example routing for the Newton wheel, with 1 attempt per task in isolated `k8s-sandbox` pods, compared against a no-skill baseline. Evaluator version `1.6.4`, evaluated 2026-10-30. <br>
+6 evaluation tasks (4 positive, 2 negative) covering documentation and example routing for the Newton wheel, with 1 attempt per task in isolated `k8s-sandbox` pods, compared against a no-skill baseline. Evaluator version `1.6.6`, evaluated 2026-11-02. <br>
 
 ## Evaluation Metrics Used: <br>
 Reported benchmark dimensions: <br>
@@ -67,15 +67,15 @@ Underlying evaluation signals used in this run: <br>
 ## Evaluation Results: <br>
 | Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
 |---|---:|---:|
-| Overall | 97.7% — baseline ran, but no comparable score was available; uplift unavailable | 89.9% — baseline ran, but no comparable score was available; uplift unavailable |
+| Overall | 94.9% — baseline ran, but no comparable score was available; uplift unavailable | 85.2% — baseline ran, but no comparable score was available; uplift unavailable |
 | Security | 100.0% → 100.0% (±0.0 points) | 100.0% → 100.0% (±0.0 points) |
-| Correctness | 80.0% → 92.0% (+12.0 points) | 80.0% → 100.0% (+20.0 points) |
-| Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 93.3% — baseline ran, but no comparable score was available; uplift unavailable |
-| Effectiveness | 66.0% → 97.5% (+31.5 points) | 58.0% → 87.5% (+29.5 points) |
-| Efficiency | 99.2% — baseline ran, but no comparable score was available; uplift unavailable | 68.8% — baseline ran, but no comparable score was available; uplift unavailable |
+| Correctness | 76.7% → 100.0% (+23.3 points) | 70.0% → 96.7% (+26.7 points) |
+| Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 95.0% — baseline ran, but no comparable score was available; uplift unavailable |
+| Effectiveness | 50.0% → 75.1% (+25.1 points) | 53.3% → 61.3% (+8.0 points) |
+| Efficiency | 99.1% — baseline ran, but no comparable score was available; uplift unavailable | 73.1% — baseline ran, but no comparable score was available; uplift unavailable |
 
 ## Skill Version(s): <br>
-4810f44 (source: git SHA, committed 2026-10-30) <br>
+f5b2244 (source: git SHA, committed 2026-11-02) <br>
 
 ## Ethical Considerations: <br>
 NVIDIA believes Trustworthy AI is a shared responsibility and we have established policies and practices to enable development for a wide array of AI applications. When downloaded or used in accordance with our terms of service, developers should work with their internal team to ensure this skill meets requirements for the relevant industry and use case and addresses unforeseen product misuse. <br>
