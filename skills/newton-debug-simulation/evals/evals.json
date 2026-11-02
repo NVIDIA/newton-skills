@@ -1,0 +1,43 @@
+{
+  "skill_name": "newton-debug-simulation",
+  "evals": [
+  {
+    "id": "newton-debug-explicit-tunneling",
+    "prompt": "Use newton-debug-simulation. A falling body intermittently passes through the ground in Newton 1.7. I have not supplied the solver, timestep, or reproducer. Give a diagnostic plan without inventing a parameter fix.",
+    "expected_skill": "newton-debug-simulation",
+    "expected_script": null,
+    "expected_output": "The response gathers version, solver, device, timestep/cadence, geometry, and a reproducer; routes to contact and tuning documentation; proposes discriminating measurements; and leaves the cause unverified.",
+    "assertions": [
+      "Reads newton-debug-simulation.",
+      "Requests the missing environment and reproducer details.",
+      "Separates contact generation from solver response and reporting.",
+      "Does not prescribe a universal timestep, gap, or iteration count."
+    ]
+  },
+  {
+    "id": "newton-debug-implicit-late-instability",
+    "prompt": "Our training rollout looks valid for thousands of steps, then states become non-finite. How should we isolate the first bad transition without masking it?",
+    "expected_skill": "newton-debug-simulation",
+    "expected_script": null,
+    "expected_output": "The response preserves the first invalid state and inputs, reduces while retaining the failure, checks model/control/contact/solver/environment causes, and avoids output clamping as a fix.",
+    "assertions": [
+      "Selects the debugging skill from the late-emerging symptom.",
+      "Captures the first invalid transition and relevant history.",
+      "Uses discriminating state and solver measurements.",
+      "Rejects filtering or clamping as proof of repaired physics."
+    ]
+  },
+  {
+    "id": "newton-debug-negative-contributor-test",
+    "prompt": "A Python unit test fails in my Newton source checkout after I changed repository code. Inspect the contributor test failure; there is no simulation symptom.",
+    "expected_skill": null,
+    "expected_script": null,
+    "expected_output": "The response treats this as source-repository maintenance and does not load a released-wheel simulation debugging skill.",
+    "assertions": [
+      "Does not read newton-debug-simulation.",
+      "Focuses on the changed code, failing test, and contributor workflow.",
+      "Does not invent a simulation symptom."
+    ]
+  }
+  ]
+}
