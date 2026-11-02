@@ -1,0 +1,43 @@
+{
+  "skill_name": "newton-optimize-simulation",
+  "evals": [
+  {
+    "id": "newton-optimize-implicit-startup",
+    "prompt": "The first Newton run is slow but later steps are fast. How do I determine whether compilation, loading, allocation, or stepping is responsible?",
+    "expected_skill": "newton-optimize-simulation",
+    "expected_script": null,
+    "expected_output": "The response recognizes a startup-performance question, defines separate timing regions and instrumentation, and avoids attributing the first-run cost to steady-state stepping.",
+    "assertions": [
+      "Selects the optimization skill.",
+      "Separates compilation/loading/allocation from warm stepping.",
+      "Accounts for synchronization and profiler overhead.",
+      "Reports the exact timing scope."
+    ]
+  },
+  {
+    "id": "newton-optimize-displayport-coupled-sweep",
+    "prompt": "A Newton 1.7 DisplayPort connector insertion workload is too slow. Collision frequency, contact formulation, mesh resolution, and connector gap may interact. Define a bounded experiment that improves throughput without invalidating insertion behavior. Do not reuse old universal defaults or claim a speedup without measurements from the target GPU.",
+    "expected_skill": "newton-optimize-simulation",
+    "expected_script": null,
+    "expected_output": "The response treats the settings as coupled factors, fixes the workload and acceptance criteria, proposes a bounded measured sweep, and requires both throughput and insertion-validity evidence before accepting a configuration.",
+    "assertions": [
+      "Treats collision, contact, mesh, and gap settings as coupled factors.",
+      "Defines a bounded experiment with fixed workload and acceptance criteria.",
+      "Measures throughput and preserves insertion validity.",
+      "Avoids universal defaults and unmeasured target-GPU speedup claims."
+    ]
+  },
+  {
+    "id": "newton-optimize-negative-training-input",
+    "prompt": "Profile a slow PyTorch data loader in a training job that does not import or run Newton.",
+    "expected_skill": null,
+    "expected_script": null,
+    "expected_output": "The response stays with PyTorch data-loading performance and does not load a Newton simulation optimization skill.",
+    "assertions": [
+      "Does not read newton-optimize-simulation.",
+      "Does not attribute the bottleneck to Newton.",
+      "Keeps measurements scoped to the stated training input pipeline."
+    ]
+  }
+  ]
+}
