@@ -15,11 +15,9 @@ synchronized to the NVIDIA Skills Catalog.
 
 - [newton-usage](skills/newton-usage/SKILL.md): Find documentation and packaged
   examples when setting up, building, or debugging a Newton simulation.
-- [newton-performance](skills/newton-performance/SKILL.md): Speed up and review
-  Newton simulations without changing the physics: CUDA graph capture, the
-  odd-substep trap, host syncs, buffer sizing, collision cost, solver settings,
-  batched worlds, and benchmarking. Warp performance guidance also applies; use
-  Warp's skills and documentation for kernel-level work.
+- [newton-performance](skills/newton-performance/SKILL.md): Measure and improve
+  the speed of a correct Newton simulation, or review its step loop, using
+  Newton's performance documentation.
 
 ## Using the Skills
 
