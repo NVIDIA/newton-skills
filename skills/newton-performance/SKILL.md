@@ -46,10 +46,11 @@ Use the Newton documentation for the installed release,
 before relying on an API or default. Open only the page the task needs:
 
 - [Performance](https://newton-physics.github.io/newton/latest/guide/performance.html):
-  CUDA graph capture, odd substep counts, host synchronization, buffer
-  capacity, multiple worlds, and benchmarking. If the installed release does
-  not have this page, use `latest` and verify each API against the installed
-  version's API reference.
+  profiling, CUDA graph capture, odd substep counts, host synchronization,
+  buffer capacity, accuracy/speed tradeoffs, multiple worlds, and
+  benchmarking. If this page does not exist for the installed release or for
+  `latest`, use the pages below and the `State.assign` API reference for odd
+  substep counts, and do not cite the Performance guide.
 - [Simulation tuning](https://newton-physics.github.io/newton/latest/concepts/simulation_tuning.html):
   trading substeps, iterations, and contact settings against accuracy.
 - [Collisions](https://newton-physics.github.io/newton/latest/concepts/collisions.html):
@@ -64,19 +65,24 @@ opening it.
 
 ## 4. Measure, change, verify
 
-1. Choose instrumentation that fits the execution: eager Python stepping and
-   captured graph replay need different tools and timing boundaries. Exclude
-   warm-up, compilation, and the first graph launch from steady-state timing,
-   synchronize at the timing boundaries, and account for profiler overhead so
-   the before and after runs measure the same work.
-2. Measure a baseline until one actionable cost is identified. Do not start
-   from universal tuning values.
-3. Change one factor at a time. When settings interact (for example collision
+1. Measure a reproducible baseline for the recorded workload and timing scope.
+2. Choose the profiling path for that scope: startup (import, model build,
+   compilation), eager stepping, or captured-graph replay. Each needs different
+   tools and timing boundaries; the Performance guide's profiling section and
+   Warp's profiling guide give the tools. Exclude warm-up, compilation, and the
+   first graph launch from steady-state timing, synchronize at the timing
+   boundaries, and add only the instrumentation the question needs.
+3. Collect the profile and inspect it: identify the dominant kernels, gaps, or
+   synchronization points, and state the evidence. Do not choose a change
+   before this step, and do not start from universal tuning values.
+4. Select a documented lever whose accuracy tradeoff fits the task. Change one
+   factor at a time. When settings interact (for example collision
    frequency, contact model, mesh resolution, and gap), run a small bounded
    sweep over the coupled set instead.
-4. Repeat comparable before and after measurements to estimate variance, and
-   re-run the fidelity checks from step 1.
-5. Keep a change only if it meets the objective and passes the fidelity
+5. Repeat before and after measurements under the same conditions and
+   instrumentation to estimate variance, and re-run the fidelity checks from
+   section 1.
+6. Keep a change only if it meets the objective and passes the fidelity
    checks; otherwise revert it.
 
 ## 5. Review checks
