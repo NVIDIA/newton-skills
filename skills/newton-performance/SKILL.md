@@ -14,10 +14,11 @@ defines what counts as evidence.
 - If the simulation is unstable, produces invalid states, or the user's goal is
   correctness rather than speed, use `newton-usage` instead and stop here.
 - Decide the mode. A **plan** request (how should I profile or optimize this?)
-  gets a documentation route and one bounded experiment; do not run tools. A
-  **review** request (is this loop correct and fast?) gets findings against the
-  documentation; do not run tools unless asked. A **measure** or **implement**
-  request runs the workflow below.
+  gets a documentation route and one bounded experiment. A **review** request
+  (is this loop correct and fast?) gets findings against the documentation.
+  In both, reading code and documentation is fine, but do not run the
+  simulation, benchmarks, or profilers unless asked. A **measure** or
+  **implement** request runs the workflow below.
 - Record the workload, the objective, and the timing scope. Keep these scopes
   separate, because they have different causes: startup (import, model build,
   kernel compilation), warm stepping, rendering, host/device transfers, memory,
@@ -43,22 +44,20 @@ performance counters), give the exact command for the user to run and stop.
 
 Use the Newton documentation for the installed release,
 `https://newton-physics.github.io/newton/<version>/`, and flag a mismatch
-before relying on an API or default. Open only the page the task needs:
+before relying on an API or default. Open only the page the task needs; paths
+are relative to that root:
 
-- [Performance](https://newton-physics.github.io/newton/latest/guide/performance.html):
-  profiling, CUDA graph capture, odd substep counts, host synchronization,
-  buffer capacity, accuracy/speed tradeoffs, multiple worlds, and
-  benchmarking. If this page does not exist for the installed release or for
-  `latest`, use the pages below and the `State.assign` API reference for odd
-  substep counts, and do not cite the Performance guide.
-- [Simulation tuning](https://newton-physics.github.io/newton/latest/concepts/simulation_tuning.html):
-  trading substeps, iterations, and contact settings against accuracy.
-- [Collisions](https://newton-physics.github.io/newton/latest/concepts/collisions.html):
-  broad phase, geometry, contact capacity, and collision frequency.
-- [Solvers](https://newton-physics.github.io/newton/latest/solvers/index.html)
-  and the API reference: solver options, capacities, and `ModelFlags`.
+- `concepts/simulation_tuning.html`: trading substeps, iterations, and contact
+  settings against accuracy.
+- `concepts/collisions.html`: broad phase, geometry, contact capacity, and
+  collision frequency.
+- `solvers/index.html` and the API reference: solver options, capacities,
+  `ModelFlags`, and `State.assign` for odd substep counts in a captured frame.
 - [Warp profiling](https://nvidia.github.io/warp/stable/user_guide/execution_and_performance/profiling.html)
-  for instrumentation, using the page for the installed Warp version.
+  for instrumentation and timing, using the page for the installed Warp
+  version.
+
+Cite the page and section each recommendation relies on.
 
 When the user only needs a documentation location, give the URL without
 opening it.
@@ -68,10 +67,10 @@ opening it.
 1. Measure a reproducible baseline for the recorded workload and timing scope.
 2. Choose the profiling path for that scope: startup (import, model build,
    compilation), eager stepping, or captured-graph replay. Each needs different
-   tools and timing boundaries; the Performance guide's profiling section and
-   Warp's profiling guide give the tools. Exclude warm-up, compilation, and the
-   first graph launch from steady-state timing, synchronize at the timing
-   boundaries, and add only the instrumentation the question needs.
+   tools and timing boundaries; Warp's profiling guide gives the tools.
+   Exclude warm-up, compilation, and the first graph launch from steady-state
+   timing, synchronize at the timing boundaries, and add only the
+   instrumentation the question needs.
 3. Collect the profile and inspect it: identify the dominant kernels, gaps, or
    synchronization points, and state the evidence. Do not choose a change
    before this step, and do not start from universal tuning values.
@@ -87,8 +86,8 @@ opening it.
 
 ## 5. Review checks
 
-When reviewing a Newton step loop, check these against the Performance guide
-and cite the section:
+When reviewing a Newton step loop, check these against the documentation
+selected in section 3 and cite the page:
 
 - the whole frame, including collision, is captured in one graph and warmed up
   before capture;

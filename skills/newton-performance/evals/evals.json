@@ -8,7 +8,7 @@
       "expected_script": null,
       "expected_output": "Explains that with an odd substep count the Python swap runs only during capture, so each replay reads a buffer that holds an older state and the simulation advances fewer substeps per frame without an error. Gives a correct fix: copying the final state with State.assign, an even substep count, or alternating two graphs with a consistent readable state. Explains that the .numpy() contact-count read synchronizes with the host and cannot be captured, and that the Python max tracking would only run during capture; moves peak or overflow tracking to the device or to occasional checks outside the graph. Provides a corrected loop and does not claim to have run it.",
       "assertions": [
-        "After one replay of the corrected loop, the state that callers read holds the result of all five substeps.",
+        "After one replay of the corrected loop, the state that callers read has advanced by the intended frame duration and holds the correct output state, whether the fix keeps five substeps or adjusts the substep count and dt.",
         "Identifies the per-substep .numpy() read as a host synchronization that is invalid or frozen inside a captured graph, and removes it from the frame.",
         "Keeps force clearing, collision, and the solver step inside the captured frame.",
         "Does not claim the corrected loop was run or benchmarked."
