@@ -10,6 +10,7 @@
       "assertions": [
         "After one replay of the corrected loop, the state that callers read has advanced by the intended frame duration and holds the correct output state, whether the fix keeps five substeps or adjusts the substep count and dt.",
         "Identifies the per-substep .numpy() read as a host synchronization that is invalid or frozen inside a captured graph, and removes it from the frame.",
+        "Keeps peak or overflow contact tracking, either on the device inside the graph or as an occasional synchronized check outside it, rather than deleting it.",
         "Keeps force clearing, collision, and the solver step inside the captured frame.",
         "Does not claim the corrected loop was run or benchmarked."
       ]

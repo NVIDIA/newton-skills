@@ -53,9 +53,10 @@ are relative to that root:
   collision frequency.
 - `solvers/index.html` and the API reference: solver options, capacities,
   `ModelFlags`, and `State.assign` for odd substep counts in a captured frame.
-- [Warp profiling](https://nvidia.github.io/warp/stable/user_guide/execution_and_performance/profiling.html)
-  for instrumentation and timing, using the page for the installed Warp
-  version.
+- Warp's Profiling page for instrumentation and timing, under the installed
+  Warp version's documentation, `https://nvidia.github.io/warp/v<major>.<minor>/`.
+  The page path differs between Warp versions, so find it from that version's
+  index. If that version is not published, use `stable` and flag the mismatch.
 
 Cite the page and section each recommendation relies on.
 
