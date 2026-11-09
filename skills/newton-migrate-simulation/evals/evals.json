@@ -62,6 +62,19 @@
         "Describes proposed import and verification steps without executing imports or fabricating results.",
         "Leaves behavioral parity unverified without a source reference."
       ]
+    },
+    {
+      "id": "newton-migrate-context-target-before-install",
+      "prompt": "We plan to port a MuJoCo robot to Newton 1.7, but Newton is not installed yet. Point us to the relevant release documentation and give a migration plan. Do not install anything or run importers.",
+      "expected_skill": "newton-migrate-simulation",
+      "expected_script": null,
+      "expected_output": "Uses the stated Newton 1.7 target for planning documentation without requiring an installed version, and reserves installed-version verification for implementation.",
+      "assertions": [
+        "Selects documentation matching the stated target release rather than requiring an installation to plan.",
+        "Does not treat moving latest documentation as proof of Newton 1.7 support.",
+        "Permits focused read-only documentation lookup while preserving the installation and execution restrictions.",
+        "Requires installed-release verification before version-specific implementation and flags a mismatch with the planned target."
+      ]
     }
   ]
 }

@@ -21,9 +21,14 @@ intentional differences explicit.
    `python -c "import sys; from importlib.metadata import version; print(sys.executable, flush=True); print(version('newton'), flush=True)"`.
    Only if imports are permitted, separately run
    `python -c "import newton; print(newton.__file__)"` and retain any import
-   error alongside the metadata. Use the task's interpreter and environment
-   wrapper for both commands; ask for them if unknown rather than probing
-   another environment.
+   error alongside the metadata. Keep both commands in the task's existing
+   environment, preserving any required wrapper settings. Prefer its interpreter
+   directly, or use `uv run --no-sync --frozen` only after confirming that the
+   intended environment already exists. Do not use probe options that create an
+   environment, sync dependencies, install extras, or update a lockfile. If no
+   non-mutating execution path is available, report the blocker and obtain any
+   needed setup authorization before proceeding; do not probe another environment.
+   Ask for the interpreter or wrapper if unknown.
    Inspect the device only when
    it affects the port. Collect missing source facts once. If neither a source
    simulator nor source assets are available, stop this workflow and use
@@ -32,7 +37,12 @@ intentional differences explicit.
    whether the goal is asset reuse, controller reuse, or behavioral parity.
    Inventory units, frames, assets, joints, drives, limits, contacts, collision geometry,
    controller semantics, used features, and available reference runs.
-2. Select documentation matching the installed Newton release. Use the [legacy Warp migration map](https://newton-physics.github.io/newton/latest/migration.html)
+2. For planning before installation, select documentation for the user's stated
+   target release. If the target is unknown, clarify it or keep the plan
+   version-neutral and label that assumption. Before implementation, verify the
+   installed release, select matching documentation, and flag any mismatch with
+   the planned target before applying version-specific mappings. Use the
+   [legacy Warp migration map](https://newton-physics.github.io/newton/latest/migration.html)
    only for a source built with Warp's former simulation module. For other sources,
    route directly to
    [conventions](https://newton-physics.github.io/newton/latest/concepts/conventions.html),
@@ -42,7 +52,8 @@ intentional differences explicit.
    and the [solver capability guide](https://newton-physics.github.io/newton/latest/solvers/index.html)
    only as required by the source inventory. Prefer the installed wheel
    documentation when available; otherwise select matching hosted documentation.
-   The links above are entrypoints, not a claim about the installed version. Read
+   The links above are moving `latest` entrypoints, not a claim about the
+   planned or installed version. Read
    the sections and public API entries needed to resolve each feature mapping;
    follow focused references when the inventory requires additional guidance. When
    the user only needs a documentation location, copy the URL without opening it.

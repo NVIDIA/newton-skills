@@ -14,6 +14,8 @@ fold useful guidance into `newton-usage`.
   fallback when the general usage skill is absent.
 - Inventory assets, conventions, controls, contacts, limits, and reference runs.
 - Select matching documentation without pinning the skill to a particular release.
+- Before installation, use the stated target for planning documentation; verify
+  the actual installed release before implementation and flag target mismatches.
 - Prefer matching installed documentation when available; allow focused follow-up
   retrieval for each feature in the source inventory.
 - Map documented features and inspect effective imported properties and backend support.
