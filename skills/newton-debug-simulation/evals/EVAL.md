@@ -7,6 +7,9 @@ with NumPy and Warp (Newton dependencies); a source checkout is optional. Newton
 
 ## Behaviors
 
+- Keep metadata probes in the existing task environment without syncing
+  dependencies, creating environments, installing extras, or updating locks.
+
 - Record version, device, solver, cadence, expected behavior, and reproduction.
 - Use the reproducer interpreter and wrapper, collect metadata before importing,
   and verify pre-simulation failures with the failing probe before requiring a rollout.

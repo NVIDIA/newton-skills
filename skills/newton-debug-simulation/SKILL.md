@@ -21,9 +21,14 @@ correction without changing the intended physical model.
    `python -c "import sys; from importlib.metadata import version; print(sys.executable, flush=True); print(version('newton'), flush=True)"`.
    Only if imports are permitted, separately run
    `python -c "import newton; print(newton.__file__)"` and retain any import
-   error alongside the metadata. Use the task's interpreter and environment
-   wrapper for both commands; ask for them if unknown rather than probing
-   another environment.
+   error alongside the metadata. Keep both commands in the task's existing
+   environment, preserving any required wrapper settings. Prefer its interpreter
+   directly, or use `uv run --no-sync --frozen` only after confirming that the
+   intended environment already exists. Do not use probe options that create an
+   environment, sync dependencies, install extras, or update a lockfile. If no
+   non-mutating execution path is available, report the blocker and obtain any
+   needed setup authorization before proceeding; do not probe another environment.
+   Ask for the interpreter or wrapper if unknown.
    Inspect the device only when it affects the failure. Collect missing reproducer facts once. Route a correct
    workload's performance request to `newton-performance` and claim
    assessment to `newton-verify-simulation` when those skills are available;
@@ -31,7 +36,8 @@ correction without changing the intended physical model.
    request has no reproducible failure. Record the solver,
    simulation/control cadence, and expected versus observed behavior.
 2. Select documentation matching the installed release. The links below are
-   documentation entrypoints; verify their version before relying on a parameter.
+   moving `latest` entrypoints and may differ from the installed release;
+   select matching release documentation before relying on a parameter.
    Route the symptom directly to [simulation tuning](https://newton-physics.github.io/newton/latest/concepts/simulation_tuning.html)
    for instability or poor physical response, [collisions](https://newton-physics.github.io/newton/latest/concepts/collisions.html)
    for missing or incorrect contacts, [solver observables](https://newton-physics.github.io/newton/latest/concepts/solver_observables.html)
