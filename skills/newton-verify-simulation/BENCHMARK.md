@@ -14,7 +14,7 @@ Recommended for publication based on the completed evaluation evidence in this r
 - Evaluator version: `1.6.9`
 - Agents: Claude Code (`aws/anthropic/bedrock-claude-opus-5-5`), Codex (`openai/openai/gpt-6.1-sol`)
 - Tasks: 8 evaluation tasks (4 positive, 4 negative)
-- Dataset digest: `sha256:b01f869b0d487d1ac5dd14dbb6b8f6dab9ef7a4576b900dc41b34e6fb874cec6` (skill-evaluator-dataset-snapshot/1)
+- Dataset digest: `sha256:c3cacf9e9b93d58973f5f975671762524ca65f2bb9b5ba2c6394bdfa6f7dcfc8` (skill-evaluator-dataset-snapshot/1)
 - Attempts per task: 1
 - Environment: `k8s-sandbox`
 - Tier 2 evidence: required for publication
@@ -50,12 +50,12 @@ The three-tier evaluation checks whether the skill:
 
 | Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
 |---|---:|---:|
-| Overall | 99.1% — baseline ran, but no comparable score was available; uplift unavailable | 87.5% — baseline ran, but no comparable score was available; uplift unavailable |
-| Security | 100.0% → 100.0% (±0.0 points) | 100.0% → 87.5% (-12.5 points) |
-| Correctness | 97.5% → 97.5% (±0.0 points) | 80.0% → 92.5% (+12.5 points) |
-| Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 93.8% — baseline ran, but no comparable score was available; uplift unavailable |
-| Effectiveness | 93.8% → 100.0% (+6.2 points) | 98.4% → 84.4% (-14.0 points) |
-| Efficiency | 98.0% — baseline ran, but no comparable score was available; uplift unavailable | 79.5% — baseline ran, but no comparable score was available; uplift unavailable |
+| Overall | 96.0% — baseline ran, but no comparable score was available; uplift unavailable | 90.9% — baseline ran, but no comparable score was available; uplift unavailable |
+| Security | 87.5% → 87.5% (±0.0 points) | 87.5% → 100.0% (+12.5 points) |
+| Correctness | 92.5% → 100.0% (+7.5 points) | 87.5% → 90.0% (+2.5 points) |
+| Discoverability | 98.8% — baseline ran, but no comparable score was available; uplift unavailable | 93.8% — baseline ran, but no comparable score was available; uplift unavailable |
+| Effectiveness | 78.1% → 96.9% (+18.8 points) | 96.9% → 93.8% (-3.1 points) |
+| Efficiency | 96.9% — baseline ran, but no comparable score was available; uplift unavailable | 77.1% — baseline ran, but no comparable score was available; uplift unavailable |
 
 **How to read this table:** baseline is the same task attempted without the target skill. Scores are rounded to one decimal; threshold-adjacent values use additional precision so their displayed band matches the verdict. Uplift is derived from those displayed scores and shown in percentage points.
 
@@ -70,9 +70,9 @@ Shared-source comparisons use the same signals and weights on both conditions. T
 | Agent | Dimension | Basis | Baseline → With skill (uplift) | Explanation |
 | --- | --- | --- | --- | --- |
 | claude-code | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
-| claude-code | Efficiency | Token-only comparison | 96.7% → 96.0% (-0.7 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| claude-code | Efficiency | Token-only comparison | 95.9% → 93.8% (-2.1 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
 | codex | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
-| codex | Efficiency | Token-only comparison | 89.5% → 88.1% (-1.4 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| codex | Efficiency | Token-only comparison | 88.8% → 88.7% (-0.1 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
 
 ## Token Usage
 
@@ -80,25 +80,25 @@ Actual Tier 3 execution usage is reported for every observed agent/case pair and
 
 | Agent | Dataset case | With skill | Without skill | Delta | Change | Coverage |
 |---|---|---:|---:|---:|---:|---|
-| claude-code | All cases | 1,622,219 | 1,610,637 | +11,582 | +0.72% | skill 8/8; base 8/8 |
-| claude-code | newton-verify-context-authorized-collection | 73,370 | 36,278 | +37,092 | +102.24% | skill 1/1; base 1/1 |
-| claude-code | newton-verify-context-finite-without-reference | 74,156 | 36,827 | +37,329 | +101.36% | skill 1/1; base 1/1 |
-| claude-code | newton-verify-displayport-invalid-success | 111,382 | 179,761 | -68,379 | -38.04% | skill 1/1; base 1/1 |
-| claude-code | newton-verify-implicit-sensitivity | 111,114 | 35,865 | +75,249 | +209.81% | skill 1/1; base 1/1 |
-| claude-code | newton-verify-negative-construction | 816,391 | 849,106 | -32,715 | -3.85% | skill 1/1; base 1/1 |
-| claude-code | newton-verify-negative-debugging | 143,803 | 178,695 | -34,892 | -19.53% | skill 1/1; base 1/1 |
-| claude-code | newton-verify-negative-file-integrity | 144,019 | 150,922 | -6,903 | -4.57% | skill 1/1; base 1/1 |
-| claude-code | newton-verify-negative-performance | 147,984 | 143,183 | +4,801 | +3.35% | skill 1/1; base 1/1 |
-| codex | All cases | 1,806,697 | 1,398,923 | +407,774 | +29.15% | skill 8/8; base 8/8 |
-| codex | newton-verify-context-authorized-collection | 27,953 | 18,065 | +9,888 | +54.74% | skill 1/1; base 1/1 |
-| codex | newton-verify-context-finite-without-reference | 28,226 | 13,692 | +14,534 | +106.15% | skill 1/1; base 1/1 |
-| codex | newton-verify-displayport-invalid-success | 73,603 | 66,318 | +7,285 | +10.98% | skill 1/1; base 1/1 |
-| codex | newton-verify-implicit-sensitivity | 32,451 | 13,415 | +19,036 | +141.90% | skill 1/1; base 1/1 |
-| codex | newton-verify-negative-construction | 1,490,066 | 1,150,715 | +339,351 | +29.49% | skill 1/1; base 1/1 |
-| codex | newton-verify-negative-debugging | 55,212 | 41,198 | +14,014 | +34.02% | skill 1/1; base 1/1 |
-| codex | newton-verify-negative-file-integrity | 13,247 | 40,750 | -27,503 | -67.49% | skill 1/1; base 1/1 |
-| codex | newton-verify-negative-performance | 85,939 | 54,770 | +31,169 | +56.91% | skill 1/1; base 1/1 |
-| ALL AGENTS | Dataset aggregate | 3,428,916 | 3,009,560 | +419,356 | +13.93% | skill 16/16; base 16/16 |
+| claude-code | All cases | 1,665,223 | 1,888,976 | -223,753 | -11.85% | skill 8/8; base 8/8 |
+| claude-code | newton-verify-context-authorized-collection | 73,777 | 37,005 | +36,772 | +99.37% | skill 1/1; base 1/1 |
+| claude-code | newton-verify-context-finite-without-reference | 75,289 | 36,845 | +38,444 | +104.34% | skill 1/1; base 1/1 |
+| claude-code | newton-verify-displayport-invalid-success | 149,998 | 143,257 | +6,741 | +4.71% | skill 1/1; base 1/1 |
+| claude-code | newton-verify-implicit-sensitivity | 111,220 | 71,595 | +39,625 | +55.35% | skill 1/1; base 1/1 |
+| claude-code | newton-verify-negative-construction | 857,244 | 1,134,341 | -277,097 | -24.43% | skill 1/1; base 1/1 |
+| claude-code | newton-verify-negative-debugging | 144,015 | 179,173 | -35,158 | -19.62% | skill 1/1; base 1/1 |
+| claude-code | newton-verify-negative-file-integrity | 109,157 | 143,651 | -34,494 | -24.01% | skill 1/1; base 1/1 |
+| claude-code | newton-verify-negative-performance | 144,523 | 143,109 | +1,414 | +0.99% | skill 1/1; base 1/1 |
+| codex | All cases | 1,326,355 | 1,449,651 | -123,296 | -8.51% | skill 8/8; base 8/8 |
+| codex | newton-verify-context-authorized-collection | 28,449 | 23,300 | +5,149 | +22.10% | skill 1/1; base 1/1 |
+| codex | newton-verify-context-finite-without-reference | 28,379 | 13,856 | +14,523 | +104.81% | skill 1/1; base 1/1 |
+| codex | newton-verify-displayport-invalid-success | 69,673 | 59,589 | +10,084 | +16.92% | skill 1/1; base 1/1 |
+| codex | newton-verify-implicit-sensitivity | 36,944 | 13,481 | +23,463 | +174.04% | skill 1/1; base 1/1 |
+| codex | newton-verify-negative-construction | 1,036,479 | 1,202,241 | -165,762 | -13.79% | skill 1/1; base 1/1 |
+| codex | newton-verify-negative-debugging | 54,875 | 41,617 | +13,258 | +31.86% | skill 1/1; base 1/1 |
+| codex | newton-verify-negative-file-integrity | 13,238 | 40,979 | -27,741 | -67.70% | skill 1/1; base 1/1 |
+| codex | newton-verify-negative-performance | 58,318 | 54,588 | +3,730 | +6.83% | skill 1/1; base 1/1 |
+| ALL AGENTS | Dataset aggregate | 2,991,578 | 3,338,627 | -347,049 | -10.39% | skill 16/16; base 16/16 |
 
 Prompt tokens include cached reads, so total tokens are `prompt + completion` (cached is not added twice). The Efficiency score uses `(prompt - cached) + completion`. Change is `100 * (with - without) / without`; negative means fewer tokens. N/A comparisons include their reason in the coverage column; coverage is never estimated.
 

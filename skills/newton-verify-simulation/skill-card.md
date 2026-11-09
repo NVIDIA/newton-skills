@@ -9,7 +9,7 @@ NVIDIA <br>
 ### License/Terms of Use: <br>
 CC-BY-4.0 AND Apache 2.0 <br>
 ## Use Case: <br>
-Developers and engineers using the Newton physics simulator use this skill to independently verify what a simulation result establishes, selecting falsifying checks (finite states, invariants, contact and penetration, actuator/travel limits, timestep or seed sensitivity, reference comparisons) and reporting passed, failed, and unverified claims separately from real-world validity. <br>
+Developers and engineers using the Newton physics simulator use this skill to determine what a simulation result establishes, applying falsifying checks such as bounds, invariants, contact and penetration, timestep/seed sensitivity, and reference comparisons, and reporting passed, failed, and unverified claims separately from real-world validity. <br>
 
 ### Deployment Geography for Use: <br>
 Global <br>
@@ -25,7 +25,7 @@ Risk: Review before execution as proposals could introduce incorrect or misleadi
 Mitigation: Review and scan skill before deployment. <br>
 
 ## Reference(s): <br>
-- [Newton physics simulator (GitHub)](https://github.com/newton-physics/newton) <br>
+- [Newton (GitHub)](https://github.com/newton-physics/newton) <br>
 - [Newton Conventions](https://newton-physics.github.io/newton/latest/concepts/conventions.html) <br>
 - [Newton Mass and Inertia](https://newton-physics.github.io/newton/latest/concepts/mass_inertia.html) <br>
 - [Newton Articulations](https://newton-physics.github.io/newton/latest/concepts/articulations.html) <br>
@@ -33,13 +33,14 @@ Mitigation: Review and scan skill before deployment. <br>
 - [Newton Actuators](https://newton-physics.github.io/newton/latest/concepts/actuators.html) <br>
 - [Newton Solver Observables](https://newton-physics.github.io/newton/latest/concepts/solver_observables.html) <br>
 - [Newton Solver Capabilities](https://newton-physics.github.io/newton/latest/solvers/index.html) <br>
+- [Newton Installation Guide](https://newton-physics.github.io/newton/latest/guide/installation.html) <br>
 
 
 ## Skill Output: <br>
 **Output Type(s):** [Analysis, Shell commands] <br>
-**Output Format:** [Markdown verification report with inline Python/shell commands] <br>
+**Output Format:** [Markdown with inline bash code blocks] <br>
 **Output Parameters:** [1D] <br>
-**Other Properties Related to Output:** [None] <br>
+**Other Properties Related to Output:** [Reports passed, failed, and unverified claims separately with version/environment, route, horizon, bounds, commands, evidence, and at most one blocker.] <br>
 
 ## Evaluation Agents Used: <br>
 - Claude Code (`aws/anthropic/bedrock-claude-opus-5-5`) <br>
@@ -80,12 +81,12 @@ Recommended for publication based on the completed evaluation evidence in this r
 
 | Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
 |---|---:|---:|
-| Overall | 99.1% — baseline ran, but no comparable score was available; uplift unavailable | 87.5% — baseline ran, but no comparable score was available; uplift unavailable |
-| Security | 100.0% → 100.0% (±0.0 points) | 100.0% → 87.5% (-12.5 points) |
-| Correctness | 97.5% → 97.5% (±0.0 points) | 80.0% → 92.5% (+12.5 points) |
-| Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 93.8% — baseline ran, but no comparable score was available; uplift unavailable |
-| Effectiveness | 93.8% → 100.0% (+6.2 points) | 98.4% → 84.4% (-14.0 points) |
-| Efficiency | 98.0% — baseline ran, but no comparable score was available; uplift unavailable | 79.5% — baseline ran, but no comparable score was available; uplift unavailable |
+| Overall | 96.0% — baseline ran, but no comparable score was available; uplift unavailable | 90.9% — baseline ran, but no comparable score was available; uplift unavailable |
+| Security | 87.5% → 87.5% (±0.0 points) | 87.5% → 100.0% (+12.5 points) |
+| Correctness | 92.5% → 100.0% (+7.5 points) | 87.5% → 90.0% (+2.5 points) |
+| Discoverability | 98.8% — baseline ran, but no comparable score was available; uplift unavailable | 93.8% — baseline ran, but no comparable score was available; uplift unavailable |
+| Effectiveness | 78.1% → 96.9% (+18.8 points) | 96.9% → 93.8% (-3.1 points) |
+| Efficiency | 96.9% — baseline ran, but no comparable score was available; uplift unavailable | 77.1% — baseline ran, but no comparable score was available; uplift unavailable |
 
 **How to read this table:** baseline is the same task attempted without the target skill. Scores are rounded to one decimal; threshold-adjacent values use additional precision so their displayed band matches the verdict. Uplift is derived from those displayed scores and shown in percentage points.
 
@@ -100,9 +101,9 @@ Shared-source comparisons use the same signals and weights on both conditions. T
 | Agent | Dimension | Basis | Baseline → With skill (uplift) | Explanation |
 | --- | --- | --- | --- | --- |
 | claude-code | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
-| claude-code | Efficiency | Token-only comparison | 96.7% → 96.0% (-0.7 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| claude-code | Efficiency | Token-only comparison | 95.9% → 93.8% (-2.1 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
 | codex | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
-| codex | Efficiency | Token-only comparison | 89.5% → 88.1% (-1.4 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| codex | Efficiency | Token-only comparison | 88.8% → 88.7% (-0.1 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
 
 ### Tier Status
 
@@ -113,7 +114,7 @@ Shared-source comparisons use the same signals and weights on both conditions. T
 | Tier 3 | Live agent evaluation | **PASS** | 2 agent(s); 8 task(s) |
 
 ## Skill Version(s): <br>
-bb9218e (source: git SHA, committed 2026-11-09) <br>
+5de4e50 (source: git SHA, committed 2026-11-09) <br>
 
 ## Ethical Considerations: <br>
 NVIDIA believes Trustworthy AI is a shared responsibility and we have established policies and practices to enable development for a wide array of AI applications. When downloaded or used in accordance with our terms of service, developers should work with their internal team to ensure this skill meets requirements for the relevant industry and use case and addresses unforeseen product misuse. <br>
