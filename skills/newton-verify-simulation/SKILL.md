@@ -21,9 +21,14 @@ simulation fidelity, simulator parity, and real-world validity.
    `python -c "import sys; from importlib.metadata import version; print(sys.executable, flush=True); print(version('newton'), flush=True)"`.
    Only if imports are permitted, separately run
    `python -c "import newton; print(newton.__file__)"` and retain any import
-   error alongside the metadata. Use the task's interpreter and environment
-   wrapper for both commands; ask for them if unknown rather than probing
-   another environment.
+   error alongside the metadata. Keep both commands in the task's existing
+   environment, preserving any required wrapper settings. Prefer its interpreter
+   directly, or use `uv run --no-sync --frozen` only after confirming that the
+   intended environment already exists. Do not use probe options that create an
+   environment, sync dependencies, install extras, or update a lockfile. If no
+   non-mutating execution path is available, report the blocker and obtain any
+   needed setup authorization before proceeding; do not probe another environment.
+   Ask for the interpreter or wrapper if unknown.
    Inspect the device only when it affects the claim. For construction, use
    `newton-usage`; for root-cause correction, use `newton-debug-simulation`; for
    migration, use `newton-migrate-simulation`; for speed, use `newton-performance`.
@@ -32,7 +37,8 @@ simulation fidelity, simulator parity, and real-world validity.
    handoff or requiring another skill to be installed. Derive physical bounds
    from the task or reference, never defaults.
 2. Use documentation matching the installed release. The links below are
-   entrypoints; verify their version before relying on a parameter. Select the
+   moving `latest` entrypoints and may differ from the installed release;
+   select matching release documentation before relying on a parameter. Select the
    relevant route for each claim or check:
    [conventions](https://newton-physics.github.io/newton/latest/concepts/conventions.html)
    for units, frames, and spatial quantities; [mass and inertia](https://newton-physics.github.io/newton/latest/concepts/mass_inertia.html)

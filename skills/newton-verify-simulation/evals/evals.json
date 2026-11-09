@@ -53,14 +53,15 @@
     },
     {
       "id": "newton-verify-context-authorized-collection",
-      "prompt": "For a Newton finite-state check, may I explicitly authorize running my existing rollout to collect a missing trajectory, or does verification have to stop until I supply a separate reference? Explain the workflow without executing anything.",
+      "prompt": "For a Newton finite-state check in my existing uv project environment, may I explicitly authorize running the current rollout to collect a missing trajectory, or does verification have to stop until I supply a separate reference? Explain the workflow and a metadata probe without executing anything or changing the environment or lockfile.",
       "expected_skill": "newton-verify-simulation",
       "expected_script": null,
       "expected_output": "Allows explicitly authorized evidence collection from an existing rollout and requires references only when the claim needs comparison.",
       "assertions": [
         "Allows an explicitly authorized run of an existing rollout to collect missing trajectory evidence.",
         "Does not require an external reference for a finite-state claim.",
-        "Respects this request for explanation only and does not claim to have collected evidence."
+        "Respects this request for explanation only and does not claim to have collected evidence.",
+        "Uses the existing interpreter or non-syncing frozen wrapper for the metadata probe and does not change dependencies or the lockfile."
       ]
     },
     {
