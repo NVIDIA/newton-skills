@@ -75,6 +75,18 @@
         "Permits focused read-only documentation lookup while preserving the installation and execution restrictions.",
         "Requires installed-release verification before version-specific implementation and flags a mismatch with the planned target."
       ]
+    },
+    {
+      "id": "newton-migrate-context-target-mismatch",
+      "prompt": "Our migration plan targets Newton 1.7, but the existing project environment reports Newton 1.6. Keep the target at 1.7. What can we do next before porting the controller? Do not change the environment or run anything.",
+      "expected_skill": "newton-migrate-simulation",
+      "expected_script": null,
+      "expected_output": "Stops version-specific implementation against 1.6, preserves the requested 1.7 target, and identifies the target environment needed before proceeding.",
+      "assertions": [
+        "Does not silently implement a Newton 1.6 port or reinterpret the requested target.",
+        "Requires a Newton 1.7 target environment before version-specific implementation unless the user explicitly approves a target change.",
+        "Can explain the blocker and plan next steps without installing packages, executing probes, or inventing parity results."
+      ]
     }
   ]
 }

@@ -22,9 +22,14 @@ intentional differences explicit.
    Only if imports are permitted, separately run
    `python -c "import newton; print(newton.__file__)"` and retain any import
    error alongside the metadata. Keep both commands in the task's existing
-   environment, preserving any required wrapper settings. Prefer its interpreter
-   directly, or use `uv run --no-sync --frozen` only after confirming that the
-   intended environment already exists. Do not use probe options that create an
+   environment, preserving wrapper-provided variables and project context. Use
+   its verified interpreter directly only when those settings are preserved;
+   otherwise retain the required wrapper. Before either probe, confirm that it
+   selects that
+   exact environment; existence alone does not establish selection. With uv, use
+   the intended project explicitly, or `--active` when the active environment is
+   intended. Use `uv run --no-sync --frozen` only with that confirmed existing
+   environment. Do not use probe options that create an
    environment, sync dependencies, install extras, or update a lockfile. If no
    non-mutating execution path is available, report the blocker and obtain any
    needed setup authorization before proceeding; do not probe another environment.
@@ -40,8 +45,10 @@ intentional differences explicit.
 2. For planning before installation, select documentation for the user's stated
    target release. If the target is unknown, clarify it or keep the plan
    version-neutral and label that assumption. Before implementation, verify the
-   installed release, select matching documentation, and flag any mismatch with
-   the planned target before applying version-specific mappings. Use the
+   installed release. If it differs from the requested target, stop before
+   version-specific implementation until the target environment is supplied or
+   the user explicitly approves changing the target. Do not silently retarget the
+   port. Select documentation matching the confirmed target. Use the
    [legacy Warp migration map](https://newton-physics.github.io/newton/latest/migration.html)
    only for a source built with Warp's former simulation module. For other sources,
    route directly to
