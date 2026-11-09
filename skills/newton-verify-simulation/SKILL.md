@@ -14,28 +14,37 @@ metadata:
 Determine what a Newton result establishes while separating solver execution,
 simulation fidelity, simulator parity, and real-world validity.
 
-1. Choose the request mode before using tools. For a verification plan, provide
-   the direct documentation route and smallest falsification matrix without running
-   the simulation or opening documentation. For evidence collection, reuse supplied
-   facts and otherwise run this probe once: `python -c "import sys, newton; from importlib.metadata import version; print(sys.executable); print(version('newton')); print(newton.__file__)"`.
-   Inspect the device only when
-   it affects the claim. Collect missing claim and reference facts once. Route
-   construction to `newton-build-simulation`, root-cause correction to
-   `newton-debug-simulation`, migration work to `newton-migrate-simulation`, and
-   speed work to `newton-optimize-simulation`. Stop this workflow, state that the
-   selected skill owns the task, and follow it. Record the intended use, solver,
-   acceptance criteria, and available analytic, simulator, experimental, or
-   hardware reference. Derive bounds from the task or reference, never defaults.
-2. For Newton 1.7.0, open only the route needed by the claim:
-   [conventions](https://newton-physics.github.io/newton/1.7.0/concepts/conventions.html)
-   for units, frames, and spatial quantities; [mass and inertia](https://newton-physics.github.io/newton/1.7.0/concepts/mass_inertia.html)
-   for physical properties; [articulations](https://newton-physics.github.io/newton/1.7.0/concepts/articulations.html)
-   for state and joints; [collisions](https://newton-physics.github.io/newton/1.7.0/concepts/collisions.html)
-   for contact evidence; [solver observables](https://newton-physics.github.io/newton/1.7.0/concepts/solver_observables.html)
-   for diagnostic outputs; or [solver capabilities](https://newton-physics.github.io/newton/1.7.0/solvers/index.html)
-   for backend support. Open at most one concept or solver route, plus its linked
-   API entry only when the claim depends on an exact symbol. When the user only
-   needs a documentation location, copy the URL without opening it. Use browser or
+1. Establish the claim, intended use, solver, acceptance criteria, and evidence
+   needed. Follow user and harness permissions; planning can include read-only
+   documentation lookup, while measurements require authorized execution.
+   Reuse supplied environment facts; otherwise first collect metadata with
+   `python -c "import sys; from importlib.metadata import version; print(sys.executable, flush=True); print(version('newton'), flush=True)"`.
+   Only if imports are permitted, separately run
+   `python -c "import newton; print(newton.__file__)"` and retain any import
+   error alongside the metadata. Use the task's interpreter and environment
+   wrapper for both commands; ask for them if unknown rather than probing
+   another environment.
+   Inspect the device only when it affects the claim. For construction, use
+   `newton-usage`; for root-cause correction, use `newton-debug-simulation`; for
+   migration, use `newton-migrate-simulation`; for speed, use `newton-performance`.
+   Follow the relevant skill only when installed. Otherwise continue the requested
+   task using matching public documentation instead of stopping at a missing
+   handoff or requiring another skill to be installed. Derive physical bounds
+   from the task or reference, never defaults.
+2. Use documentation matching the installed release. The links below are
+   entrypoints; verify their version before relying on a parameter. Select the
+   relevant route for each claim or check:
+   [conventions](https://newton-physics.github.io/newton/latest/concepts/conventions.html)
+   for units, frames, and spatial quantities; [mass and inertia](https://newton-physics.github.io/newton/latest/concepts/mass_inertia.html)
+   for physical properties; [articulations](https://newton-physics.github.io/newton/latest/concepts/articulations.html)
+   for state and joints; [collisions](https://newton-physics.github.io/newton/latest/concepts/collisions.html)
+   for contact evidence; [actuators](https://newton-physics.github.io/newton/latest/concepts/actuators.html)
+   for actuator models and limits; [solver observables](https://newton-physics.github.io/newton/latest/concepts/solver_observables.html)
+   for diagnostic outputs; or [solver capabilities](https://newton-physics.github.io/newton/latest/solvers/index.html)
+   for backend support. Prefer matching bundled documentation when available.
+   Follow focused guides and API entries for every required check; a claim
+   involving both travel limits and penetration needs both relevant routes. When
+   the user only needs a documentation location, copy the URL without opening it. Use browser or
    documentation tools for retrieval; never use shell network commands such as
    `curl` or `wget`. Do not open the overview or search unrelated sections first.
    Check units, frames, model structure, geometry, and initialization first.
@@ -44,14 +53,20 @@ simulation fidelity, simulator parity, and real-world validity.
    substep sensitivity, determinism, repeated seeds, and reference comparisons as
    applicable. Inspect the relevant trajectory and exercise checks with known-valid,
    invalid, and misleading-output controls. For a plan, provide this minimal matrix
-   and stop; do not execute or retrieve evidence the user did not request. If the
-   trajectory or reference is absent, inspect its expected location once, report
-   what is missing, and stop without a broad search.
+   and label the checks as proposed. Require external references only for
+   claims that need a comparison; finite-state and authored-bound checks can use
+   supplied trajectories and model requirements alone. If evidence required by
+   the selected claim is missing, inspect its expected location once. In a plan,
+   report the gap and describe collection without executing it. When evidence
+   collection is explicitly requested and authorized, run the existing rollout
+   to obtain the missing trajectory if it is available. Otherwise report the
+   missing input and leave the claim unverified, without a broad search or
+   inventing measurements. Building a missing simulation belongs to newton-usage.
 4. Report passed, failed, and unverified claims separately, but include only the
    version/environment, selected route, horizon, bounds, commands, evidence, and
    one blocker if present. Prefer state and independent checks over
    a conflicting success flag. Import, stable rollout, reward, and hardware transfer
    are separate claims; simulation evidence alone cannot establish real-world transfer.
 
-Supported Newton version: 1.7.0 only. For another version, warn and stop before
-version-specific conclusions until interfaces and evidence are revalidated.
+Newton compatibility has not been validated across releases. Verify matching
+interfaces, backend behavior, and evidence before a version-specific conclusion.

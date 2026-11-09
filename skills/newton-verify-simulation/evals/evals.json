@@ -1,43 +1,100 @@
 {
   "skill_name": "newton-verify-simulation",
   "evals": [
-  {
-    "id": "newton-verify-implicit-sensitivity",
-    "prompt": "The final pose looks right. What evidence would show the result is not an artifact of one timestep or one random seed?",
-    "expected_skill": "newton-verify-simulation",
-    "expected_script": null,
-    "expected_output": "The response recognizes a verification request, checks the full trajectory, defines timestep/substep and repeated-seed comparisons, and uses fixed acceptance criteria.",
-    "assertions": [
-      "Selects the verification skill.",
-      "Does not rely only on the final pose.",
-      "Uses sensitivity and repeated-seed evidence when applicable.",
-      "Keeps acceptance criteria fixed during comparison."
-    ]
-  },
-  {
-    "id": "newton-verify-displayport-invalid-success",
-    "prompt": "A Newton 1.7 DisplayPort insertion run reports a high success rate, but some trajectories exceed the actuator travel limit or show excessive connector penetration. Verify the simulation result and state what would still be needed for a sim-to-real claim.",
-    "expected_skill": "newton-verify-simulation",
-    "expected_script": null,
-    "expected_output": "The response rejects task-success labels that violate physical constraints, checks complete trajectories against fixed travel and penetration bounds, reports simulation validity separately, and requires corresponding hardware evidence for sim-to-real conclusions.",
-    "assertions": [
-      "Rejects nominal successes that violate actuator or penetration bounds.",
-      "Checks complete trajectories rather than aggregate success alone.",
-      "Separates simulation validity from sim-to-real validity.",
-      "Requires hardware evidence for real-world claims."
-    ]
-  },
-  {
-    "id": "newton-verify-negative-file-integrity",
-    "prompt": "Verify the SHA-256 checksum of a downloaded archive. It contains no Newton model or simulation result.",
-    "expected_skill": null,
-    "expected_script": null,
-    "expected_output": "The response uses ordinary file-integrity verification and does not load a Newton simulation verification skill.",
-    "assertions": [
-      "Does not read newton-verify-simulation.",
-      "Keeps the task scoped to checksum verification.",
-      "Does not invent physical acceptance criteria."
-    ]
-  }
+    {
+      "id": "newton-verify-implicit-sensitivity",
+      "prompt": "The final pose looks right. What evidence would show the result is not an artifact of one timestep or one random seed?",
+      "expected_skill": "newton-verify-simulation",
+      "expected_script": null,
+      "expected_output": "The response recognizes a verification request, checks the full trajectory, defines timestep/substep and repeated-seed comparisons, and uses fixed acceptance criteria.",
+      "assertions": [
+        "Selects the verification skill.",
+        "Does not rely only on the final pose.",
+        "Uses sensitivity and repeated-seed evidence when applicable.",
+        "Keeps acceptance criteria fixed during comparison."
+      ]
+    },
+    {
+      "id": "newton-verify-displayport-invalid-success",
+      "prompt": "A Newton 1.7 DisplayPort insertion run reports a high success rate, but some trajectories exceed the actuator travel limit or show excessive connector penetration. Verify the simulation result and state what would still be needed for a sim-to-real claim.",
+      "expected_skill": "newton-verify-simulation",
+      "expected_script": null,
+      "expected_output": "The response rejects task-success labels that violate physical constraints, checks complete trajectories against fixed travel and penetration bounds, reports simulation validity separately, and requires corresponding hardware evidence for sim-to-real conclusions.",
+      "assertions": [
+        "Rejects nominal successes that violate actuator or penetration bounds.",
+        "Checks complete trajectories rather than aggregate success alone.",
+        "Separates simulation validity from sim-to-real validity.",
+        "Requires hardware evidence for real-world claims."
+      ]
+    },
+    {
+      "id": "newton-verify-negative-file-integrity",
+      "prompt": "Verify the SHA-256 checksum of a downloaded archive. It contains no Newton model or simulation result.",
+      "expected_skill": null,
+      "expected_script": null,
+      "expected_output": "The response uses ordinary file-integrity verification and does not load a Newton simulation verification skill.",
+      "assertions": [
+        "Does not read newton-verify-simulation.",
+        "Keeps the task scoped to checksum verification.",
+        "Does not invent physical acceptance criteria."
+      ]
+    },
+    {
+      "id": "newton-verify-context-finite-without-reference",
+      "prompt": "I want to check a Newton rollout only for finite positions and velocities. I have no external reference trajectory. Give me a verification plan and explain what evidence I need; do not run anything.",
+      "expected_skill": "newton-verify-simulation",
+      "expected_script": null,
+      "expected_output": "Plans complete-trajectory finite-state checks without requiring an unrelated external reference.",
+      "assertions": [
+        "Does not block finite-state verification on a missing external reference.",
+        "Describes checking all required position and velocity samples and separates proposed checks from measured results.",
+        "Does not claim parity or physical accuracy from finiteness alone."
+      ]
+    },
+    {
+      "id": "newton-verify-context-authorized-collection",
+      "prompt": "For a Newton finite-state check, may I explicitly authorize running my existing rollout to collect a missing trajectory, or does verification have to stop until I supply a separate reference? Explain the workflow without executing anything.",
+      "expected_skill": "newton-verify-simulation",
+      "expected_script": null,
+      "expected_output": "Allows explicitly authorized evidence collection from an existing rollout and requires references only when the claim needs comparison.",
+      "assertions": [
+        "Allows an explicitly authorized run of an existing rollout to collect missing trajectory evidence.",
+        "Does not require an external reference for a finite-state claim.",
+        "Respects this request for explanation only and does not claim to have collected evidence."
+      ]
+    },
+    {
+      "id": "newton-verify-negative-construction",
+      "prompt": "Create a Newton robot scene with ground contacts and a short joint motion. Pick a supported solver and implement the scene.",
+      "expected_skill": null,
+      "expected_script": null,
+      "expected_output": "Handles construction through usage guidance without activating independent claim verification.",
+      "assertions": [
+        "Does not activate newton-verify-simulation solely for construction.",
+        "Does not require the retired newton-build-simulation skill."
+      ]
+    },
+    {
+      "id": "newton-verify-negative-debugging",
+      "prompt": "My Newton model starts jittering and then explodes when the gripper touches the cube. Find the cause and fix it.",
+      "expected_skill": null,
+      "expected_script": null,
+      "expected_output": "Treats the task as root-cause diagnosis and repair.",
+      "assertions": [
+        "Does not activate newton-verify-simulation as the primary root-cause repair workflow.",
+        "Preserves the reported failure as the repair target."
+      ]
+    },
+    {
+      "id": "newton-verify-negative-performance",
+      "prompt": "Our Newton rollout takes 80 ms per frame. Profile it and reduce the time while retaining the current trajectory tolerance.",
+      "expected_skill": null,
+      "expected_script": null,
+      "expected_output": "Treats profiling and speed improvement as performance work.",
+      "assertions": [
+        "Does not activate newton-verify-simulation as the primary performance workflow.",
+        "Does not require the retired newton-optimize-simulation skill."
+      ]
+    }
   ]
 }

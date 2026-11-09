@@ -12,6 +12,11 @@ conclusions.
 - Inspect actual model/state evidence over the relevant horizon.
 - Validate checks with known-valid, invalid, and misleading-output controls.
 - Avoid activating when the primary task is building, debugging, or optimization.
+- Use available usage, debugging, migration, or performance workflows with a
+  documentation fallback rather than requiring retired or missing skills.
+- Read every focused documentation route needed by the selected checks.
+- Require references only for comparison claims and allow explicitly authorized
+  evidence collection from an existing rollout when the trajectory is missing.
 
 ## Notes
 
