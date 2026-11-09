@@ -20,12 +20,11 @@
       "prompt": "I have Newton installed from PyPI. Check my active Python environment now and report where the package and its examples live, then give me the matching solver documentation without cloning anything.",
       "expected_skill": "newton-usage",
       "expected_script": null,
-      "expected_output": "The response uses one bounded discovery probe for the active Python executable, installed Newton version, package path, examples path, and packaged example list, then returns the direct matching solver documentation without cloning or broad environment searches.",
+      "expected_output": "Identifies the active Python executable, installed Newton version, package and packaged-example locations, and available examples; gives matching solver documentation without cloning or broad environment searches.",
       "assertions": [
-        "Selects the general Newton documentation-and-example router.",
-        "Uses one bounded probe for the Python executable, version, package location, examples location, and example list.",
-        "Routes directly to public solver documentation for the installed release without opening the generic documentation root.",
-        "Does not repeat environment probes or search alternate interpreters and repositories.",
+        "Reports the active Python executable, installed Newton version, package location, examples location, and available packaged examples based on observed evidence.",
+        "Uses documentation matching the installed release; accepts relevant bundled, hosted, or supplied-checkout documentation.",
+        "Limits discovery and retrieval to information needed for the request without repeated probes or broad searches.",
         "Does not clone a repository or silently change versions."
       ]
     },
