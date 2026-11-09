@@ -15,6 +15,8 @@ They do not establish executable simulation correctness or a compatibility range
 - Check effective model state, finite values, penetration, joint travel, and task
   behavior over the required horizon instead of relying on rendered appearance.
 - Respect harness permissions; permit read-only documentation lookup during planning.
+- Preserve metadata when import fails and honor version-only requests that prohibit
+  direct or indirect Newton imports.
 - Handle ordinary construction without depending on a separate build skill.
 - Keep calculus and source-repository CI maintenance outside this skill's scope.
 

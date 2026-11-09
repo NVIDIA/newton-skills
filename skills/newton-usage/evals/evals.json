@@ -91,6 +91,18 @@
         "Checks effective imported model values and backend support.",
         "Reports measured state-level evidence or missing inputs without claiming an unexecuted success."
       ]
+    },
+    {
+      "id": "newton-usage-context-metadata-only",
+      "prompt": "Check only the installed Newton version in my active environment. Do not import Newton, list examples, or run a simulation.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "Reports distribution metadata without importing Newton or invoking a submodule.",
+      "assertions": [
+        "Uses importlib.metadata to read the installed version without importing Newton.",
+        "Does not invoke newton.docs, newton.examples, newton.info, or submodule discovery that imports the parent.",
+        "Preserves user execution limits and reports missing distribution metadata honestly."
+      ]
     }
   ]
 }

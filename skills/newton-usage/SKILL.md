@@ -19,12 +19,19 @@ and explicit choices.
 1. Establish the requested behavior or observed failure. Before building, define
    acceptance criteria: the trajectory or command to exercise, simulation horizon,
    observable state, and task-specific physical bounds. Reuse supplied environment
-   facts; otherwise identify the installed version and package with
-   `python -c "import sys, newton; from importlib.metadata import version; print(sys.executable); print(version('newton')); print(newton.__file__)"`.
+   facts; otherwise first collect metadata with
+   `python -c "import sys; from importlib.metadata import version; print(sys.executable, flush=True); print(version('newton'), flush=True)"`.
+   Only if imports are permitted, separately run
+   `python -c "import newton; print(newton.__file__)"` and retain any import
+   error alongside the metadata. Use the task's interpreter and environment
+   wrapper for both commands; ask for them if unknown rather than probing
+   another environment.
    Establish the solver and CPU/GPU environment when relevant. Follow the harness
    and user's execution permissions; a planning request may still need read-only
    documentation lookup to establish supported configurations. Distinguish
-   proposed commands and checks from executed ones.
+   proposed commands and checks from executed ones. For version-only requests
+   that prohibit importing Newton, use only the metadata command; do not run
+   example discovery, object help, or `newton.docs` as an indirect import.
 2. Select documentation matching the installed release from the
    [Newton documentation](https://newton-physics.github.io/newton/). Flag any
    mismatch before relying on an interface or feature. If the installed wheel
