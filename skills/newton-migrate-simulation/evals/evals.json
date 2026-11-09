@@ -6,7 +6,7 @@
       "prompt": "Use newton-migrate-simulation to plan a MuJoCo-to-Newton 1.7 migration for a controlled robot. Explain what must be inventoried and how behavioral parity will be checked.",
       "expected_skill": "newton-migrate-simulation",
       "expected_script": null,
-      "expected_output": "The response records both versions, inventories assets/conventions/controllers/limits/contacts, uses migration and import documentation, ports a minimal scene, and defines source-versus-target checks.",
+      "expected_output": "Records both versions, inventories source features and references, uses documented mappings, proposes a minimal port and parity checks, and does not claim the proposed checks were executed.",
       "assertions": [
         "Reads newton-migrate-simulation.",
         "Inventories source features and reference runs before mapping.",
@@ -52,15 +52,15 @@
     },
     {
       "id": "newton-migrate-context-reuse-without-reference",
-      "prompt": "I have a URDF and controller to reuse in Newton, but no recordings or runnable installation of the old simulator. Inspect the supplied assets and plan their import and controller wiring.",
+      "prompt": "I have a URDF and controller to reuse in Newton, but no recordings or runnable installation of the old simulator. Before I send the files, plan the import and controller wiring and list the checks to perform when they arrive.",
       "expected_skill": "newton-migrate-simulation",
       "expected_script": null,
-      "expected_output": "Continues the asset and controller reuse plan using documented interfaces and effective-property checks, and leaves behavioral parity unverified without blocking reuse on unavailable reference runs.",
+      "expected_output": "Plans asset and controller reuse without blocking on unavailable source recordings, identifies checks for when assets arrive, and leaves inspection and parity unverified.",
       "assertions": [
-        "Does not require a runnable source simulator when supplied source assets suffice for the requested reuse.",
-        "Inventories units, frames, joint limits, actuation, and target backend support.",
-        "Does not stop asset or controller reuse solely because source recordings are unavailable.",
-        "Leaves behavioral parity unverified and does not fabricate a source comparison."
+        "Does not require a runnable source simulator for an asset and controller reuse plan.",
+        "Lists units, frames, limits, actuation, and backend-support checks without claiming to have inspected absent files.",
+        "Describes proposed import and verification steps without executing imports or fabricating results.",
+        "Leaves behavioral parity unverified without a source reference."
       ]
     }
   ]

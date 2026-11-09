@@ -14,16 +14,23 @@ metadata:
 Port the smallest representative scene while preserving source assets and making
 intentional differences explicit.
 
-1. Choose the request mode before using tools. For a migration plan, provide the
-   direct documentation route, next representative port, and comparisons without
-   running importers; consult documentation when needed to establish support. For
-   implementation, reuse supplied facts and otherwise run this probe once: `python -c "import sys, newton; from importlib.metadata import version; print(sys.executable); print(version('newton')); print(newton.__file__)"`.
+1. Establish the requested reuse or parity goal and follow user and harness
+   execution permissions. Planning can use read-only documentation to establish
+   support; describe proposed imports and comparisons without executing them.
+   For implementation, reuse supplied facts; otherwise collect metadata with
+   `python -c "import sys; from importlib.metadata import version; print(sys.executable, flush=True); print(version('newton'), flush=True)"`.
+   Only if imports are permitted, separately run
+   `python -c "import newton; print(newton.__file__)"` and retain any import
+   error alongside the metadata. Use the task's interpreter and environment
+   wrapper for both commands; ask for them if unknown rather than probing
+   another environment.
    Inspect the device only when
    it affects the port. Collect missing source facts once. If neither a source
    simulator nor source assets are available, stop this workflow and use
-   `newton-usage` for new construction when that skill is available. Record whether the goal is asset reuse, controller
-   reuse, or behavioral parity. Inventory
-   units, frames, assets, joints, drives, limits, contacts, collision geometry,
+   `newton-usage` for new construction when available; otherwise provide setup
+   and modeling guidance from release-matched public documentation. Record
+   whether the goal is asset reuse, controller reuse, or behavioral parity.
+   Inventory units, frames, assets, joints, drives, limits, contacts, collision geometry,
    controller semantics, used features, and available reference runs.
 2. Select documentation matching the installed Newton release. Use the [legacy Warp migration map](https://newton-physics.github.io/newton/latest/migration.html)
    only for a source built with Warp's former simulation module. For other sources,
@@ -47,15 +54,18 @@ intentional differences explicit.
    imports or broad searches. For implementation, port a representative scene,
    inspect effective values and warnings, and record retained, remapped,
    unsupported, and intentionally changed features instead of copying defaults.
-   If required source assets are absent, inspect their expected location once,
-   report what is missing, and stop without a broad search. A missing source
+   During implementation, if required source assets are absent, inspect their
+   expected location once, report what is missing, and stop without a broad search. A missing source
    reference blocks a behavioral-parity claim, not asset or controller reuse;
    continue the requested reuse checks and leave parity unverified.
-4. Verify imported structure, conventions, controls, and contacts against the
-   requested reuse criteria. When behavioral parity is requested and a source
-   reference is available, compare uncontrolled motion, a simple command, and
-   relevant contacts with fixed task bounds, including an additional meaningful
-   asset configuration. Report versions/environment,
+4. For a plan, describe the structure, convention, control, and contact checks
+   to perform, plus source comparisons only when parity is requested. Do not
+   present proposed checks as results. During authorized implementation, verify
+   imported structure, conventions, controls, and contacts against the reuse
+   criteria. When parity is requested and a source reference is available,
+   compare uncontrolled motion, a simple command, and relevant contacts with
+   fixed task bounds, including another meaningful asset configuration.
+   Report versions/environment,
    selected route, commands, mappings, evidence, and all material unresolved
    differences. Asset/controller reuse needs no parity objective; without a source
    reference, parity remains unverified.

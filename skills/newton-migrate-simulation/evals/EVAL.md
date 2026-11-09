@@ -9,6 +9,9 @@ fold useful guidance into `newton-usage`.
 ## Behaviors
 
 - Identify source and installed target versions and the intended reuse/parity goal.
+- Keep planning checks proposed when assets are not supplied; require executed
+  verification only for authorized implementation. Allow a public-documentation
+  fallback when the general usage skill is absent.
 - Inventory assets, conventions, controls, contacts, limits, and reference runs.
 - Select matching documentation without pinning the skill to a particular release.
 - Prefer matching installed documentation when available; allow focused follow-up
