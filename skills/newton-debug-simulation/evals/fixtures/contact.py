@@ -9,6 +9,7 @@ import warp as wp
 
 
 def simulate(scene, device):
+    """Simulate the selected scene and return sampled state."""
     builder = newton.ModelBuilder()
     builder.add_ground_plane()
     for index in range(1 if scene == "reduced" else 3):
@@ -28,7 +29,7 @@ def simulate(scene, device):
         [state_0.body_q.numpy().copy()],
         [state_0.body_qd.numpy().copy()],
     )
-    for step in range(720):
+    for _ in range(720):
         state_0.clear_forces()
         solver.step(state_0, state_1, control, contacts, 1.0 / 240.0)
         state_0, state_1 = state_1, state_0

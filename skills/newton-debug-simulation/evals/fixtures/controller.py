@@ -9,10 +9,12 @@ import warp as wp
 
 
 def command_force(command):
+    """Compute the force for a scheduled controller command."""
     return command / np.linalg.norm(command)
 
 
 def simulate(scene, device):
+    """Simulate the selected scene and return sampled state."""
     builder = newton.ModelBuilder(gravity=wp.vec3(0.0))
     for index in range(1 if scene == "reduced" else 3):
         body = builder.add_body(

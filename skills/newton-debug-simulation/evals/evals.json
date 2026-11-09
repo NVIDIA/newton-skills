@@ -112,6 +112,19 @@
         "Preserves the requested task and does not invent a correctness symptom.",
         "Uses an available appropriate workflow without requiring another skill to be installed."
       ]
+    },
+    {
+      "id": "newton-debug-context-package-import",
+      "prompt": "I launch my Newton project with uv run --project ./sim python rollout.py, but import newton fails before the scene is built. Give commands to collect the environment details and verify a repair. Do not execute commands or install anything.",
+      "expected_skill": "newton-debug-simulation",
+      "expected_script": null,
+      "expected_output": "Keeps the supplied environment wrapper, collects metadata before a separate import probe, routes to installation and compatibility guidance, and proposes probe-level verification.",
+      "assertions": [
+        "Uses the supplied uv run --project ./sim environment for both proposed commands instead of the shell default interpreter.",
+        "Collects the interpreter and installed distribution metadata without importing Newton first.",
+        "Retains a separate import error and selects installation or compatibility documentation rather than a model importer.",
+        "Does not require a simulation rerun before import succeeds or claim a repair without execution."
+      ]
     }
   ]
 }

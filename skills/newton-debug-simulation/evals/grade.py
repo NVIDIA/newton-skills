@@ -11,6 +11,7 @@ import numpy as np
 
 
 def check_trace(path, case, scene):
+    """Check sampled state against fixed acceptance bounds."""
     count = 1 if scene == "reduced" else 3
     steps = 720 if case == "contact" else 3600
     with np.load(path, allow_pickle=False) as trace:
@@ -72,6 +73,7 @@ def check_trace(path, case, scene):
 
 
 def main():
+    """Run both scene sizes and save independent grading evidence."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--case", choices=("contact", "controller"), required=True)
     parser.add_argument("--candidate", type=Path, required=True)

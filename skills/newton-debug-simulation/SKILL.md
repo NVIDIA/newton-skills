@@ -16,11 +16,16 @@ correction without changing the intended physical model.
 
 1. Establish the expected symptom and the permitted actions. Follow harness and
    user execution permissions; planning may still require read-only documentation
-   retrieval. For hands-on diagnosis, reuse supplied facts and otherwise run this
-   probe once: `python -c "import sys, newton; from importlib.metadata import version; print(sys.executable); print(version('newton')); print(newton.__file__)"`.
-   Inspect the device only when
-   it affects the failure. Collect missing reproducer facts once. Route a correct
-   workload's performance request to `newton-optimize-simulation` and claim
+   retrieval. For hands-on diagnosis, reuse supplied facts; otherwise collect
+   metadata first with
+   `python -c "import sys; from importlib.metadata import version; print(sys.executable, flush=True); print(version('newton'), flush=True)"`.
+   Only if imports are permitted, separately run
+   `python -c "import newton; print(newton.__file__)"` and retain any import
+   error alongside the metadata. Use the task's interpreter and environment
+   wrapper for both commands; ask for them if unknown rather than probing
+   another environment.
+   Inspect the device only when it affects the failure. Collect missing reproducer facts once. Route a correct
+   workload's performance request to `newton-performance` and claim
    assessment to `newton-verify-simulation` when those skills are available;
    otherwise use the applicable public documentation. Stop diagnosis when the
    request has no reproducible failure. Record the solver,
@@ -33,7 +38,11 @@ correction without changing the intended physical model.
    for backend diagnostics, [viewers and debugging](https://newton-physics.github.io/newton/latest/guide/visualization.html)
    for visual or recorded inspection, [solver guidance](https://newton-physics.github.io/newton/latest/solvers/index.html)
    for backend behavior, or [compatibility](https://newton-physics.github.io/newton/latest/guide/compatibility.html)
-   for platform and CUDA failures. For import errors, follow
+   for platform and CUDA failures. For a Python package import failure, follow
+   [installation](https://newton-physics.github.io/newton/latest/guide/installation.html)
+   and compatibility guidance using the retained interpreter, metadata, and
+   traceback. Do not install dependencies without authorization. For model
+   asset import errors, follow
    [USD parsing](https://newton-physics.github.io/newton/latest/concepts/usd_parsing.html)
    or the applicable public importer API; for control or joint limits, consult
    [articulations](https://newton-physics.github.io/newton/latest/concepts/articulations.html)
@@ -55,9 +64,13 @@ correction without changing the intended physical model.
    absent, inspect the expected location once, report what is missing, and stop
    without scanning other environments or repositories. Leave the cause unverified
    when evidence is missing, and never mask invalid physics by filtering or clamping.
-4. Re-run the reduced and original cases over the required horizon and compare
-   state with acceptance bounds fixed before the repair. Record all attempted
-   changes, including discarded or unnecessary ones. Report the version/environment,
+4. Verify at the level the failure reached. For import or device-initialization
+   failures, repeat the failing probe in the same environment and report that
+   no simulation was possible until startup succeeds. Once simulation can run
+   and execution is authorized, re-run the reduced and original cases over the
+   required horizon and compare state with acceptance bounds fixed before the
+   repair. For a plan, describe these checks and leave their outcome unverified.
+   Record all attempted changes, including discarded or unnecessary ones. Report the version/environment,
    documentation route, reproduction command, cause, before/after evidence,
    smallest supported fix, and one blocker or unverified claim if present. CPU,
    short-run, or visual evidence does not prove a GPU, long-run, or state-level fix.

@@ -8,6 +8,8 @@ with NumPy and Warp (Newton dependencies); a source checkout is optional. Newton
 ## Behaviors
 
 - Record version, device, solver, cadence, expected behavior, and reproduction.
+- Use the reproducer interpreter and wrapper, collect metadata before importing,
+  and verify pre-simulation failures with the failing probe before requiring a rollout.
 - Reduce while retaining the symptom; preserve the first invalid state and input.
 - Distinguish model, control, contact generation, solver, and environment causes.
 - Allow focused follow-up documentation retrieval when evidence changes the route.
