@@ -16,27 +16,29 @@ intentional differences explicit.
 
 1. Choose the request mode before using tools. For a migration plan, provide the
    direct documentation route, next representative port, and comparisons without
-   running importers or opening documentation. For implementation, reuse supplied
-   facts and otherwise run this probe once: `python -c "import sys, newton; from importlib.metadata import version; print(sys.executable); print(version('newton')); print(newton.__file__)"`.
+   running importers; consult documentation when needed to establish support. For
+   implementation, reuse supplied facts and otherwise run this probe once: `python -c "import sys, newton; from importlib.metadata import version; print(sys.executable); print(version('newton')); print(newton.__file__)"`.
    Inspect the device only when
    it affects the port. Collect missing source facts once. If no source simulator
-   or source assets exist, stop this workflow, state that `newton-build-simulation`
+   or source assets exist, stop this workflow, state that `newton-usage`
    owns the task, and follow it. Record whether the goal is asset reuse, controller
    reuse, or behavioral parity. Inventory
    units, frames, assets, joints, drives, limits, contacts, collision geometry,
    controller semantics, used features, and available reference runs.
-2. For Newton 1.7.0, use the [legacy Warp migration map](https://newton-physics.github.io/newton/1.7.0/migration.html)
+2. Select documentation matching the installed Newton release. Use the [legacy Warp migration map](https://newton-physics.github.io/newton/latest/migration.html)
    only for a source built with Warp's former simulation module. For other sources,
    route directly to
-   [conventions](https://newton-physics.github.io/newton/1.7.0/concepts/conventions.html),
-   [USD parsing](https://newton-physics.github.io/newton/1.7.0/concepts/usd_parsing.html),
-   [articulations](https://newton-physics.github.io/newton/1.7.0/concepts/articulations.html),
-   [collisions](https://newton-physics.github.io/newton/1.7.0/concepts/collisions.html),
-   and the [solver capability guide](https://newton-physics.github.io/newton/1.7.0/solvers/index.html)
-   only as required by the source inventory. Open at most one concept or guide
-   page, plus the relevant public API entry only for an importer or symbol being
-   mapped. When the user only needs a documentation location, copy the URL without
-   opening it. Use browser or documentation tools for retrieval; never use shell
+   [conventions](https://newton-physics.github.io/newton/latest/concepts/conventions.html),
+   [USD parsing](https://newton-physics.github.io/newton/latest/concepts/usd_parsing.html),
+   [articulations](https://newton-physics.github.io/newton/latest/concepts/articulations.html),
+   [collisions](https://newton-physics.github.io/newton/latest/concepts/collisions.html),
+   and the [solver capability guide](https://newton-physics.github.io/newton/latest/solvers/index.html)
+   only as required by the source inventory. Prefer the installed wheel
+   documentation when available; otherwise select matching hosted documentation.
+   The links above are entrypoints, not a claim about the installed version. Read
+   the sections and public API entries needed to resolve each feature mapping;
+   follow focused references when the inventory requires additional guidance. When
+   the user only needs a documentation location, copy the URL without opening it. Use browser or documentation tools for retrieval; never use shell
    network commands such as `curl` or `wget`. Do not browse generic migration
    material first. Map only documented features and distinguish successful loading
    from properties the backend consumes.
@@ -49,10 +51,10 @@ intentional differences explicit.
 4. Compare structure, conventions, uncontrolled motion, a simple command, and
    relevant contacts with fixed task bounds. Require an additional meaningful
    asset configuration only when parity is claimed. Report only versions/environment,
-   selected route, commands, mappings, evidence, and one unresolved difference
-   if present. Asset/controller reuse needs no parity
-   objective; without a source reference, parity remains unverified.
+   selected route, commands, mappings, evidence, and all material unresolved
+   differences. Asset/controller reuse needs no parity objective; without a source
+   reference, parity remains unverified.
 
-Supported Newton version: 1.7.0 only. For another version, warn and stop before
-version-specific mappings are applied. Loading is not parity, and simulator parity
-is not real-world validation.
+Newton compatibility has not been validated across releases. Verify documented
+interfaces and backend behavior for the installed release before applying mappings.
+Loading is not parity, and simulator parity is not real-world validation.

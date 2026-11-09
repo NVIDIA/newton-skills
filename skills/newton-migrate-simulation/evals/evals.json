@@ -1,43 +1,54 @@
 {
   "skill_name": "newton-migrate-simulation",
   "evals": [
-  {
-    "id": "newton-migrate-explicit-mujoco",
-    "prompt": "Use newton-migrate-simulation to plan a MuJoCo-to-Newton 1.7 migration for a controlled robot. Explain what must be inventoried and how behavioral parity will be checked.",
-    "expected_skill": "newton-migrate-simulation",
-    "expected_script": null,
-    "expected_output": "The response records both versions, inventories assets/conventions/controllers/limits/contacts, uses migration and import documentation, ports a minimal scene, and defines source-versus-target checks.",
-    "assertions": [
-      "Reads newton-migrate-simulation.",
-      "Inventories source features and reference runs before mapping.",
-      "Uses documented Newton mappings and reports unsupported features.",
-      "Defines comparable parity checks rather than relying on successful loading."
-    ]
-  },
-  {
-    "id": "newton-migrate-implicit-controller",
-    "prompt": "We want to reuse our simulator's URDF and controller in Newton, but its joint limits and action frames may differ. What should we compare before calling the port complete?",
-    "expected_skill": "newton-migrate-simulation",
-    "expected_script": null,
-    "expected_output": "The response recognizes a migration, compares units/frames/limits/actuation and effective imported values, and requires behavioral references before declaring parity.",
-    "assertions": [
-      "Selects the migration skill without explicit invocation.",
-      "Checks frames, units, limits, controller semantics, and imported properties.",
-      "Distinguishes asset reuse from behavioral parity.",
-      "Leaves parity unverified without a source reference."
-    ]
-  },
-  {
-    "id": "newton-migrate-negative-data-schema",
-    "prompt": "Migrate a PostgreSQL schema to a managed database. This task has no simulator, robot assets, or Newton dependency.",
-    "expected_skill": null,
-    "expected_script": null,
-    "expected_output": "The response does not load a Newton simulation migration skill for an unrelated database migration.",
-    "assertions": [
-      "Does not read newton-migrate-simulation.",
-      "Keeps the task scoped to database migration.",
-      "Does not invent simulator assets or parity checks."
-    ]
-  }
+    {
+      "id": "newton-migrate-explicit-mujoco",
+      "prompt": "Use newton-migrate-simulation to plan a MuJoCo-to-Newton 1.7 migration for a controlled robot. Explain what must be inventoried and how behavioral parity will be checked.",
+      "expected_skill": "newton-migrate-simulation",
+      "expected_script": null,
+      "expected_output": "The response records both versions, inventories assets/conventions/controllers/limits/contacts, uses migration and import documentation, ports a minimal scene, and defines source-versus-target checks.",
+      "assertions": [
+        "Reads newton-migrate-simulation.",
+        "Inventories source features and reference runs before mapping.",
+        "Uses documented Newton mappings and reports unsupported features.",
+        "Defines comparable parity checks rather than relying on successful loading."
+      ]
+    },
+    {
+      "id": "newton-migrate-implicit-controller",
+      "prompt": "We want to reuse our simulator's URDF and controller in Newton, but its joint limits and action frames may differ. What should we compare before calling the port complete?",
+      "expected_skill": "newton-migrate-simulation",
+      "expected_script": null,
+      "expected_output": "The response recognizes a migration, compares units/frames/limits/actuation and effective imported values, and requires behavioral references before declaring parity.",
+      "assertions": [
+        "Selects the migration skill without explicit invocation.",
+        "Checks frames, units, limits, controller semantics, and imported properties.",
+        "Distinguishes asset reuse from behavioral parity.",
+        "Leaves parity unverified without a source reference."
+      ]
+    },
+    {
+      "id": "newton-migrate-negative-data-schema",
+      "prompt": "Migrate a PostgreSQL schema to a managed database. This task has no simulator, robot assets, or Newton dependency.",
+      "expected_skill": null,
+      "expected_script": null,
+      "expected_output": "The response does not load a Newton simulation migration skill for an unrelated database migration.",
+      "assertions": [
+        "Does not read newton-migrate-simulation.",
+        "Keeps the task scoped to database migration.",
+        "Does not invent simulator assets or parity checks."
+      ]
+    },
+    {
+      "id": "newton-migrate-negative-other-target",
+      "prompt": "Port our MuJoCo robot and controller to Isaac Sim using PhysX. Preserve its joint frames and action conventions.",
+      "expected_skill": null,
+      "expected_script": null,
+      "expected_output": "Handles the requested PhysX migration without loading the Newton migration workflow or replacing the target simulator.",
+      "assertions": [
+        "Does not activate newton-migrate-simulation.",
+        "Preserves Isaac Sim and PhysX as the requested target."
+      ]
+    }
   ]
 }
