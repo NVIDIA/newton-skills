@@ -9,17 +9,32 @@ Recommended for publication based on the completed evaluation evidence in this r
 ## Evaluation Metadata
 
 - Skill: `newton-migrate-simulation`
-- Evaluation date: 2026-10-16
-- Evaluator version: `1.5.6`
-- Agents: Claude Code (`aws/anthropic/bedrock-claude-opus-4-8`), Codex (`openai/openai/gpt-5.5`)
-- Tasks: 3 evaluation tasks (2 positive, 1 negative)
-- Dataset digest: `sha256:848b13e06834e4632aa863d0c430c5149531cc84b7772b3000539d7c43b147d6` (skill-evaluator-dataset-snapshot/1)
+- Validation status: `passed`
+- Evaluation date: 2026-11-09
+- Evaluator version: `1.6.9`
+- Agents: Claude Code (`aws/anthropic/bedrock-claude-opus-5-5`), Codex (`openai/openai/gpt-6.1-sol`)
+- Tasks: 5 evaluation tasks (3 positive, 2 negative)
+- Dataset digest: `sha256:0a3f71a087370507826a7e7a337016b4d31479039eb7f2a7c42cc57184a3f4eb` (skill-evaluator-dataset-snapshot/1)
 - Attempts per task: 1
 - Environment: `k8s-sandbox`
 - Tier 2 evidence: required for publication
 - Tier 3 evidence: required for publication
 
 Each task attempt ran in its own isolated sandbox pod.
+
+## Tier 1 LLM Provenance
+
+SkillSpector provider, model, analyzer revision, and determinism evidence retained for this scan.
+
+| Skill | Provider | Adapter | Analyzer | Model | Revision | Determinism |
+| --- | --- | --- | --- | --- | --- | --- |
+| newton-migrate-simulation | nv_inference | openai | mcp_tool_poisoning | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.4` | nondeterministic / provider_defaults |
+| newton-migrate-simulation | nv_inference | openai | semantic_developer_intent | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.4` | nondeterministic / provider_defaults |
+| newton-migrate-simulation | nv_inference | openai | semantic_quality_policy | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.4` | nondeterministic / provider_defaults |
+| newton-migrate-simulation | nv_inference | openai | semantic_security_discovery | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.4` | nondeterministic / provider_defaults |
+| newton-migrate-simulation | nv_inference | openai | meta_analyzer | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.4` | nondeterministic / provider_defaults |
+
+- Controls for `newton-migrate-simulation`: temperature=not set (source=provider_default, forwarded=no); seed=not set (source=unset, forwarded=no); reasoning_effort=not set (source=provider_default, forwarded=no)
 
 ## What This Report Answers
 
@@ -35,12 +50,12 @@ The three-tier evaluation checks whether the skill:
 
 | Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
 |---|---:|---:|
-| Overall | 99.7% — baseline ran, but no comparable score was available; uplift unavailable | 97.9% — baseline ran, but no comparable score was available; uplift unavailable |
+| Overall | 95.3% — baseline ran, but no comparable score was available; uplift unavailable | 87.4% — baseline ran, but no comparable score was available; uplift unavailable |
 | Security | 100.0% → 100.0% (±0.0 points) | 100.0% → 100.0% (±0.0 points) |
-| Correctness | 66.7% → 100.0% (+33.3 points) | 93.3% → 100.0% (+6.7 points) |
-| Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 95.0% — baseline ran, but no comparable score was available; uplift unavailable |
-| Effectiveness | 75.0% → 100.0% (+25.0 points) | 87.5% → 95.8% (+8.3 points) |
-| Efficiency | 98.5% — baseline ran, but no comparable score was available; uplift unavailable | 98.7% — baseline ran, but no comparable score was available; uplift unavailable |
+| Correctness | 88.0% → 100.0% (+12.0 points) | 100.0% → 92.0% (-8.0 points) |
+| Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 93.3% — baseline ran, but no comparable score was available; uplift unavailable |
+| Effectiveness | 70.0% → 77.5% (+7.5 points) | 85.0% → 82.5% (-2.5 points) |
+| Efficiency | 98.8% — baseline ran, but no comparable score was available; uplift unavailable | 69.3% — baseline ran, but no comparable score was available; uplift unavailable |
 
 **How to read this table:** baseline is the same task attempted without the target skill. Scores are rounded to one decimal; threshold-adjacent values use additional precision so their displayed band matches the verdict. Uplift is derived from those displayed scores and shown in percentage points.
 
@@ -48,23 +63,38 @@ Example: `47.0% → 92.0% (+45.0 points)` means the skill-assisted run scored 92
 
 A partial dimension was calculated from only the available configured signals; review the detailed report before relying on it.
 
+### Comparison details
+
+Shared-source comparisons use the same signals and weights on both conditions. They do not replace the full dimension scores above or change the publication verdict.
+
+| Agent | Dimension | Basis | Baseline → With skill (uplift) | Explanation |
+| --- | --- | --- | --- | --- |
+| claude-code | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
+| claude-code | Efficiency | Token-only comparison | 98.1% → 97.7% (-0.4 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| codex | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
+| codex | Efficiency | Token-only comparison | 87.6% → 88.5% (+0.9 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+
 ## Token Usage
 
 Actual Tier 3 execution usage is reported for every observed agent/case pair and both conditions.
 
 | Agent | Dataset case | With skill | Without skill | Delta | Change | Coverage |
 |---|---|---:|---:|---:|---:|---|
-| claude-code | All cases | 341,519 | 1,266,362 | -924,843 | -73.03% | skill 3/3; base 3/3 |
-| claude-code | newton-migrate-explicit-mujoco | 127,208 | 316,009 | -188,801 | -59.75% | skill 1/1; base 1/1 |
-| claude-code | newton-migrate-implicit-controller | 60,584 | 31,783 | +28,801 | +90.62% | skill 1/1; base 1/1 |
-| claude-code | newton-migrate-negative-data-schema | 153,727 | 918,570 | -764,843 | -83.26% | skill 1/1; base 1/1 |
-| codex | All cases | 184,766 | 310,413 | -125,647 | -40.48% | skill 3/3; base 3/3 |
-| codex | newton-migrate-explicit-mujoco | 28,307 | 39,997 | -11,690 | -29.23% | skill 1/1; base 1/1 |
-| codex | newton-migrate-implicit-controller | 27,610 | 18,480 | +9,130 | +49.40% | skill 1/1; base 1/1 |
-| codex | newton-migrate-negative-data-schema | 128,849 | 251,936 | -123,087 | -48.86% | skill 1/1; base 1/1 |
-| ALL AGENTS | Dataset aggregate | 526,285 | 1,576,775 | -1,050,490 | -66.62% | skill 6/6; base 6/6 |
+| claude-code | All cases | 439,550 | 575,252 | -135,702 | -23.59% | skill 5/5; base 5/5 |
+| claude-code | newton-migrate-context-reuse-without-reference | 111,952 | 107,184 | +4,768 | +4.45% | skill 1/1; base 1/1 |
+| claude-code | newton-migrate-explicit-mujoco | 74,543 | 108,958 | -34,415 | -31.59% | skill 1/1; base 1/1 |
+| claude-code | newton-migrate-implicit-controller | 73,235 | 108,829 | -35,594 | -32.71% | skill 1/1; base 1/1 |
+| claude-code | newton-migrate-negative-data-schema | 107,885 | 106,983 | +902 | +0.84% | skill 1/1; base 1/1 |
+| claude-code | newton-migrate-negative-other-target | 71,935 | 143,298 | -71,363 | -49.80% | skill 1/1; base 1/1 |
+| codex | All cases | 229,235 | 319,747 | -90,512 | -28.31% | skill 5/5; base 5/5 |
+| codex | newton-migrate-context-reuse-without-reference | 42,791 | 81,997 | -39,206 | -47.81% | skill 1/1; base 1/1 |
+| codex | newton-migrate-explicit-mujoco | 66,954 | 67,691 | -737 | -1.09% | skill 1/1; base 1/1 |
+| codex | newton-migrate-implicit-controller | 44,983 | 74,404 | -29,421 | -39.54% | skill 1/1; base 1/1 |
+| codex | newton-migrate-negative-data-schema | 13,368 | 40,587 | -27,219 | -67.06% | skill 1/1; base 1/1 |
+| codex | newton-migrate-negative-other-target | 61,139 | 55,068 | +6,071 | +11.02% | skill 1/1; base 1/1 |
+| ALL AGENTS | Dataset aggregate | 668,785 | 894,999 | -226,214 | -25.28% | skill 10/10; base 10/10 |
 
-Prompt tokens include cached reads, so total tokens are `prompt + completion` (cached is not added twice). The Efficiency score uses `(prompt - cached) + completion`. N/A means the relevant trajectory counters were not available; coverage is never estimated.
+Prompt tokens include cached reads, so total tokens are `prompt + completion` (cached is not added twice). The Efficiency score uses `(prompt - cached) + completion`. Change is `100 * (with - without) / without`; negative means fewer tokens. N/A comparisons include their reason in the coverage column; coverage is never estimated.
 
 ## Tier Status
 
@@ -72,7 +102,7 @@ Prompt tokens include cached reads, so total tokens are `prompt + completion` (c
 |---|---|---|---|
 | Tier 1 | Static validation | **PASSED WITH OBSERVATIONS** | 11 validator(s); 7 finding(s) |
 | Tier 2 | Semantic deduplication | **PASSED** | 2 validator(s); 0 finding(s) |
-| Tier 3 | Live agent evaluation | **PASS** | 2 agent(s); 3 task(s) |
+| Tier 3 | Live agent evaluation | **PASS** | 2 agent(s); 5 task(s) |
 
 ## Findings and Observations
 
