@@ -118,9 +118,9 @@
       "prompt": "I launch my Newton project with uv run --project ./sim python rollout.py, but import newton fails before the scene is built. The project environment and lockfile already exist and must stay unchanged. Give commands to collect environment details and verify a repair. Do not execute commands or install anything.",
       "expected_skill": "newton-debug-simulation",
       "expected_script": null,
-      "expected_output": "Keeps the supplied environment wrapper, collects metadata before a separate import probe, routes to installation and compatibility guidance, and proposes probe-level verification.",
+      "expected_output": "Uses the reproducer environment without syncing it, preserves wrapper-provided variables and project context, collects metadata before a separate import probe, and proposes startup-level verification using installation and compatibility guidance.",
       "assertions": [
-        "Uses the supplied existing project interpreter or uv run --project ./sim --no-sync --frozen for the probes, without syncing dependencies or updating the lockfile.",
+        "Uses the supplied existing project interpreter only with evidence that required wrapper-provided settings are preserved, or uses uv run --project ./sim --no-sync --frozen; neither path syncs dependencies or updates the lockfile.",
         "Collects the interpreter and installed distribution metadata without importing Newton first.",
         "Retains a separate import error and selects installation or compatibility documentation rather than a model importer.",
         "Does not require a simulation rerun before import succeeds or claim a repair without execution."

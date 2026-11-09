@@ -5,6 +5,7 @@ import argparse
 import json
 import subprocess
 import sys
+import zipfile
 from pathlib import Path
 
 import numpy as np
@@ -111,7 +112,14 @@ def main():
                 result["passed"] = all(result["checks"].values())
             else:
                 result["passed"] = False
-        except (subprocess.TimeoutExpired, OSError, ValueError, KeyError) as error:
+        except (
+            subprocess.TimeoutExpired,
+            OSError,
+            ValueError,
+            KeyError,
+            EOFError,
+            zipfile.BadZipFile,
+        ) as error:
             result = {"command": command, "passed": False, "error": str(error)}
         results[scene] = result
     report = {

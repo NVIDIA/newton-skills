@@ -39,6 +39,8 @@ python grade.py --case controller --candidate /trial/controller.py --output-dir 
 
 Run each command with the same environment and `--device` before and after repair.
 Use unique output directories for each arm, attempt, and before/after run.
+Run `python test_grade.py` to verify that an empty or truncated scene trace is
+reported as a failure while the remaining scene is graded and a report is written.
 `WARP_CACHE_PATH` can point to a writable compiler cache. Baselines must exit 1
 because of the intended physics checks, not import or execution errors. Each
 candidate must complete both `--scene reduced` and `--scene original` and exit 0.
