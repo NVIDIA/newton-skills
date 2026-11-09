@@ -41,7 +41,7 @@
     },
     {
       "id": "newton-debug-executable-contact",
-      "prompt": "The supplied contact.py runs but the spheres pass through the floor. Repair it without changing geometry, initial conditions, solver, duration, or timestep. Run both --scene reduced and --scene original, save their traces with --output, and report before/after numerical evidence and every attempted change.",
+      "prompt": "Use the supplied contact.py; if it has not been staged, copy evals/fixtures/contact.py from the supplied newton-debug-simulation directory to contact.py in your working directory. The spheres pass through the floor. Repair the working copy without changing geometry, initial conditions, solver, duration, or timestep. Run both --scene reduced and --scene original before and after repair, save traces to distinct --output paths, and report numerical evidence and every attempted change. Preserve the source fixture and independent grader.",
       "expected_skill": "newton-debug-simulation",
       "expected_script": "contact.py",
       "expected_output": "Reproduces the penetration, identifies the cause from contact/state evidence, makes the smallest supported repair, and passes the independent grader for reduced and original scenes.",
@@ -54,7 +54,7 @@
     },
     {
       "id": "newton-debug-executable-late-controller",
-      "prompt": "The supplied controller.py rollout becomes invalid only after thousands of steps. Find the first bad transition and repair the controller while preserving the command schedule, model, integration timestep, and full duration. Run --scene reduced and --scene original, save traces with --output, and report every attempted change.",
+      "prompt": "Use the supplied controller.py; if it has not been staged, copy evals/fixtures/controller.py from the supplied newton-debug-simulation directory to controller.py in your working directory. The rollout becomes invalid only after thousands of steps. Find the first bad transition and repair the working copy while preserving the command schedule, model, integration timestep, and full duration. Run --scene reduced and --scene original before and after repair, save traces to distinct --output paths, and report every attempted change. Preserve the source fixture and independent grader.",
       "expected_skill": "newton-debug-simulation",
       "expected_script": "controller.py",
       "expected_output": "Captures the first invalid transition and command, repairs its cause, and verifies the complete reduced and original trajectories against independent motion and finite-state checks.",

@@ -20,8 +20,11 @@ with NumPy and Warp (Newton dependencies); a source checkout is optional. Newton
 
 The evaluator copies `fixtures/contact.py` and `fixtures/controller.py` into a
 fresh agent workspace under those basenames. Supply the files and task prompt
-in both comparison arms. Keep `grade.py`, acceptance bounds, and a pristine
-fixture copy outside the writable agent workspace. Run the independent grader
+in both comparison arms. If using the prompts' fixture-directory fallback, expose
+the same read-only input directory in both arms without requiring skill activation
+in the baseline. A missing fixture or missing Newton environment is a setup
+failure, not a diagnosis or repair result. Keep `grade.py`, acceptance bounds,
+and a pristine fixture copy outside the writable agent workspace. Run the independent grader
 against the pristine fixture before the trial and the candidate after it:
 
 ```bash
@@ -60,16 +63,17 @@ Select the installed release before using these current documentation entrypoint
 
 | Diagnostic question | Public Newton documentation | Coverage or remaining gap |
 | --- | --- | --- |
-| Penetration and false success | [Simulation tuning](https://newton-physics.github.io/newton/latest/concepts/simulation_tuning.html#diagnose-before-tuning), [contacts](https://newton-physics.github.io/newton/latest/concepts/collisions.html) | Geometry, task metrics, contact generation, and capacity are covered. Explicit reward/overtravel success checks are added in the companion Newton documentation change. |
-| Late invalid rollout | [Tuning guardrails](https://newton-physics.github.io/newton/latest/concepts/simulation_tuning.html#tuning-order), [observables](https://newton-physics.github.io/newton/latest/concepts/solver_observables.html) | Existing guardrails cover non-finite state. First-invalid-transition capture and full-horizon replay are added in the companion change. |
+| Penetration and false success | [Simulation tuning](https://newton-physics.github.io/newton/latest/concepts/simulation_tuning.html#diagnose-before-tuning), [contacts](https://newton-physics.github.io/newton/latest/concepts/collisions.html) | Geometry, task metrics, contact generation, and capacity are covered. A consolidated false-success checklist for reward, overtravel, and penetration has not been established for the target release; record this as a documentation gap. |
+| Late invalid rollout | [Tuning guardrails](https://newton-physics.github.io/newton/latest/concepts/simulation_tuning.html#tuning-order), [observables](https://newton-physics.github.io/newton/latest/concepts/solver_observables.html) | Existing guardrails cover non-finite state. A public first-invalid-transition and full-horizon replay procedure has not been established for the target release; record this as a documentation gap. |
 | Model import errors | [USD parsing](https://newton-physics.github.io/newton/latest/concepts/usd_parsing.html), [articulations](https://newton-physics.github.io/newton/latest/concepts/articulations.html), applicable importer API | Verify the actual format's importer, schema resolution, imported properties, and backend support; USD guidance alone does not cover every importer. |
-| Controller and coupling configuration | [Tuning classification](https://newton-physics.github.io/newton/latest/concepts/simulation_tuning.html#diagnose-before-tuning), [coupled solvers](https://newton-physics.github.io/newton/latest/concepts/coupling.html), [solver capabilities](https://newton-physics.github.io/newton/latest/solvers/index.html) | Control/model causes, ownership, and backend state synchronization are covered. The companion change connects these checks to late failures. |
+| Controller and coupling configuration | [Tuning classification](https://newton-physics.github.io/newton/latest/concepts/simulation_tuning.html#diagnose-before-tuning), [coupled solvers](https://newton-physics.github.io/newton/latest/concepts/coupling.html), [solver capabilities](https://newton-physics.github.io/newton/latest/solvers/index.html) | Control/model causes, ownership, and backend state synchronization are covered. Verify each link against the installed release; do not infer a complete late-failure troubleshooting procedure from these separate references. |
 
-The companion change is [Newton PR #5223](https://github.com/newton-physics/newton/pull/5223),
-updating `docs/concepts/simulation_tuning.rst` with **Check Physical Success**
-(`physical-success-checks`) and **Diagnose Late Rollout Failures**
-(`late-rollout-failures`). Do not claim these sections are published until that
-change lands.
+This PR identifies existing public coverage and records the remaining gaps; it
+does not supply or depend on a companion PR in another repository. Those gaps
+remain unresolved and must be reported as such when assessing documentation
+completeness. The executable fixtures demonstrate only the specific failures
+and repairs described above.
+
 Keep durable diagnostic explanations in Newton, not in the skill instructions.
 
 ## Comparison Protocol
