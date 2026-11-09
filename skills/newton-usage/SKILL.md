@@ -1,6 +1,6 @@
 ---
 name: newton-usage
-description: Find version-matched Newton documentation and packaged examples for setup or capability discovery. Route build, debug, migration, optimization, and validation work to focused skills.
+description: Set up, build, or debug physics simulations with the released Newton Python package. Use when choosing supported simulation components, finding documentation and examples, adapting a scene, or diagnosing simulation and runtime problems.
 metadata:
   author: Anthony Angeles <aangeles@nvidia.com>
   tags:
@@ -13,49 +13,54 @@ metadata:
 
 Help users of the released Newton wheel find and apply the relevant public
 documentation and examples. Work in the user's Python environment; a Newton
-source checkout is optional. Route focused work to the matching specialized
-Newton skill when one is available.
+source checkout is optional. Preserve supplied assets, conventions, environment,
+and explicit choices.
 
-1. Choose the request mode before using tools:
-   - For “how do I,” “show the command,” or other instruction-only requests,
-     return commands and direct documentation URLs without executing commands,
-     browsing, or opening the documentation. Do not call a web or documentation
-     tool in this mode.
-   - For “find,” “discover,” “check,” or other environment-specific requests,
-     reuse known facts and otherwise run this bounded discovery once:
-     `python -c "import sys; from importlib.metadata import version; from importlib.util import find_spec; print('python=' + sys.executable); print('version=' + version('newton')); print('package=' + str(find_spec('newton').origin)); print('examples=' + str(find_spec('newton.examples').origin))" && python -m newton.examples --list`.
-   - For construction, diagnosis, migration, performance, or claim assessment,
-     stop this workflow, read the matching specialized Newton skill, state that
-     it owns the task, and follow it as the primary workflow.
-   Establish the CPU/GPU environment only when it affects the answer. This skill
-   is tested with Newton 1.7.0; for another version, use matching documentation
-   and verify each referenced interface before relying on it.
-2. For Newton 1.7.0, select the direct route matching the request:
-   - setup, extras, and examples: [installation](https://newton-physics.github.io/newton/1.7.0/guide/installation.html)
-   - platform, CUDA, version, or API support: [compatibility](https://newton-physics.github.io/newton/1.7.0/guide/compatibility.html)
-   - first simulation or robotics walkthrough: [tutorials](https://newton-physics.github.io/newton/1.7.0/guide/tutorials.html)
-   - solver choice and capabilities: [solver guide](https://newton-physics.github.io/newton/1.7.0/solvers/index.html)
-   - exact public symbols: [API reference](https://newton-physics.github.io/newton/1.7.0/api/newton.html)
-   Use the [overview](https://newton-physics.github.io/newton/1.7.0/guide/overview.html)
-   only when the request spans categories. When the user asks for a documentation
-   location or matching route, copy the URL into the answer without opening or
-   verifying it, including after environment discovery. Open at most one routed
-   page only when its contents are needed to answer the question, plus a linked
-   API page only when an exact symbol must be confirmed. Do not search the site or
-   inspect another version first. If a matching checkout already exists, its
-   documentation is under `docs/`; do not require a clone.
-3. For a selected packaged example, inspect its options with
-   `python -m newton.examples <example_name> --help`. Do not run an example or
-   install extras unless asked. If dependencies are missing, point to the
-   version-pinned `newton[examples]` installation guidance without silently
-   changing Newton versions.
-4. Keep the result compact: Newton version/environment; selected documentation
-   or example; action executed or command supplied; verified result; and one
-   remaining blocker, if any. Omit fields that do not apply. Do not survey
-   unrelated documentation or repeat already-known environment checks.
+1. Establish the requested behavior or observed failure. Before building, define
+   acceptance criteria: the trajectory or command to exercise, simulation horizon,
+   observable state, and task-specific physical bounds. Reuse supplied environment
+   facts; otherwise identify the installed version and package with
+   `python -c "import sys, newton; from importlib.metadata import version; print(sys.executable); print(version('newton')); print(newton.__file__)"`.
+   Establish the solver and CPU/GPU environment when relevant. Follow the harness
+   and user's execution permissions; a planning request may still need read-only
+   documentation lookup to establish supported configurations. Distinguish
+   proposed commands and checks from executed ones.
+2. Select documentation matching the installed release from the
+   [Newton documentation](https://newton-physics.github.io/newton/). Flag any
+   mismatch before relying on an interface or feature. If the installed wheel
+   provides `python -m newton.docs`, use its matching snapshot; older wheels may
+   require hosted documentation. A supplied matching checkout's `docs/` is also
+   usable without requiring a clone. Read only relevant sections and follow
+   linked guidance when needed to resolve a concrete question:
+   - Setup and modeling: installation, tutorials, conventions, solver guides,
+     and the API reference.
+   - Debugging: FAQ, simulation tuning, collisions and contacts, solver
+     observables, and viewers and debugging; follow solver-specific guidance.
+   - Asset reuse: importer documentation, conventions, articulations, and the
+     solver's feature support. Use the legacy Warp migration guide only for
+     Warp's former simulation module. Distinguish successful import from
+     supported behavior and behavioral parity with a source reference.
+3. Start with the simplest documented solver configuration that supports the
+   required components and interactions. Consider coupled solvers only when one
+   solver cannot represent the required interaction. State unsupported needs.
+   Discover packaged examples with `python -m newton.examples --list` and inspect
+   a relevant example with `python -m newton.examples <example_name> --help`.
+   Adapt the closest suitable example or the documented minimal simulation.
+   Do not install dependencies or extras without authorization; report missing
+   requirements and preserve the user's Newton version and source assets.
+4. Build the smallest representative scene or reduce a failure while retaining
+   its symptom. Use documented public APIs, inspect effective model and solver
+   values, and make a focused change. Check finite state, physical bounds such as
+   penetration and joint travel, and the requested behavior over the agreed
+   horizon; rendered appearance or successful execution alone is insufficient.
+   Recheck the original scene after a reduced case succeeds. If a specialized
+   Newton skill is installed and provides relevant additional diagnosis,
+   optimization, or independent verification, use it without requiring that skill
+   for ordinary setup and construction.
+5. Report the documentation used, commands supplied or executed, measured results
+   against the acceptance criteria, and material limitations. If execution is not
+   permitted or required assets are unavailable, give the next concrete check and
+   leave the outcome unverified.
 
-Supported Newton version: 1.7.0 only. If the installed version differs, warn and
-stop before version-specific commands until matching documentation and interfaces
-are verified. If Newton is absent or discovery fails, preserve the command, status,
-and output and stop. Do not scan other interpreters, environments, repositories,
-or filesystem locations unless the user asks.
+Newton compatibility has not been validated across releases. Verify the installed
+release's documented interfaces and behavior before claiming support.

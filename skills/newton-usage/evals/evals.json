@@ -6,13 +6,13 @@
       "prompt": "Use newton-usage to help me get started with the released Newton package. I do not have a source checkout. Give me the commands to identify the version and discover a packaged example, but do not execute those commands, install packages, or run a simulation.",
       "expected_skill": "newton-usage",
       "expected_script": null,
-      "expected_output": "The response supplies the version and wheel-packaged-example discovery commands plus the direct Newton 1.7.0 installation route, without executing commands, opening documentation, requiring a checkout, or claiming discovered values.",
+      "expected_output": "Supplies version and packaged-example discovery commands and matching installation guidance without executing commands, installing packages, running a simulation, requiring a checkout, or claiming discovered values.",
       "assertions": [
         "Reads newton-usage before answering.",
         "Supplies the installed-version and packaged-example discovery commands without executing them.",
-        "Returns the direct version-matched installation URL without searching or opening the documentation site.",
         "Keeps a source checkout optional and preserves the environment.",
-        "Reports that installation and simulation execution were not performed."
+        "Reports that installation and simulation execution were not performed.",
+        "Uses release-matched installation guidance and respects the requested command-only response."
       ]
     },
     {
@@ -42,9 +42,9 @@
       ]
     },
     {
-      "id": "newton-usage-negative-specialized-debug",
+      "id": "newton-usage-implicit-debug",
       "prompt": "My Newton simulation is reproducibly tunneling through the ground. Diagnose it and verify the fix.",
-      "expected_skill": "newton-debug-simulation",
+      "expected_skill": "newton-usage",
       "expected_script": null,
       "expected_output": "The response treats tunneling as a reproducible correctness failure, checks once for the expected reproducer, and, when it is absent, reports the missing inputs without claiming a cause or fix while preserving ground penetration as the verification target.",
       "assertions": [
@@ -65,6 +65,32 @@
         "Focuses on the failing CI job, logs, tested revision, and contributor instructions.",
         "Does not treat repository maintenance as a wheel-consumer simulation task.",
         "Respects the restrictions on file changes and job reruns."
+      ]
+    },
+    {
+      "id": "newton-usage-implicit-build",
+      "prompt": "I need a Newton scene with rigid and deformable objects interacting. Help me choose a supported setup and define acceptance checks before writing code. You can consult documentation, but do not create files, install packages, or run simulations.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "Uses release-matched documentation to compare configurations, prefers one supported solver where sufficient, defines acceptance criteria before implementation, and respects the execution restrictions.",
+      "assertions": [
+        "Defines the relevant interaction, trajectory, horizon, observables, and physical acceptance bounds before proposing a build.",
+        "Chooses the simplest supported configuration; requires coupling only for an interaction a single solver cannot represent.",
+        "Allows focused documentation retrieval to establish support without executing a simulation or modifying the environment.",
+        "Does not require a separate build skill."
+      ]
+    },
+    {
+      "id": "newton-usage-context-assets",
+      "prompt": "My existing robot asset must stay unchanged. Add a Newton scene around it in the active environment and test a short motion. If example extras are unavailable, use the public APIs with what is installed.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "Preserves the asset and environment, uses a minimal supported configuration, and checks effective imported state and physical bounds rather than appearance.",
+      "assertions": [
+        "Preserves the supplied source asset and does not install extras without authorization.",
+        "Defines acceptance bounds before adapting the scene.",
+        "Checks effective imported model values and backend support.",
+        "Reports measured state-level evidence or missing inputs without claiming an unexecuted success."
       ]
     }
   ]

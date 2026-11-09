@@ -1,39 +1,31 @@
 # Evaluation Scope
 
-This suite measures documentation, example, and specialized-skill routing for
-the released Newton wheel. It covers explicit, implicit, contextual, negative,
-and cross-skill prompts. Tasks request instructions only; they do not require a
-GPU or execute simulations. These cases do not establish simulation correctness.
+This suite measures documentation and example routing, supported simulation
+construction, and symptom triage for the released Newton wheel. Planning cases
+permit focused documentation retrieval while preserving user execution limits.
+They do not establish executable simulation correctness or a compatibility range.
 
 ## Behaviors
 
-- Distinguish command-only guidance from active environment discovery.
-- For active discovery, collect the installed version, package path, and packaged
-  examples with one bounded probe and use matching public documentation.
-- Find packaged examples without requiring a source checkout.
-- Explicitly hand focused workflows to the matching specialized Newton skill and
-  make that skill the primary owner.
-- Preserve environment restrictions and distinguish advice from verified results.
-- Keep Newton's method questions outside the physics-simulator skill.
-- Keep source-repository CI maintenance outside this wheel-consumer skill.
+- Reuse known facts and identify the installed version before release-specific work.
+- Find matching documentation and packaged examples without requiring a checkout.
+- Define acceptance criteria before building and choose the simplest supported
+  solver configuration, including a single solver before unnecessary coupling.
+- Preserve assets and avoid installing dependencies without authorization.
+- Check effective model state, finite values, penetration, joint travel, and task
+  behavior over the required horizon instead of relying on rendered appearance.
+- Respect harness permissions; permit read-only documentation lookup during planning.
+- Handle ordinary construction without depending on a separate build skill.
+- Keep calculus and source-repository CI maintenance outside this skill's scope.
 
-## Notes
+## Comparison Protocol
 
-Run paired trials with and without the skill in otherwise identical environments
-on both Claude Code and Codex. Use the same public documentation access in both
-arms. Repeat trials to measure variance. Report task correctness, routing,
-total token consumption including skill loading and retries, and elapsed time.
-Skill-reading assertions apply to the with-skill arm; the baseline is judged on
-the task outcome and substantive behaviors without requiring skill discovery.
-
-Use at least three attempts per case for publication evidence. Publication
-requires improved task performance or efficiency without correctness regressions.
-Record evaluator, agent/model, environment, elapsed time, token coverage, per-case
-results, pass@1, pass@3, and the worst component score in the generated benchmark.
-Also inspect total tool calls, repeated documentation URLs, and repeated environment
-probes when comparing cost. Keep executable simulation and GPU evidence in the
-applicable specialized skill evaluations.
-
-Skill execution is the source of truth for whether a skill was read or activated.
-Behavior assertions should judge the observable workflow and must not duplicate
-activation checks that can contradict trajectory-based skill-execution evidence.
+Run paired trials with and without the skill on Codex and Claude Code, with at
+least three attempts per case and the same environment and documentation access.
+Judge outcomes independently of activation; credit equally correct alternatives.
+Record evaluator revision, agent/model versions, Newton/environment versions,
+per-case correctness, total tokens including loading/retries, elapsed time, and
+variability. Report correctness and efficiency separately; do not infer uplift
+from activation or a pipeline PASS. Preserve generated artifacts and obtain fresh
+NVSkills evaluation and signing after these changes. Simulation correctness needs
+separate executable task evidence; GPU claims require GPU-backed execution.
