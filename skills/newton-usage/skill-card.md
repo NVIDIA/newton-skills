@@ -9,7 +9,7 @@ NVIDIA <br>
 ### License/Terms of Use: <br>
 CC-BY-4.0 AND Apache 2.0 <br>
 ## Use Case: <br>
-Developers and engineers using the released Newton Python wheel use this skill to find release-matched documentation and packaged examples, choose a supported solver configuration, build a minimal representative simulation scene, and diagnose simulation and runtime problems. <br>
+Developers and engineers using the released Newton Python package use this skill to find release-matched Newton documentation and packaged examples, choose a supported solver configuration, build a minimal representative simulation scene, and diagnose simulation or runtime problems against defined acceptance criteria. <br>
 
 ### Deployment Geography for Use: <br>
 Global <br>
@@ -27,14 +27,15 @@ Mitigation: Review and scan skill before deployment. <br>
 ## Reference(s): <br>
 - [Newton documentation](https://newton-physics.github.io/newton/) <br>
 - [Newton installation guide](https://newton-physics.github.io/newton/latest/guide/installation.html) <br>
-- [Newton physics simulator (GitHub)](https://github.com/newton-physics/newton) <br>
+- [Newton GitHub repository](https://github.com/newton-physics/newton) <br>
+- [Evaluation scope (evals/EVAL.md)](evals/EVAL.md) <br>
 
 
 ## Skill Output: <br>
 **Output Type(s):** [Analysis, Shell commands, Code, Configuration instructions] <br>
 **Output Format:** [Markdown with inline Python and bash code blocks] <br>
 **Output Parameters:** [1D] <br>
-**Other Properties Related to Output:** [None] <br>
+**Other Properties Related to Output:** [Reports documentation used, commands supplied or executed, measured results against acceptance criteria, and material limitations; unexecuted checks are left unverified.] <br>
 
 ## Evaluation Agents Used: <br>
 - Claude Code (`aws/anthropic/bedrock-claude-opus-5-5`) <br>
@@ -43,7 +44,7 @@ Mitigation: Review and scan skill before deployment. <br>
 
 
 ## Evaluation Tasks: <br>
-7 evaluation tasks (5 positive, 2 negative), 1 attempt per task, run in the `k8s-sandbox` environment with each task attempt in its own isolated sandbox pod; baseline is the same task attempted without the target skill. <br>
+8 evaluation tasks (6 positive, 2 negative), 1 attempt per task, run in the `k8s-sandbox` environment with each task attempt in its own isolated sandbox pod; each task was attempted with the skill and as a no-skill baseline. <br>
 
 ## Evaluation Metrics Used: <br>
 Reported benchmark dimensions: <br>
@@ -75,12 +76,12 @@ Recommended for publication based on the completed evaluation evidence in this r
 
 | Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
 |---|---:|---:|
-| Overall | 85.6% — baseline ran, but no comparable score was available; uplift unavailable | 80.6% — baseline ran, but no comparable score was available; uplift unavailable |
-| Security | 100.0% → 100.0% (±0.0 points) | 100.0% → 100.0% (±0.0 points) |
-| Correctness | 80.0% → 91.4% (+11.4 points) | 74.3% → 80.0% (+5.7 points) |
-| Discoverability | 97.0% — baseline ran, but no comparable score was available; uplift unavailable | 92.0% — baseline ran, but no comparable score was available; uplift unavailable |
-| Effectiveness | 66.4% → 57.1% (-9.3 points) | 65.0% → 58.9% (-6.1 points) |
-| Efficiency | 82.6% — baseline ran, but no comparable score was available; uplift unavailable | 72.1% — baseline ran, but no comparable score was available; uplift unavailable |
+| Overall | 87.1% — baseline ran, but no comparable score was available; uplift unavailable | 82.6% — baseline ran, but no comparable score was available; uplift unavailable |
+| Security | 100.0% → 93.8% (-6.2 points) | 87.5% → 100.0% (+12.5 points) |
+| Correctness | 82.5% → 92.5% (+10.0 points) | 80.0% → 92.5% (+12.5 points) |
+| Discoverability | 87.5% — baseline ran, but no comparable score was available; uplift unavailable | 84.2% — baseline ran, but no comparable score was available; uplift unavailable |
+| Effectiveness | 67.8% → 75.0% (+7.2 points) | 64.4% → 59.4% (-5.0 points) |
+| Efficiency | 86.7% — baseline ran, but no comparable score was available; uplift unavailable | 76.9% — baseline ran, but no comparable score was available; uplift unavailable |
 
 **How to read this table:** baseline is the same task attempted without the target skill. Scores are rounded to one decimal; threshold-adjacent values use additional precision so their displayed band matches the verdict. Uplift is derived from those displayed scores and shown in percentage points.
 
@@ -88,19 +89,27 @@ Example: `47.0% → 92.0% (+45.0 points)` means the skill-assisted run scored 92
 
 A partial dimension was calculated from only the available configured signals; review the detailed report before relying on it.
 
-### Comparison details
+#### Comparison details
 
 Shared-source comparisons use the same signals and weights on both conditions. They do not replace the full dimension scores above or change the publication verdict.
 
 | Agent | Dimension | Basis | Baseline → With skill (uplift) | Explanation |
 | --- | --- | --- | --- | --- |
 | claude-code | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
-| claude-code | Efficiency | Token-only comparison | 98.0% → 97.5% (-0.5 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| claude-code | Efficiency | Token-only comparison | 98.2% → 96.4% (-1.8 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
 | codex | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
-| codex | Efficiency | Token-only comparison | 89.6% → 90.6% (+1.0 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| codex | Efficiency | Token-only comparison | 90.6% → 91.2% (+0.6 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+
+### Tier Status
+
+| Tier | Purpose | Status | Evidence |
+|---|---|---|---|
+| Tier 1 | Static validation | **PASSED WITH OBSERVATIONS** | 11 validator(s); 9 finding(s) |
+| Tier 2 | Semantic deduplication | **PASSED** | 2 validator(s); 0 finding(s) |
+| Tier 3 | Live agent evaluation | **PASS** | 2 agent(s); 8 task(s) |
 
 ## Skill Version(s): <br>
-2117edf (source: git SHA, committed 2026-11-09) <br>
+cc393b8 (source: git SHA, committed 2026-11-09) <br>
 
 ## Ethical Considerations: <br>
 NVIDIA believes Trustworthy AI is a shared responsibility and we have established policies and practices to enable development for a wide array of AI applications. When downloaded or used in accordance with our terms of service, developers should work with their internal team to ensure this skill meets requirements for the relevant industry and use case and addresses unforeseen product misuse. <br>
