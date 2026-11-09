@@ -116,6 +116,7 @@ def main():
             subprocess.TimeoutExpired,
             OSError,
             ValueError,
+            TypeError,
             KeyError,
             EOFError,
             zipfile.BadZipFile,

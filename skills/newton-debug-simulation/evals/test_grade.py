@@ -14,9 +14,9 @@ class TraceGradingTests(unittest.TestCase):
     """Check that a corrupt scene does not discard the other scene's result."""
 
     def test_corrupt_reduced_trace_preserves_original_result(self):
-        """Record empty and truncated traces as failures and still finish grading."""
+        """Record malformed traces as failures and still finish grading."""
         grader = Path(__file__).with_name("grade.py")
-        for payload in (b"", b"PK\x03\x04truncated"):
+        for payload in (b"", b"PK\x03\x04truncated", None):
             with self.subTest(payload=payload), tempfile.TemporaryDirectory() as folder:
                 root = Path(folder)
                 candidate = root / "candidate.py"
@@ -33,7 +33,11 @@ class TraceGradingTests(unittest.TestCase):
                         parser.add_argument("--output")
                         args = parser.parse_args()
                         if args.scene == "reduced":
-                            Path(args.output).write_bytes({payload!r})
+                            payload = {payload!r}
+                            if payload is None:
+                                np.savez(args.output, poses=np.full((721, 1, 7), "invalid"), velocities=np.zeros((721, 1, 6)))
+                            else:
+                                Path(args.output).write_bytes(payload)
                         else:
                             poses = np.zeros((721, 3, 7), dtype=np.float32)
                             poses[:, :, 6] = 1.0
