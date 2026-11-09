@@ -49,6 +49,19 @@
         "Does not activate newton-migrate-simulation.",
         "Preserves Isaac Sim and PhysX as the requested target."
       ]
+    },
+    {
+      "id": "newton-migrate-context-reuse-without-reference",
+      "prompt": "I have a URDF and controller to reuse in Newton, but no recordings or runnable installation of the old simulator. Inspect the supplied assets and plan their import and controller wiring.",
+      "expected_skill": "newton-migrate-simulation",
+      "expected_script": null,
+      "expected_output": "Continues the asset and controller reuse plan using documented interfaces and effective-property checks, and leaves behavioral parity unverified without blocking reuse on unavailable reference runs.",
+      "assertions": [
+        "Does not require a runnable source simulator when supplied source assets suffice for the requested reuse.",
+        "Inventories units, frames, joint limits, actuation, and target backend support.",
+        "Does not stop asset or controller reuse solely because source recordings are unavailable.",
+        "Leaves behavioral parity unverified and does not fabricate a source comparison."
+      ]
     }
   ]
 }
