@@ -6,8 +6,8 @@ agents to public documentation and examples shipped in the Newton Python wheel.
 
 ## Status
 
-The first skill is an initial draft with a routing evaluation suite. NVSkills CI
-is configured for evaluation and signing; catalog publication is pending. Skills
+The skills are initial candidates with evaluation suites. NVSkills CI is
+configured for evaluation and signing; catalog publication is pending. Skills
 will be updated alongside Newton releases and, once registered, continuously
 synchronized to the NVIDIA Skills Catalog.
 
@@ -15,12 +15,19 @@ synchronized to the NVIDIA Skills Catalog.
 
 - [newton-usage](skills/newton-usage/SKILL.md): Find documentation and packaged
   examples when setting up, building, or debugging a Newton simulation.
+- [newton-migrate-simulation](skills/newton-migrate-simulation/SKILL.md)
+  (candidate under review): Plan asset and controller reuse with explicit
+  feature and parity checks. Its separate scope awaits migration findings;
+  listing it here does not establish release or catalog readiness.
 
 ## Using the Skills
 
 Install Newton in your Python environment following its
 [installation guide](https://newton-physics.github.io/newton/latest/guide/installation.html).
-Install or copy `skills/newton-usage/` into your agent's supported skill directory.
+Install or copy the selected directory under `skills/` into your agent's
+supported skill directory, such as `skills/newton-usage/` or the migration
+candidate `skills/newton-migrate-simulation/`. Candidate skills remain under
+review and have no validated compatibility range.
 A Newton source checkout is optional. Use documentation matching your installed
 Newton release.
 

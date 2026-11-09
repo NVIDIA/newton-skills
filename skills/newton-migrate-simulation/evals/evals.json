@@ -1,0 +1,92 @@
+{
+  "skill_name": "newton-migrate-simulation",
+  "evals": [
+    {
+      "id": "newton-migrate-explicit-mujoco",
+      "prompt": "Use newton-migrate-simulation to plan a MuJoCo-to-Newton 1.7 migration for a controlled robot. Explain what must be inventoried and how behavioral parity will be checked.",
+      "expected_skill": "newton-migrate-simulation",
+      "expected_script": null,
+      "expected_output": "Records both versions, inventories source features and references, uses documented mappings, proposes a minimal port and parity checks, and does not claim the proposed checks were executed.",
+      "assertions": [
+        "Reads newton-migrate-simulation.",
+        "Inventories source features and reference runs before mapping.",
+        "Uses documented Newton mappings and reports unsupported features.",
+        "Defines comparable parity checks rather than relying on successful loading."
+      ]
+    },
+    {
+      "id": "newton-migrate-implicit-controller",
+      "prompt": "We want to reuse our simulator's URDF and controller in Newton, but its joint limits and action frames may differ. What should we compare before calling the port complete?",
+      "expected_skill": "newton-migrate-simulation",
+      "expected_script": null,
+      "expected_output": "The response recognizes a migration, compares units/frames/limits/actuation and effective imported values, and requires behavioral references before declaring parity.",
+      "assertions": [
+        "Selects the migration skill without explicit invocation.",
+        "Checks frames, units, limits, controller semantics, and imported properties.",
+        "Distinguishes asset reuse from behavioral parity.",
+        "Leaves parity unverified without a source reference."
+      ]
+    },
+    {
+      "id": "newton-migrate-negative-data-schema",
+      "prompt": "Migrate a PostgreSQL schema to a managed database. This task has no simulator, robot assets, or Newton dependency.",
+      "expected_skill": null,
+      "expected_script": null,
+      "expected_output": "The response does not load a Newton simulation migration skill for an unrelated database migration.",
+      "assertions": [
+        "Does not read newton-migrate-simulation.",
+        "Keeps the task scoped to database migration.",
+        "Does not invent simulator assets or parity checks."
+      ]
+    },
+    {
+      "id": "newton-migrate-negative-other-target",
+      "prompt": "Port our MuJoCo robot and controller to Isaac Sim using PhysX. Preserve its joint frames and action conventions.",
+      "expected_skill": null,
+      "expected_script": null,
+      "expected_output": "Handles the requested PhysX migration without loading the Newton migration workflow or replacing the target simulator.",
+      "assertions": [
+        "Does not activate newton-migrate-simulation.",
+        "Preserves Isaac Sim and PhysX as the requested target."
+      ]
+    },
+    {
+      "id": "newton-migrate-context-reuse-without-reference",
+      "prompt": "I have a URDF and controller to reuse in Newton, but no recordings or runnable installation of the old simulator. Before I send the files, plan the import and controller wiring and list the checks to perform when they arrive.",
+      "expected_skill": "newton-migrate-simulation",
+      "expected_script": null,
+      "expected_output": "Plans asset and controller reuse without blocking on unavailable source recordings, identifies checks for when assets arrive, and leaves inspection and parity unverified.",
+      "assertions": [
+        "Does not require a runnable source simulator for an asset and controller reuse plan.",
+        "Lists units, frames, limits, actuation, and backend-support checks without claiming to have inspected absent files.",
+        "Describes proposed import and verification steps without executing imports or fabricating results.",
+        "Leaves behavioral parity unverified without a source reference."
+      ]
+    },
+    {
+      "id": "newton-migrate-context-target-before-install",
+      "prompt": "We plan to port a MuJoCo robot to Newton 1.7, but Newton is not installed yet. Point us to the relevant release documentation and give a migration plan. Do not install anything or run importers.",
+      "expected_skill": "newton-migrate-simulation",
+      "expected_script": null,
+      "expected_output": "Uses the stated Newton 1.7 target for planning documentation without requiring an installed version, and reserves installed-version verification for implementation.",
+      "assertions": [
+        "Selects documentation matching the stated target release rather than requiring an installation to plan.",
+        "Does not treat moving latest documentation as proof of Newton 1.7 support.",
+        "Permits focused read-only documentation lookup while preserving the installation and execution restrictions.",
+        "Requires installed-release verification before version-specific implementation and flags a mismatch with the planned target."
+      ]
+    },
+    {
+      "id": "newton-migrate-context-target-mismatch",
+      "prompt": "Our migration plan targets Newton 1.7, but the existing project environment reports Newton 1.6. Keep the target at 1.7. What can we do next before porting the controller? Do not change the environment or run anything.",
+      "expected_skill": "newton-migrate-simulation",
+      "expected_script": null,
+      "expected_output": "Stops version-specific implementation against 1.6, preserves the requested 1.7 target, and identifies the target environment needed before proceeding.",
+      "assertions": [
+        "Does not silently implement a Newton 1.6 port or reinterpret the requested target.",
+        "Requires a Newton 1.7 target environment before version-specific implementation unless the user explicitly approves a target change.",
+        "Can explain the blocker and plan next steps without installing packages, executing probes, or inventing parity results."
+      ]
+    }
+  ]
+}
