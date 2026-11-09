@@ -12,6 +12,8 @@ They do not establish executable simulation correctness or a compatibility range
 
 - Reuse known facts and identify the installed version before release-specific work.
 - Find matching documentation and packaged examples without requiring a checkout.
+- Reuse the selected interpreter or verified non-syncing wrapper for example
+  listing and help, even when the project environment is not activated.
 - Define acceptance criteria before building and choose the simplest supported
   solver configuration, including a single solver before unnecessary coupling.
 - Preserve assets and avoid installing dependencies without authorization.

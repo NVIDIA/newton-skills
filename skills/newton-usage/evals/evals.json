@@ -115,6 +115,30 @@
         "Does not propose ordinary uv run, dependency sync, extras installation, or environment creation for the probe.",
         "Does not import Newton or claim the proposed command was executed."
       ]
+    },
+    {
+      "id": "newton-usage-context-active-project-selection",
+      "prompt": "I have an activated environment for this Newton task and a different .venv in the current uv project. Use the active environment to identify the installed Newton version without importing Newton. Give commands only and leave both environments and the project lockfile unchanged.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "Selects the existing active interpreter directly or uses uv --active in non-syncing frozen mode, without inspecting the separate project installation.",
+      "assertions": [
+        "Selects the explicitly intended active environment rather than the default uv project environment.",
+        "If using uv, includes --active with --no-sync --frozen and relies on the supplied existing environment.",
+        "Reads distribution metadata without importing Newton or changing either environment or the lockfile."
+      ]
+    },
+    {
+      "id": "newton-usage-context-example-environment",
+      "prompt": "Newton is installed in my uv project .venv, but that environment is not activated. Give commands to identify its Newton version, list the packaged examples, and inspect one example help page. Do not execute anything, install dependencies, or change the lockfile.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "Reuses the intended existing project interpreter or a verified non-syncing frozen wrapper for metadata, example discovery, and help.",
+      "assertions": [
+        "Uses the same selected existing project environment for metadata, example listing, and help.",
+        "Does not fall back to bare system Python because the project environment is not activated.",
+        "Does not sync dependencies, create an environment, update the lockfile, or execute the proposed commands."
+      ]
     }
   ]
 }
