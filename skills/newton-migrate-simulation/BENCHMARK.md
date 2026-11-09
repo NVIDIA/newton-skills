@@ -13,8 +13,8 @@ Recommended for publication based on the completed evaluation evidence in this r
 - Evaluation date: 2026-11-09
 - Evaluator version: `1.6.9`
 - Agents: Claude Code (`aws/anthropic/bedrock-claude-opus-5-5`), Codex (`openai/openai/gpt-6.1-sol`)
-- Tasks: 6 evaluation tasks (4 positive, 2 negative)
-- Dataset digest: `sha256:089d618606c4908a358f74e623087162e9ef024606e71cc0c88343bbc177642c` (skill-evaluator-dataset-snapshot/1)
+- Tasks: 7 evaluation tasks (5 positive, 2 negative)
+- Dataset digest: `sha256:6ef8e81cadf422973d1e5386ca49be8b2bf76aed8d177469ac76e5fa387256dd` (skill-evaluator-dataset-snapshot/1)
 - Attempts per task: 1
 - Environment: `k8s-sandbox`
 - Tier 2 evidence: required for publication
@@ -50,12 +50,12 @@ The three-tier evaluation checks whether the skill:
 
 | Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
 |---|---:|---:|
-| Overall | 98.1% — baseline ran, but no comparable score was available; uplift unavailable | 90.1% — baseline ran, but no comparable score was available; uplift unavailable |
-| Security | 91.7% → 100.0% (+8.3 points) | 100.0% → 100.0% (±0.0 points) |
-| Correctness | 93.3% → 100.0% (+6.7 points) | 96.7% → 100.0% (+3.3 points) |
-| Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 95.0% — baseline ran, but no comparable score was available; uplift unavailable |
-| Effectiveness | 83.3% → 97.9% (+14.6 points) | 83.3% → 100.0% (+16.7 points) |
-| Efficiency | 92.5% — baseline ran, but no comparable score was available; uplift unavailable | 55.3% — baseline ran, but no comparable score was available; uplift unavailable |
+| Overall | 97.9% — baseline ran, but no comparable score was available; uplift unavailable | 86.1% — baseline ran, but no comparable score was available; uplift unavailable |
+| Security | 92.9% → 100.0% (+7.1 points) | 100.0% → 100.0% (±0.0 points) |
+| Correctness | 97.1% → 100.0% (+2.9 points) | 97.1% → 94.3% (-2.8 points) |
+| Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 76.0% — baseline ran, but no comparable score was available; uplift unavailable |
+| Effectiveness | 85.7% → 98.2% (+12.5 points) | 92.9% → 100.0% (+7.1 points) |
+| Efficiency | 91.2% — baseline ran, but no comparable score was available; uplift unavailable | 60.2% — baseline ran, but no comparable score was available; uplift unavailable |
 
 **How to read this table:** baseline is the same task attempted without the target skill. Scores are rounded to one decimal; threshold-adjacent values use additional precision so their displayed band matches the verdict. Uplift is derived from those displayed scores and shown in percentage points.
 
@@ -70,9 +70,9 @@ Shared-source comparisons use the same signals and weights on both conditions. T
 | Agent | Dimension | Basis | Baseline → With skill (uplift) | Explanation |
 | --- | --- | --- | --- | --- |
 | claude-code | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
-| claude-code | Efficiency | Token-only comparison | 95.2% → 97.5% (+2.3 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| claude-code | Efficiency | Token-only comparison | 96.2% → 97.4% (+1.2 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
 | codex | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
-| codex | Efficiency | Token-only comparison | 85.9% → 86.9% (+1.0 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| codex | Efficiency | Token-only comparison | 86.9% → 89.1% (+2.2 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
 
 ## Token Usage
 
@@ -80,21 +80,23 @@ Actual Tier 3 execution usage is reported for every observed agent/case pair and
 
 | Agent | Dataset case | With skill | Without skill | Delta | Change | Coverage |
 |---|---|---:|---:|---:|---:|---|
-| claude-code | All cases | 553,910 | 1,430,140 | -876,230 | -61.27% | skill 6/6; base 6/6 |
-| claude-code | newton-migrate-context-reuse-without-reference | 74,515 | 37,784 | +36,731 | +97.21% | skill 1/1; base 1/1 |
-| claude-code | newton-migrate-context-target-before-install | 151,092 | 997,362 | -846,270 | -84.85% | skill 1/1; base 1/1 |
-| claude-code | newton-migrate-explicit-mujoco | 74,649 | 108,552 | -33,903 | -31.23% | skill 1/1; base 1/1 |
-| claude-code | newton-migrate-implicit-controller | 74,069 | 108,824 | -34,755 | -31.94% | skill 1/1; base 1/1 |
-| claude-code | newton-migrate-negative-data-schema | 71,450 | 106,990 | -35,540 | -33.22% | skill 1/1; base 1/1 |
-| claude-code | newton-migrate-negative-other-target | 108,135 | 70,628 | +37,507 | +53.11% | skill 1/1; base 1/1 |
-| codex | All cases | 305,844 | 312,213 | -6,369 | -2.04% | skill 6/6; base 6/6 |
-| codex | newton-migrate-context-reuse-without-reference | 45,418 | 26,764 | +18,654 | +69.70% | skill 1/1; base 1/1 |
-| codex | newton-migrate-context-target-before-install | 62,582 | 56,314 | +6,268 | +11.13% | skill 1/1; base 1/1 |
-| codex | newton-migrate-explicit-mujoco | 60,261 | 93,865 | -33,604 | -35.80% | skill 1/1; base 1/1 |
-| codex | newton-migrate-implicit-controller | 41,154 | 53,067 | -11,913 | -22.45% | skill 1/1; base 1/1 |
-| codex | newton-migrate-negative-data-schema | 41,183 | 41,049 | +134 | +0.33% | skill 1/1; base 1/1 |
-| codex | newton-migrate-negative-other-target | 55,246 | 41,154 | +14,092 | +34.24% | skill 1/1; base 1/1 |
-| ALL AGENTS | Dataset aggregate | 859,754 | 1,742,353 | -882,599 | -50.66% | skill 12/12; base 12/12 |
+| claude-code | All cases | 663,954 | 846,059 | -182,105 | -21.52% | skill 7/7; base 7/7 |
+| claude-code | newton-migrate-context-reuse-without-reference | 74,577 | 73,116 | +1,461 | +2.00% | skill 1/1; base 1/1 |
+| claude-code | newton-migrate-context-target-before-install | 151,564 | 378,025 | -226,461 | -59.91% | skill 1/1; base 1/1 |
+| claude-code | newton-migrate-context-target-mismatch | 73,518 | 70,695 | +2,823 | +3.99% | skill 1/1; base 1/1 |
+| claude-code | newton-migrate-explicit-mujoco | 74,898 | 109,152 | -34,254 | -31.38% | skill 1/1; base 1/1 |
+| claude-code | newton-migrate-implicit-controller | 74,531 | 37,225 | +37,306 | +100.22% | skill 1/1; base 1/1 |
+| claude-code | newton-migrate-negative-data-schema | 107,740 | 107,019 | +721 | +0.67% | skill 1/1; base 1/1 |
+| claude-code | newton-migrate-negative-other-target | 107,126 | 70,827 | +36,299 | +51.25% | skill 1/1; base 1/1 |
+| codex | All cases | 257,539 | 312,195 | -54,656 | -17.51% | skill 7/7; base 7/7 |
+| codex | newton-migrate-context-reuse-without-reference | 32,999 | 31,207 | +1,792 | +5.74% | skill 1/1; base 1/1 |
+| codex | newton-migrate-context-target-before-install | 62,556 | 56,415 | +6,141 | +10.89% | skill 1/1; base 1/1 |
+| codex | newton-migrate-context-target-mismatch | 13,693 | 13,410 | +283 | +2.11% | skill 1/1; base 1/1 |
+| codex | newton-migrate-explicit-mujoco | 50,350 | 76,241 | -25,891 | -33.96% | skill 1/1; base 1/1 |
+| codex | newton-migrate-implicit-controller | 41,113 | 38,936 | +2,177 | +5.59% | skill 1/1; base 1/1 |
+| codex | newton-migrate-negative-data-schema | 13,389 | 40,804 | -27,415 | -67.19% | skill 1/1; base 1/1 |
+| codex | newton-migrate-negative-other-target | 43,439 | 55,182 | -11,743 | -21.28% | skill 1/1; base 1/1 |
+| ALL AGENTS | Dataset aggregate | 921,493 | 1,158,254 | -236,761 | -20.44% | skill 14/14; base 14/14 |
 
 Prompt tokens include cached reads, so total tokens are `prompt + completion` (cached is not added twice). The Efficiency score uses `(prompt - cached) + completion`. Change is `100 * (with - without) / without`; negative means fewer tokens. N/A comparisons include their reason in the coverage column; coverage is never estimated.
 
@@ -104,7 +106,7 @@ Prompt tokens include cached reads, so total tokens are `prompt + completion` (c
 |---|---|---|---|
 | Tier 1 | Static validation | **PASSED WITH OBSERVATIONS** | 11 validator(s); 8 finding(s) |
 | Tier 2 | Semantic deduplication | **PASSED** | 2 validator(s); 0 finding(s) |
-| Tier 3 | Live agent evaluation | **PASS** | 2 agent(s); 6 task(s) |
+| Tier 3 | Live agent evaluation | **PASS** | 2 agent(s); 7 task(s) |
 
 ## Findings and Observations
 
