@@ -9,7 +9,7 @@ NVIDIA <br>
 ### License/Terms of Use: <br>
 CC-BY-4.0 AND Apache 2.0 <br>
 ## Use Case: <br>
-Developers and engineers use this skill to plan or implement a port of existing simulator assets, controllers, or behavior to the Newton physics simulator, inventorying units, frames, joints, drives, limits, contacts, and controller semantics, mapping only documented Newton features, and reporting retained, remapped, unsupported, and intentionally changed features with parity left unverified when no source reference exists. <br>
+Developers and engineers use this skill to plan or implement a port of existing simulator assets, controllers, or behavior to the Newton physics simulator, inventorying units, frames, joints, drives, limits, contacts, and controller semantics, mapping only documented Newton features for the target release, and reporting retained, remapped, unsupported, and intentionally changed features with behavioral parity left unverified when no source reference exists. <br>
 
 ### Deployment Geography for Use: <br>
 Global <br>
@@ -48,7 +48,7 @@ Mitigation: Review and scan skill before deployment. <br>
 
 
 ## Evaluation Tasks: <br>
-5 evaluation tasks (3 positive, 2 negative), 1 attempt per task, each run in its own isolated sandbox pod (`k8s-sandbox` environment), with and without the skill (baseline). Evaluator version `1.6.9`; evaluation date 2026-11-09. <br>
+6 evaluation tasks (4 positive, 2 negative), 1 attempt per task, each run in its own isolated sandbox pod (`k8s-sandbox` environment), with and without the skill (baseline). Evaluator version `1.6.9`; evaluation date 2026-11-09. <br>
 
 ## Evaluation Metrics Used: <br>
 Reported benchmark dimensions: <br>
@@ -80,12 +80,12 @@ Recommended for publication based on the completed evaluation evidence in this r
 
 | Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
 |---|---:|---:|
-| Overall | 97.3% — baseline ran, but no comparable score was available; uplift unavailable | 90.1% — baseline ran, but no comparable score was available; uplift unavailable |
-| Security | 100.0% → 100.0% (±0.0 points) | 100.0% → 100.0% (±0.0 points) |
-| Correctness | 92.0% → 100.0% (+8.0 points) | 96.0% → 100.0% (+4.0 points) |
+| Overall | 98.1% — baseline ran, but no comparable score was available; uplift unavailable | 90.1% — baseline ran, but no comparable score was available; uplift unavailable |
+| Security | 91.7% → 100.0% (+8.3 points) | 100.0% → 100.0% (±0.0 points) |
+| Correctness | 93.3% → 100.0% (+6.7 points) | 96.7% → 100.0% (+3.3 points) |
 | Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 95.0% — baseline ran, but no comparable score was available; uplift unavailable |
-| Effectiveness | 82.5% → 87.5% (+5.0 points) | 95.0% → 100.0% (+5.0 points) |
-| Efficiency | 98.8% — baseline ran, but no comparable score was available; uplift unavailable | 55.6% — baseline ran, but no comparable score was available; uplift unavailable |
+| Effectiveness | 83.3% → 97.9% (+14.6 points) | 83.3% → 100.0% (+16.7 points) |
+| Efficiency | 92.5% — baseline ran, but no comparable score was available; uplift unavailable | 55.3% — baseline ran, but no comparable score was available; uplift unavailable |
 
 **How to read this table:** baseline is the same task attempted without the target skill. Scores are rounded to one decimal; threshold-adjacent values use additional precision so their displayed band matches the verdict. Uplift is derived from those displayed scores and shown in percentage points.
 
@@ -93,27 +93,27 @@ Example: `47.0% → 92.0% (+45.0 points)` means the skill-assisted run scored 92
 
 A partial dimension was calculated from only the available configured signals; review the detailed report before relying on it.
 
-### Comparison details
+#### Comparison details
 
 Shared-source comparisons use the same signals and weights on both conditions. They do not replace the full dimension scores above or change the publication verdict.
 
 | Agent | Dimension | Basis | Baseline → With skill (uplift) | Explanation |
 | --- | --- | --- | --- | --- |
 | claude-code | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
-| claude-code | Efficiency | Token-only comparison | 98.3% → 97.6% (-0.7 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| claude-code | Efficiency | Token-only comparison | 95.2% → 97.5% (+2.3 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
 | codex | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
-| codex | Efficiency | Token-only comparison | 88.0% → 87.1% (-0.9 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| codex | Efficiency | Token-only comparison | 85.9% → 86.9% (+1.0 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
 
 ### Tier Status
 
 | Tier | Purpose | Status | Evidence |
 |---|---|---|---|
-| Tier 1 | Static validation | **PASSED WITH OBSERVATIONS** | 11 validator(s); 7 finding(s) |
+| Tier 1 | Static validation | **PASSED WITH OBSERVATIONS** | 11 validator(s); 8 finding(s) |
 | Tier 2 | Semantic deduplication | **PASSED** | 2 validator(s); 0 finding(s) |
-| Tier 3 | Live agent evaluation | **PASS** | 2 agent(s); 5 task(s) |
+| Tier 3 | Live agent evaluation | **PASS** | 2 agent(s); 6 task(s) |
 
 ## Skill Version(s): <br>
-85ebe48 (source: git SHA, committed 2026-11-09) <br>
+775a15f (source: git SHA, committed 2026-11-09) <br>
 
 ## Ethical Considerations: <br>
 NVIDIA believes Trustworthy AI is a shared responsibility and we have established policies and practices to enable development for a wide array of AI applications. When downloaded or used in accordance with our terms of service, developers should work with their internal team to ensure this skill meets requirements for the relevant industry and use case and addresses unforeseen product misuse. <br>
