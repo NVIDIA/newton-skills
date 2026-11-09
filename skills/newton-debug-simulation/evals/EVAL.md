@@ -65,10 +65,11 @@ Select the installed release before using these current documentation entrypoint
 | Model import errors | [USD parsing](https://newton-physics.github.io/newton/latest/concepts/usd_parsing.html), [articulations](https://newton-physics.github.io/newton/latest/concepts/articulations.html), applicable importer API | Verify the actual format's importer, schema resolution, imported properties, and backend support; USD guidance alone does not cover every importer. |
 | Controller and coupling configuration | [Tuning classification](https://newton-physics.github.io/newton/latest/concepts/simulation_tuning.html#diagnose-before-tuning), [coupled solvers](https://newton-physics.github.io/newton/latest/concepts/coupling.html), [solver capabilities](https://newton-physics.github.io/newton/latest/solvers/index.html) | Control/model causes, ownership, and backend state synchronization are covered. The companion change connects these checks to late failures. |
 
-The companion change belongs in Newton's `docs/concepts/simulation_tuning.rst`,
-with sections **Check Physical Success** (`physical-success-checks`) and
-**Diagnose Late Rollout Failures** (`late-rollout-failures`). These sections are
-prepared separately; do not claim they are published until that change lands.
+The companion change is [Newton PR #5223](https://github.com/newton-physics/newton/pull/5223),
+updating `docs/concepts/simulation_tuning.rst` with **Check Physical Success**
+(`physical-success-checks`) and **Diagnose Late Rollout Failures**
+(`late-rollout-failures`). Do not claim these sections are published until that
+change lands.
 Keep durable diagnostic explanations in Newton, not in the skill instructions.
 
 ## Comparison Protocol
