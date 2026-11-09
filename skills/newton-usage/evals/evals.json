@@ -103,6 +103,18 @@
         "Does not invoke newton.docs, newton.examples, newton.info, or submodule discovery that imports the parent.",
         "Preserves user execution limits and reports missing distribution metadata honestly."
       ]
+    },
+    {
+      "id": "newton-usage-context-preserve-project",
+      "prompt": "My uv project already has an environment and lockfile, but pyproject.toml has changed since the last sync. Give a command to read the installed Newton version without importing Newton or changing the environment or lockfile. Do not execute anything.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "Uses the existing environment interpreter or a non-syncing, frozen wrapper to read installed metadata without changing the project.",
+      "assertions": [
+        "Uses the existing project interpreter or uv run --no-sync --frozen with the supplied existing environment.",
+        "Does not propose ordinary uv run, dependency sync, extras installation, or environment creation for the probe.",
+        "Does not import Newton or claim the proposed command was executed."
+      ]
     }
   ]
 }

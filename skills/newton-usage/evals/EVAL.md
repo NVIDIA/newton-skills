@@ -7,6 +7,9 @@ They do not establish executable simulation correctness or a compatibility range
 
 ## Behaviors
 
+- Keep metadata probes in the existing task environment without syncing
+  dependencies, creating environments, installing extras, or updating locks.
+
 - Reuse known facts and identify the installed version before release-specific work.
 - Find matching documentation and packaged examples without requiring a checkout.
 - Define acceptance criteria before building and choose the simplest supported
