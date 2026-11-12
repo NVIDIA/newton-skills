@@ -44,6 +44,20 @@
       ]
     },
     {
+      "id": "newton-usage-offline-docs",
+      "prompt": "I installed the current Newton physics wheel on a machine without internet access. I need the modeling conventions and the ModelBuilder API reference. How can I find and consult the documentation already available in my Python environment? Give commands and a short lookup plan; do not install packages, clone repositories, or run a simulation.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "Identify the installed Newton version and try python -m newton.docs. Use its reported local directory to find the conventions guide and ModelBuilder API page through targeted search, the optional llms.txt navigation index, or newton.info object or symbol lookup. Distinguish a bundled snapshot from unrendered editable sources. If this wheel lacks local docs, report the offline limitation rather than assuming a download is possible. Preserve the environment and avoid claiming checks that were not run.",
+      "assertions": [
+        "Routes to newton-usage and accounts for the installed package version.",
+        "Discovers local documentation with python -m newton.docs and locates relevant pages through targeted search, the generated index, or newton.info lookup; index reading is not mandatory.",
+        "Selects the conventions guide and ModelBuilder API reference without loading the whole corpus.",
+        "Reports an offline limitation if documentation is unavailable instead of requiring a checkout, Sphinx, or downloads.",
+        "Does not change packages, run simulations, or claim verification not performed."
+      ]
+    },
+    {
       "id": "newton-usage-negative-root-finding",
       "prompt": "Starting at x = 1, show one Newton iteration for x^2 - 2 = 0.",
       "expected_skill": null,
