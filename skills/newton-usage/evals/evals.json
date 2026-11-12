@@ -3,56 +3,54 @@
   "evals": [
     {
       "id": "newton-usage-explicit-setup",
-      "prompt": "Use newton-usage to help me get started with the Newton physics simulator from PyPI. I do not have a source checkout. Give me a short plan and commands to discover and run a suitable packaged example. Do not install packages or run simulations in this task.",
+      "prompt": "Use newton-usage to help me get started with the released Newton package. I do not have a source checkout. Give me the commands to identify the version and discover a packaged example, but do not execute those commands, install packages, or run a simulation.",
       "expected_skill": "newton-usage",
       "expected_script": null,
-      "expected_output": "A concise wheel-based setup plan using public Newton documentation, a command to identify the installed package version, python -m newton.examples --list, and commands to inspect and run a discovered example. Example dependencies are obtained through the examples extra while preserving the selected Newton version. A Git checkout is optional. No installation or simulation is claimed to have been performed.",
+      "expected_output": "Supplies version and packaged-example discovery commands and matching installation guidance without executing commands, installing packages, running a simulation, requiring a checkout, or claiming discovered values.",
       "assertions": [
-        "Routes to newton-usage.",
-        "Points to public Newton documentation and accounts for the installed package version.",
-        "Provides python -m newton.examples --list and the example launcher and --help patterns.",
-        "Does not require a source checkout or change packages.",
-        "Does not claim a successful simulation run."
+        "Reads newton-usage before answering.",
+        "Supplies the installed-version and packaged-example discovery commands without executing them.",
+        "Keeps a source checkout optional and preserves the environment.",
+        "Reports that installation and simulation execution were not performed.",
+        "Uses release-matched installation guidance and respects the requested command-only response."
       ]
     },
     {
-      "id": "newton-usage-implicit-debug",
-      "prompt": "My simulation built with the Newton Python wheel sometimes lets a falling body pass through the ground. I have not provided a reproducer, package version, or solver yet. What should we inspect first? Give me a short diagnostic plan; do not invent a fix or execute a simulation.",
+      "id": "newton-usage-implicit-discovery",
+      "prompt": "I have Newton installed from PyPI. Check my active Python environment now and report where the package and its examples live, then give me the matching solver documentation without cloning anything.",
       "expected_skill": "newton-usage",
       "expected_script": null,
-      "expected_output": "A focused diagnostic plan requesting the Newton version, solver, CPU/GPU environment, and minimal reproducer. It routes to the matching collision/contact and simulation-tuning documentation and relevant wheel-shipped examples, proposes discriminating checks grounded in those sources, and identifies the original symptom as the verification target. The cause and resolution remain unverified without evidence.",
+      "expected_output": "Identifies the active Python executable, installed Newton version, package and packaged-example locations, and available examples; gives matching solver documentation without cloning or broad environment searches.",
       "assertions": [
-        "Routes to newton-usage without an explicit skill invocation.",
-        "Requests the package version, solver, execution environment, and reproducer.",
-        "Routes to collision/contact and simulation-tuning documentation for the relevant version and solver.",
-        "Uses packaged example discovery without requiring a checkout.",
-        "Does not assert a root cause, universal parameter value, or verified fix without evidence."
-      ]
-    },
-    {
-      "id": "newton-usage-context-version",
-      "prompt": "A teammate sent me a Newton example from the latest online docs, but our project uses an older pinned Newton wheel. We cannot upgrade it or clone the source repository. How should I find a compatible example and check whether the referenced API exists? Give instructions only; do not change the environment.",
-      "expected_skill": "newton-usage",
-      "expected_script": null,
-      "expected_output": "Instructions to discover the installed Newton version, select matching documentation where available, and explicitly flag any unresolved documentation-version mismatch. It uses the pinned wheel's example list, example --help, and installed example source as compatibility evidence. It does not assume that latest APIs exist, require a checkout, upgrade packages, or claim verification not performed.",
-      "assertions": [
-        "Routes to newton-usage in the project context.",
-        "Accounts for the pinned installed version and flags unmatched documentation.",
-        "Provides wheel-based example discovery and installed-source inspection.",
-        "Does not assume latest documentation proves compatibility with the older wheel.",
-        "Respects the restrictions on upgrading, cloning, and environment changes."
+        "Reports the active Python executable, installed Newton version, package location, examples location, and available packaged examples based on observed evidence.",
+        "Uses documentation matching the installed release; accepts relevant bundled, hosted, or supplied-checkout documentation.",
+        "Limits discovery and retrieval to information needed for the request without repeated probes or broad searches.",
+        "Does not clone a repository or silently change versions."
       ]
     },
     {
       "id": "newton-usage-negative-root-finding",
-      "prompt": "Starting at x = 1, show one Newton iteration for x^2 - 2 = 0.",
+      "prompt": "Explain one iteration of Newton's method for finding the square root of 2, starting from x = 1. This is a calculus question.",
       "expected_skill": null,
       "expected_script": null,
-      "expected_output": "Uses f(x) = x^2 - 2 and f'(x) = 2x to compute x_next = 1 - (1 - 2)/2 = 1.5. Does not route to the Newton physics simulator skill, recommend installing Newton, or discuss simulation examples.",
+      "expected_output": "The response computes the next estimate as 1.5 without using the Newton physics skill.",
       "assertions": [
-        "Does not activate or read newton-usage.",
-        "Computes the first iteration as 1.5.",
-        "Does not introduce the Newton physics package or simulation workflow."
+        "Does not read a Newton physics skill.",
+        "Computes the Newton-method iteration correctly.",
+        "Does not discuss simulator installation or examples."
+      ]
+    },
+    {
+      "id": "newton-usage-implicit-debug",
+      "prompt": "My Newton simulation is reproducibly tunneling through the ground. Diagnose it and verify the fix.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "The response treats tunneling as a reproducible correctness failure, checks once for the expected reproducer, and, when it is absent, reports the missing inputs without claiming a cause or fix while preserving ground penetration as the verification target.",
+      "assertions": [
+        "Treats reproducible tunneling as a correctness failure and preserves ground penetration as the verification target.",
+        "Requests only the missing reproducer, launch command, Newton version, solver, backend, and simulation cadence needed for diagnosis.",
+        "If the reproducer is absent, inspects its expected location once, reports the missing input, and stops without a broad search.",
+        "Does not claim a cause, correction, or successful verification without reproducing the failure."
       ]
     },
     {
@@ -66,6 +64,80 @@
         "Focuses on the failing CI job, logs, tested revision, and contributor instructions.",
         "Does not treat repository maintenance as a wheel-consumer simulation task.",
         "Respects the restrictions on file changes and job reruns."
+      ]
+    },
+    {
+      "id": "newton-usage-implicit-build",
+      "prompt": "I need a Newton scene with rigid and deformable objects interacting. Help me choose a supported setup and define acceptance checks before writing code. You can consult documentation, but do not create files, install packages, or run simulations.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "Uses release-matched documentation to compare configurations, prefers one supported solver where sufficient, defines acceptance criteria before implementation, and respects the execution restrictions.",
+      "assertions": [
+        "Defines the relevant interaction, trajectory, horizon, observables, and physical acceptance bounds before proposing a build.",
+        "Chooses the simplest supported configuration; requires coupling only for an interaction a single solver cannot represent.",
+        "Allows focused documentation retrieval to establish support without executing a simulation or modifying the environment.",
+        "Does not require a separate build skill."
+      ]
+    },
+    {
+      "id": "newton-usage-context-assets",
+      "prompt": "My existing robot asset must stay unchanged. Add a Newton scene around it in the active environment and test a short motion. If example extras are unavailable, use the public APIs with what is installed.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "Preserves the asset and environment, uses a minimal supported configuration, and checks effective imported state and physical bounds rather than appearance.",
+      "assertions": [
+        "Preserves the supplied source asset and does not install extras without authorization.",
+        "Defines acceptance bounds before adapting the scene.",
+        "Checks effective imported model values and backend support.",
+        "Reports measured state-level evidence or missing inputs without claiming an unexecuted success."
+      ]
+    },
+    {
+      "id": "newton-usage-context-metadata-only",
+      "prompt": "Check only the installed Newton version in my active environment. Do not import Newton, list examples, or run a simulation.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "Reports distribution metadata without importing Newton or invoking a submodule.",
+      "assertions": [
+        "Uses importlib.metadata to read the installed version without importing Newton.",
+        "Does not invoke newton.docs, newton.examples, newton.info, or submodule discovery that imports the parent.",
+        "Preserves user execution limits and reports missing distribution metadata honestly."
+      ]
+    },
+    {
+      "id": "newton-usage-context-preserve-project",
+      "prompt": "My uv project already has an environment and lockfile, but pyproject.toml has changed since the last sync. Give a command to read the installed Newton version without importing Newton or changing the environment or lockfile. Do not execute anything.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "Uses the existing environment interpreter or a non-syncing, frozen wrapper to read installed metadata without changing the project.",
+      "assertions": [
+        "Uses the existing project interpreter or uv run --no-sync --frozen with the supplied existing environment.",
+        "Does not propose ordinary uv run, dependency sync, extras installation, or environment creation for the probe.",
+        "Does not import Newton or claim the proposed command was executed."
+      ]
+    },
+    {
+      "id": "newton-usage-context-active-project-selection",
+      "prompt": "I have an activated environment for this Newton task and a different .venv in the current uv project. Use the active environment to identify the installed Newton version without importing Newton. Give commands only and leave both environments and the project lockfile unchanged.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "Selects the existing active interpreter directly or uses uv --active in non-syncing frozen mode, without inspecting the separate project installation.",
+      "assertions": [
+        "Selects the explicitly intended active environment rather than the default uv project environment.",
+        "If using uv, includes --active with --no-sync --frozen and relies on the supplied existing environment.",
+        "Reads distribution metadata without importing Newton or changing either environment or the lockfile."
+      ]
+    },
+    {
+      "id": "newton-usage-context-example-environment",
+      "prompt": "Newton is installed in my uv project .venv, but that environment is not activated. Give commands to identify its Newton version, list the packaged examples, and inspect one example help page. Do not execute anything, install dependencies, or change the lockfile.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "Reuses the intended existing project interpreter or a verified non-syncing frozen wrapper for metadata, example discovery, and help.",
+      "assertions": [
+        "Uses the same selected existing project environment for metadata, example listing, and help.",
+        "Does not fall back to bare system Python because the project environment is not activated.",
+        "Does not sync dependencies, create an environment, update the lockfile, or execute the proposed commands."
       ]
     }
   ]
