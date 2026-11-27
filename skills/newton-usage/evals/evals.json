@@ -67,6 +67,62 @@
         "Does not treat repository maintenance as a wheel-consumer simulation task.",
         "Respects the restrictions on file changes and job reruns."
       ]
+    },
+    {
+      "id": "newton-usage-solver-cloth-robot",
+      "prompt": "I want to simulate a robot arm, imported from URDF, draping a cloth over a table on the GPU with the Newton wheel. Which Newton solver or solver combination should I use, and why? Give a recommendation with trade-offs only; do not install packages or run simulations.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "A recommendation grounded in the solver overview's feature tables for the installed Newton version. It identifies solvers or documented solver coupling that cover both the articulated rigid robot and cloth, for example SolverVBD for rigid bodies and cloth with its limited joint support and experimental status, or a rigid-body solver coupled with a cloth solver as described in the coupling documentation. It states the trade-offs and what to verify for the user's robot, such as the joint types it needs. It points to the relevant solver guide and example discovery, and does not claim a tested result.",
+      "assertions": [
+        "Routes to newton-usage without an explicit skill invocation.",
+        "Consults the solver overview's feature tables, or equivalent documentation for the installed version, before recommending.",
+        "Recommends at least one documented option that covers both articulated rigid bodies and cloth, and credits any equally valid documented alternative.",
+        "States relevant limitations, such as experimental status or limited joint support, and what to check for the user's robot.",
+        "Does not claim the recommendation was tested or install packages."
+      ]
+    },
+    {
+      "id": "newton-usage-solver-closed-loop",
+      "prompt": "We model a planar four-bar linkage gripper with hard frictional contacts against parts. The linkage forms a kinematic loop. Which Newton solver should we start with, and what should we watch out for? Advice only; do not run anything.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "A recommendation grounded in the solver overview and solver guides. It recognizes the closed kinematic loop and contrasts maximal-coordinate solvers, which enforce joints as pairwise constraints, with generalized-coordinate solvers, which need loop closures as additional constraints. SolverKamino is a documented fit for kinematic loops and hard frictional contacts and is marked experimental; other documented choices with stated trade-offs are credited. It names checks for the user's case, such as joint types and contact behavior, and does not claim tested results.",
+      "assertions": [
+        "Routes to newton-usage.",
+        "Identifies the kinematic loop as a solver-selection constraint and explains generalized versus maximal coordinates for it.",
+        "Grounds the recommendation in the solver overview or solver guides, noting experimental status where documented.",
+        "Credits equally valid documented alternatives with their trade-offs.",
+        "Does not claim the recommendation was tested."
+      ]
+    },
+    {
+      "id": "newton-usage-solver-determinism",
+      "prompt": "For a GPU reinforcement learning project with an MJCF humanoid in Newton we need run-to-run deterministic rollouts. Is SolverMuJoCo the right choice, or should we use another solver? Give a short recommendation; do not run simulations.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "A recommendation that checks determinism support in the solver overview and the deterministic simulation documentation for the installed version, rather than assuming it. It reports any documented determinism limitation of SolverMuJoCo on GPU and names documented generalized-coordinate alternatives that support determinism with their trade-offs, or explains how to obtain determinism with the documented settings. It flags remaining limitations and leaves verification of determinism on the user's setup as an explicit next step.",
+      "assertions": [
+        "Routes to newton-usage.",
+        "Checks determinism support in the solver feature tables or determinism documentation for the installed version.",
+        "Reports a documented determinism limitation of the chosen solver instead of assuming determinism.",
+        "Names documented alternatives or settings with trade-offs, crediting equally valid options.",
+        "Recommends verifying run-to-run determinism on the user's setup and does not claim it was verified."
+      ]
+    },
+    {
+      "id": "newton-usage-faq-contact-stiffness",
+      "prompt": "I use SolverMuJoCo in Newton. The gripper fingers sink into a held cube, and raising ke on the cube shape changes nothing. What should I check? Short diagnostic plan only; no code execution.",
+      "expected_skill": "newton-usage",
+      "expected_script": null,
+      "expected_output": "A diagnostic plan that routes to the Simulation Tuning FAQ and the MuJoCo tuning and solver documentation for the installed version. It names candidate causes documented there, such as which shape's contact parameters govern a contact pair, how shape stiffness and damping map to MuJoCo contact parameters and their time-step limits, and whether a runtime edit reached the solver. It proposes checks that distinguish these causes and keeps the symptom as the verification target, without asserting one root cause.",
+      "assertions": [
+        "Routes to newton-usage.",
+        "Uses the Simulation Tuning FAQ and solver-specific tuning documentation.",
+        "Considers how both shapes' contact parameters combine for the pair instead of only the edited shape.",
+        "Considers the stiffness-to-solver mapping and whether the edit reached the solver.",
+        "Does not assert a single root cause or verified fix without evidence."
+      ]
     }
   ]
 }
