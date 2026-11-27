@@ -3,16 +3,15 @@
   "evals": [
     {
       "id": "newton-usage-explicit-setup",
-      "prompt": "Use newton-usage to help me get started with the released Newton package. I do not have a source checkout. Give me the commands to identify the version and discover a packaged example, but do not execute those commands, install packages, or run a simulation.",
+      "prompt": "Use newton-usage to help me get started with the released Newton package. I do not have a source checkout. Give me commands to identify the version, discover a packaged example, and launch it. What should I do if its dependencies are missing? Do not run commands or install anything.",
       "expected_skill": "newton-usage",
       "expected_script": null,
-      "expected_output": "Supplies version and packaged-example discovery commands and matching installation guidance without executing commands, installing packages, running a simulation, requiring a checkout, or claiming discovered values.",
+      "expected_output": "Gives a wheel-based path from version and example discovery through launch, with release-matched dependency guidance and no execution or installation.",
       "assertions": [
-        "Reads newton-usage before answering.",
-        "Supplies the installed-version and packaged-example discovery commands without executing them.",
+        "Supplies commands to identify the version, discover an example, and launch it in the selected environment.",
         "Keeps a source checkout optional and preserves the environment.",
-        "Reports that installation and simulation execution were not performed.",
-        "Uses release-matched installation guidance and respects the requested command-only response."
+        "For missing example dependencies, points to the installation guide and preserves the selected Newton version.",
+        "Does not execute commands or install anything."
       ]
     },
     {
@@ -99,7 +98,7 @@
       "expected_script": null,
       "expected_output": "Reports distribution metadata without importing Newton or invoking a submodule.",
       "assertions": [
-        "Uses importlib.metadata to read the installed version without importing Newton.",
+        "Reads the installed distribution version without importing Newton.",
         "Does not invoke newton.docs, newton.examples, newton.info, or submodule discovery that imports the parent.",
         "Preserves user execution limits and reports missing distribution metadata honestly."
       ]
@@ -111,7 +110,7 @@
       "expected_script": null,
       "expected_output": "Uses the existing environment interpreter or a non-syncing, frozen wrapper to read installed metadata without changing the project.",
       "assertions": [
-        "Uses the existing project interpreter or uv run --no-sync --frozen with the supplied existing environment.",
+        "Uses the existing project interpreter or a wrapper that selects it without syncing or changing the lockfile.",
         "Does not propose ordinary uv run, dependency sync, extras installation, or environment creation for the probe.",
         "Does not import Newton or claim the proposed command was executed."
       ]
@@ -124,7 +123,7 @@
       "expected_output": "Selects the existing active interpreter directly or uses uv --active in non-syncing frozen mode, without inspecting the separate project installation.",
       "assertions": [
         "Selects the explicitly intended active environment rather than the default uv project environment.",
-        "If using uv, includes --active with --no-sync --frozen and relies on the supplied existing environment.",
+        "If using a wrapper, selects the active environment explicitly and avoids syncing dependencies or changing the lockfile.",
         "Reads distribution metadata without importing Newton or changing either environment or the lockfile."
       ]
     },
