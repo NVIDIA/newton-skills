@@ -10,6 +10,10 @@ version range.
 
 - Discover the installed version and use matching public documentation.
 - Find packaged examples without requiring a source checkout.
+- Ground solver recommendations in the documented feature tables and
+  limitations, crediting equally valid alternatives.
+- Route known simulation symptoms to the Simulation Tuning FAQ and the
+  solver-specific tuning guides.
 - Preserve environment restrictions and distinguish advice from verified results.
 - Keep Newton's method questions outside the physics-simulator skill.
 - Keep source-repository CI maintenance outside this wheel-consumer skill.

@@ -17,12 +17,15 @@ source checkout is optional.
    any version mismatch before relying on an API or feature. Read only the
    sections relevant to the task:
    - Setup and modeling: installation, tutorials, conventions, solver guides,
-     and the API reference.
-   - Debugging: FAQ, simulation tuning, collisions and contacts, and viewers
-     and debugging; follow the relevant solver-specific guidance.
+     and the API reference. To choose a solver, compare the requirements with
+     the solver overview's feature tables before recommending one.
+   - Debugging: the Simulation Tuning FAQ for known symptoms, then simulation
+     tuning, collisions and contacts, and viewers and debugging; follow the
+     relevant solver-specific guidance.
    - If a matching source checkout is already available, these sources are
      under `docs/guide/*.rst`, `docs/concepts/*.rst`, `docs/solvers/*.rst`,
-     `docs/api/*.rst`, and `docs/faq.rst`. Do not require a clone to use Newton.
+     `docs/api/*.rst`, and `docs/faq.rst`; the Simulation Tuning FAQ is
+     `docs/concepts/simulation_tuning_faq.rst`. Do not require a clone to use Newton.
 3. Discover examples shipped in the wheel with
    `python -m newton.examples --list`. Run a relevant example with
    `python -m newton.examples <example_name>` and inspect its options with
