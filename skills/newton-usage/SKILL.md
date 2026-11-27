@@ -16,9 +16,8 @@ metadata:
    For a version-only request, stop there. If needed and permitted, locate Newton
    separately with `python -c "import newton; print(newton.__file__)"`. Retain
    the metadata if import fails.
-2. **Find matching guidance.** Use the [Newton documentation](https://newton-physics.github.io/newton/),
-   a supplied matching checkout, or the wheel's `python -m newton.docs` when
-   available and imports are permitted. Flag version mismatches. Consult the
+2. **Find matching guidance.** Use the [Newton documentation](https://newton-physics.github.io/newton/)
+   or a supplied matching checkout. Flag version mismatches. Consult the
    installation guide if Newton is missing, or the relevant solver, importer,
    or troubleshooting guide for an existing scene. A checkout is optional.
 3. **Start from an example.** List examples with `python -m newton.examples --list`

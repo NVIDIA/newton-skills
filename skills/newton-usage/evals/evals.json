@@ -99,7 +99,7 @@
       "expected_output": "Reports distribution metadata without importing Newton or invoking a submodule.",
       "assertions": [
         "Reads the installed distribution version without importing Newton.",
-        "Does not invoke newton.docs, newton.examples, newton.info, or submodule discovery that imports the parent.",
+        "Does not invoke Newton submodules or use discovery that imports the parent package.",
         "Preserves user execution limits and reports missing distribution metadata honestly."
       ]
     },
