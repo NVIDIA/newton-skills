@@ -1,37 +1,42 @@
 ---
 name: newton-usage
-description: Set up, build, or debug physics simulations with the Newton Python package. Use when installing Newton, choosing simulation components, finding examples, or diagnosing simulation and runtime problems.
+description: Install or use the released Newton Python package to find examples, build physics simulations, choose solvers, or diagnose failures.
+metadata:
+  author: Anthony Angeles <aangeles@nvidia.com>
 ---
 
 # Using Newton
 
-Help users of the released Newton wheel find and apply the relevant public
-documentation and examples. Work in the user's Python environment; a Newton
-source checkout is optional.
+1. **Identify the task and release.** Reuse supplied facts. Use the same verified
+   interpreter or required wrapper for all Newton commands, preserving its
+   environment variables and project context. Keep discovery read-only. For an
+   inactive or ambiguous uv environment, see [environment selection](references/environment.md).
+   Get the interpreter and version without importing Newton with
+   `python -c "import sys; from importlib.metadata import version; print(sys.executable, flush=True); print(version('newton'))"`.
+   For a version-only request, stop there. If needed and permitted, locate Newton
+   separately with `python -c "import newton; print(newton.__file__)"`. Retain
+   the metadata if import fails.
+2. **Find matching guidance.** Use the [Newton documentation](https://newton-physics.github.io/newton/)
+   or a supplied matching checkout. Flag version mismatches. Consult the
+   installation guide if Newton is missing, or the relevant solver, importer,
+   or troubleshooting guide for an existing scene. A checkout is optional.
+3. **Start from an example.** List examples with `python -m newton.examples --list`
+   or look in the installed package's `examples/` directory. Use
+   `python -m newton.examples <name> --help` for options and run the example
+   with `python -m newton.examples <name>` when execution is requested. If
+   dependencies are missing, point to the installation guide for
+   `newton[examples]` pinned to the installed version. Get authorization before
+   changing dependencies.
+4. **Build or diagnose.** Define the motion, horizon, observables, and physical
+   bounds before building. Choose the simplest documented solver that supports
+   the required interactions. Use coupling only if one solver cannot represent
+   them. Adapt the closest example or a minimal public-API scene. Preserve
+   supplied assets, choices, and execution limits. Reduce failures while retaining
+   the symptom, then recheck the original scene after fixing it.
+5. **Verify and report.** Inspect effective model and solver values, finite
+   state, relevant bounds such as penetration or joint travel, and the requested
+   behavior over the agreed horizon. Report sources, commands run, and measured
+   results. If execution is unavailable, give the next check and mark the outcome
+   unverified. Use specialized skills when they add relevant expertise.
 
-1. Identify the installed Newton version with
-   `python -c "from importlib.metadata import version; print(version('newton'))"`.
-   Establish the user's goal or failure, solver, and CPU/GPU environment.
-2. Start at the [Newton documentation](https://newton-physics.github.io/newton/).
-   Select documentation matching the installed release where available; flag
-   any version mismatch before relying on an API or feature. Read only the
-   sections relevant to the task:
-   - Setup and modeling: installation, tutorials, conventions, solver guides,
-     and the API reference.
-   - Debugging: FAQ, simulation tuning, collisions and contacts, and viewers
-     and debugging; follow the relevant solver-specific guidance.
-   - If a matching source checkout is already available, these sources are
-     under `docs/guide/*.rst`, `docs/concepts/*.rst`, `docs/solvers/*.rst`,
-     `docs/api/*.rst`, and `docs/faq.rst`. Do not require a clone to use Newton.
-3. Discover examples shipped in the wheel with
-   `python -m newton.examples --list`. Run a relevant example with
-   `python -m newton.examples <example_name>` and inspect its options with
-   `python -m newton.examples <example_name> --help`. Locate the installed
-   package with `python -c "import newton; print(newton.__file__)"`; example
-   source is in the adjacent `examples/` directory. If example dependencies
-   are missing, follow the installation guide for the `newton[examples]`
-   extra, keeping the user's Newton version pinned.
-4. Adapt the closest supported example or reduce a failure to a small
-   reproducer. Use documented public APIs, make a focused change, and verify
-   the requested behavior or original symptom. Report the documentation used,
-   what was checked, and anything still unverified.
+Compatibility across Newton releases has not been validated.

@@ -1,5 +1,5 @@
 ## Description: <br>
-Set up, build, or debug physics simulations with the Newton Python package; use when installing Newton, choosing simulation components, finding examples, or diagnosing simulation and runtime problems. <br>
+Install or use the released Newton Python package to find examples, build physics simulations, choose solvers, or diagnose failures. <br>
 
 This skill is ready for commercial/non-commercial use. <br>
 
@@ -9,7 +9,7 @@ NVIDIA <br>
 ### License/Terms of Use: <br>
 CC-BY-4.0 AND Apache 2.0 <br>
 ## Use Case: <br>
-Developers and engineers using the released Newton Python wheel use this skill to find version-matched public documentation and packaged examples, set up and adapt simulations, and diagnose simulation and runtime problems with small reproducers. <br>
+Developers and engineers using the released Newton physics simulator Python package use this skill to identify their installed Newton version, find matching documentation and packaged examples, build or adapt physics simulations with an appropriate solver, and diagnose and verify simulation failures. <br>
 
 ### Deployment Geography for Use: <br>
 Global <br>
@@ -25,16 +25,17 @@ Risk: Review before execution as proposals could introduce incorrect or misleadi
 Mitigation: Review and scan skill before deployment. <br>
 
 ## Reference(s): <br>
+- [Select an existing Python environment](references/environment.md) <br>
 - [Newton documentation](https://newton-physics.github.io/newton/) <br>
 - [Newton installation guide](https://newton-physics.github.io/newton/latest/guide/installation.html) <br>
-- [Newton GitHub repository](https://github.com/newton-physics/newton) <br>
+- [Newton physics simulator (GitHub)](https://github.com/newton-physics/newton) <br>
 
 
 ## Skill Output: <br>
-**Output Type(s):** [Analysis, Shell commands, Code, Configuration instructions] <br>
-**Output Format:** [Markdown with inline bash and Python code blocks] <br>
+**Output Type(s):** [Shell commands, Code, Analysis] <br>
+**Output Format:** [Markdown with inline Python and shell code blocks] <br>
 **Output Parameters:** [1D] <br>
-**Other Properties Related to Output:** [Reports the documentation used, what was checked, and anything still unverified.] <br>
+**Other Properties Related to Output:** [Reports sources, commands run, and measured results; outcomes are marked unverified when execution is unavailable.] <br>
 
 ## Evaluation Agents Used: <br>
 - Claude Code (`aws/anthropic/bedrock-claude-opus-5-5`) <br>
@@ -43,39 +44,72 @@ Mitigation: Review and scan skill before deployment. <br>
 
 
 ## Evaluation Tasks: <br>
-5 evaluation tasks (3 positive, 2 negative) covering documentation and example routing for the Newton wheel, with 1 attempt per task in isolated `k8s-sandbox` pods, compared against a no-skill baseline. Evaluator version `1.6.4`, evaluated 2026-10-30. <br>
+11 evaluation tasks (9 positive, 2 negative), 1 attempt per task, run in the `k8s-sandbox` environment with each task attempt in its own isolated sandbox pod; baseline runs attempted the same tasks without the skill. <br>
 
 ## Evaluation Metrics Used: <br>
 Reported benchmark dimensions: <br>
-- Security: Is it safe to use? Scored from the `security` signal. <br>
-- Correctness: Is the answer correct? Scored from the `accuracy` signal. <br>
-- Discoverability: Was the right skill loaded when needed? Scored from the `skill_execution` signal. <br>
-- Effectiveness: Did the skill help complete the task? Equal-weight mean of `goal_accuracy` and `behavior_check`. <br>
-- Efficiency: Did it avoid wasted tool calls and token usage? 50% `skill_efficiency` plus 50% `token_efficiency`. <br>
+- Security: Is it safe to use? Scored from `security` (100%). <br>
+- Correctness: Is the answer correct? Scored from `accuracy` (100%). <br>
+- Discoverability: Was the right skill loaded when needed? Scored from `skill_execution` (100%). <br>
+- Effectiveness: Did the skill help complete the task? Scored from `goal_accuracy` (50%) + `behavior_check` (50%). <br>
+- Efficiency: Did it avoid wasted tool calls and token usage? Scored from `skill_efficiency` (50%) + `token_efficiency` (50%). <br>
 
 Underlying evaluation signals used in this run: <br>
-- `security`: Unsafe operations, secret leakage, and unauthorized access. <br>
-- `skill_execution`: Whether the expected skill was selected, decoys were avoided, and the workflow executed. <br>
-- `skill_efficiency`: Tool-call productivity. <br>
-- `accuracy`: Final-answer correctness against the reference answer. <br>
-- `goal_accuracy`: Whether the user's goal was achieved. <br>
-- `behavior_check`: Whether the expected workflow behavior was followed. <br>
-- `token_efficiency`: Actual uncached prompt plus completion token usage. <br>
+- `security`: Security: unsafe operations, secret leakage, and unauthorized access. <br>
+- `skill_execution`: Skill Execution: whether the expected skill was selected, decoys were avoided, and the workflow executed. <br>
+- `skill_efficiency`: Tool Productivity: tool-call productivity (legacy wire id; routing is scored under Discoverability). <br>
+- `accuracy`: Accuracy: final-answer correctness against the reference answer. <br>
+- `goal_accuracy`: Goal Accuracy: whether the user's goal was achieved. <br>
+- `behavior_check`: Behavior Check: whether the expected workflow behavior was followed. <br>
+- `token_efficiency`: Token Efficiency: actual uncached prompt plus completion usage (50% of Efficiency). <br>
 
 
 
 ## Evaluation Results: <br>
+> ✅ **Overall verdict: PASS — Recommended for publication**
+
+### Publication Recommendation
+
+Recommended for publication based on the completed evaluation evidence in this report.
+
+### Results at a Glance
+
 | Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
 |---|---:|---:|
-| Overall | 97.7% — baseline ran, but no comparable score was available; uplift unavailable | 89.9% — baseline ran, but no comparable score was available; uplift unavailable |
-| Security | 100.0% → 100.0% (±0.0 points) | 100.0% → 100.0% (±0.0 points) |
-| Correctness | 80.0% → 92.0% (+12.0 points) | 80.0% → 100.0% (+20.0 points) |
-| Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 93.3% — baseline ran, but no comparable score was available; uplift unavailable |
-| Effectiveness | 66.0% → 97.5% (+31.5 points) | 58.0% → 87.5% (+29.5 points) |
-| Efficiency | 99.2% — baseline ran, but no comparable score was available; uplift unavailable | 68.8% — baseline ran, but no comparable score was available; uplift unavailable |
+| Overall | 89.5% — baseline ran, but no comparable score was available; uplift unavailable | 86.3% — baseline ran, but no comparable score was available; uplift unavailable |
+| Security | 100.0% → 100.0% (±0.0 points) | 77.3% → 90.9% (+13.6 points) |
+| Correctness | 89.1% → 98.2% (+9.1 points) | 90.9% → 98.2% (+7.3 points) |
+| Discoverability | 78.3% — baseline ran, but no comparable score was available; uplift unavailable | 82.8% — baseline ran, but no comparable score was available; uplift unavailable |
+| Effectiveness | 69.3% → 82.6% (+13.3 points) | 84.1% → 79.5% (-4.6 points) |
+| Efficiency | 88.2% — baseline ran, but no comparable score was available; uplift unavailable | 79.8% — baseline ran, but no comparable score was available; uplift unavailable |
+
+**How to read this table:** baseline is the same task attempted without the target skill. Scores are rounded to one decimal; threshold-adjacent values use additional precision so their displayed band matches the verdict. Uplift is derived from those displayed scores and shown in percentage points.
+
+Example: `47.0% → 92.0% (+45.0 points)` means the skill-assisted run scored 92.0%, 45.0 percentage points above its 47.0% no-skill baseline.
+
+A partial dimension was calculated from only the available configured signals; review the detailed report before relying on it.
+
+#### Comparison details
+
+Shared-source comparisons use the same signals and weights on both conditions. They do not replace the full dimension scores above or change the publication verdict.
+
+| Agent | Dimension | Basis | Baseline → With skill (uplift) | Explanation |
+| --- | --- | --- | --- | --- |
+| claude-code | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
+| claude-code | Efficiency | Token-only comparison | 98.5% → 97.6% (-0.9 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| codex | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
+| codex | Efficiency | Token-only comparison | 91.3% → 91.2% (-0.1 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+
+### Tier Status
+
+| Tier | Purpose | Status | Evidence |
+|---|---|---|---|
+| Tier 1 | Static validation | **PASSED WITH OBSERVATIONS** | 11 validator(s); 9 finding(s) |
+| Tier 2 | Semantic deduplication | **PASSED** | 2 validator(s); 0 finding(s) |
+| Tier 3 | Live agent evaluation | **PASS** | 2 agent(s); 11 task(s) |
 
 ## Skill Version(s): <br>
-4810f44 (source: git SHA, committed 2026-10-30) <br>
+0ff36a9 (source: git SHA, committed 2026-11-27) <br>
 
 ## Ethical Considerations: <br>
 NVIDIA believes Trustworthy AI is a shared responsibility and we have established policies and practices to enable development for a wide array of AI applications. When downloaded or used in accordance with our terms of service, developers should work with their internal team to ensure this skill meets requirements for the relevant industry and use case and addresses unforeseen product misuse. <br>

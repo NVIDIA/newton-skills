@@ -10,11 +10,11 @@ Recommended for publication based on the completed evaluation evidence in this r
 
 - Skill: `newton-usage`
 - Validation status: `passed`
-- Evaluation date: 2026-10-30
-- Evaluator version: `1.6.4`
+- Evaluation date: 2026-11-27
+- Evaluator version: `1.6.10`
 - Agents: Claude Code (`aws/anthropic/bedrock-claude-opus-5-5`), Codex (`openai/openai/gpt-6.1-sol`)
-- Tasks: 5 evaluation tasks (3 positive, 2 negative)
-- Dataset digest: `sha256:f186dac7d2c4e6f63962549401aecd2144324c46da0fee1334c49af5fc19b756` (skill-evaluator-dataset-snapshot/1)
+- Tasks: 11 evaluation tasks (9 positive, 2 negative)
+- Dataset digest: `sha256:f31e6fb6c33a9af3b5d985a99024365051c66767aca55f6d1a179b17c743a926` (skill-evaluator-dataset-snapshot/1)
 - Attempts per task: 1
 - Environment: `k8s-sandbox`
 - Tier 2 evidence: required for publication
@@ -28,11 +28,11 @@ SkillSpector provider, model, analyzer revision, and determinism evidence retain
 
 | Skill | Provider | Adapter | Analyzer | Model | Revision | Determinism |
 | --- | --- | --- | --- | --- | --- | --- |
-| newton-usage | nv_inference | openai | mcp_tool_poisoning | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.2` | nondeterministic / provider_defaults |
-| newton-usage | nv_inference | openai | semantic_developer_intent | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.2` | nondeterministic / provider_defaults |
-| newton-usage | nv_inference | openai | semantic_quality_policy | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.2` | nondeterministic / provider_defaults |
-| newton-usage | nv_inference | openai | semantic_security_discovery | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.2` | nondeterministic / provider_defaults |
-| newton-usage | nv_inference | openai | meta_analyzer | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.2` | nondeterministic / provider_defaults |
+| newton-usage | nv_inference | openai | mcp_tool_poisoning | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.5` | nondeterministic / provider_defaults |
+| newton-usage | nv_inference | openai | semantic_developer_intent | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.5` | nondeterministic / provider_defaults |
+| newton-usage | nv_inference | openai | semantic_quality_policy | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.5` | nondeterministic / provider_defaults |
+| newton-usage | nv_inference | openai | semantic_security_discovery | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.5` | nondeterministic / provider_defaults |
+| newton-usage | nv_inference | openai | meta_analyzer | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.5` | nondeterministic / provider_defaults |
 
 - Controls for `newton-usage`: temperature=not set (source=provider_default, forwarded=no); seed=not set (source=unset, forwarded=no); reasoning_effort=not set (source=provider_default, forwarded=no)
 
@@ -50,12 +50,12 @@ The three-tier evaluation checks whether the skill:
 
 | Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
 |---|---:|---:|
-| Overall | 97.7% — baseline ran, but no comparable score was available; uplift unavailable | 89.9% — baseline ran, but no comparable score was available; uplift unavailable |
-| Security | 100.0% → 100.0% (±0.0 points) | 100.0% → 100.0% (±0.0 points) |
-| Correctness | 80.0% → 92.0% (+12.0 points) | 80.0% → 100.0% (+20.0 points) |
-| Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 93.3% — baseline ran, but no comparable score was available; uplift unavailable |
-| Effectiveness | 66.0% → 97.5% (+31.5 points) | 58.0% → 87.5% (+29.5 points) |
-| Efficiency | 99.2% — baseline ran, but no comparable score was available; uplift unavailable | 68.8% — baseline ran, but no comparable score was available; uplift unavailable |
+| Overall | 89.5% — baseline ran, but no comparable score was available; uplift unavailable | 86.3% — baseline ran, but no comparable score was available; uplift unavailable |
+| Security | 100.0% → 100.0% (±0.0 points) | 77.3% → 90.9% (+13.6 points) |
+| Correctness | 89.1% → 98.2% (+9.1 points) | 90.9% → 98.2% (+7.3 points) |
+| Discoverability | 78.3% — baseline ran, but no comparable score was available; uplift unavailable | 82.8% — baseline ran, but no comparable score was available; uplift unavailable |
+| Effectiveness | 69.3% → 82.6% (+13.3 points) | 84.1% → 79.5% (-4.6 points) |
+| Efficiency | 88.2% — baseline ran, but no comparable score was available; uplift unavailable | 79.8% — baseline ran, but no comparable score was available; uplift unavailable |
 
 **How to read this table:** baseline is the same task attempted without the target skill. Scores are rounded to one decimal; threshold-adjacent values use additional precision so their displayed band matches the verdict. Uplift is derived from those displayed scores and shown in percentage points.
 
@@ -70,9 +70,9 @@ Shared-source comparisons use the same signals and weights on both conditions. T
 | Agent | Dimension | Basis | Baseline → With skill (uplift) | Explanation |
 | --- | --- | --- | --- | --- |
 | claude-code | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
-| claude-code | Efficiency | Token-only comparison | 93.1% → 98.4% (+5.3 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| claude-code | Efficiency | Token-only comparison | 98.5% → 97.6% (-0.9 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
 | codex | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
-| codex | Efficiency | Token-only comparison | 90.2% → 90.7% (+0.5 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| codex | Efficiency | Token-only comparison | 91.3% → 91.2% (-0.1 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
 
 ## Token Usage
 
@@ -80,19 +80,31 @@ Actual Tier 3 execution usage is reported for every observed agent/case pair and
 
 | Agent | Dataset case | With skill | Without skill | Delta | Change | Coverage |
 |---|---|---:|---:|---:|---:|---|
-| claude-code | All cases | 396,425 | 286,834 | +109,591 | +38.21% | skill 5/5; base 5/5 |
-| claude-code | newton-usage-context-version | 72,528 | 36,423 | +36,105 | +99.13% | skill 1/1; base 1/1 |
-| claude-code | newton-usage-explicit-setup | 71,708 | 36,131 | +35,577 | +98.47% | skill 1/1; base 1/1 |
-| claude-code | newton-usage-implicit-debug | 72,299 | 36,072 | +36,227 | +100.43% | skill 1/1; base 1/1 |
-| claude-code | newton-usage-negative-contributor-ci | 144,772 | 143,202 | +1,570 | +1.10% | skill 1/1; base 1/1 |
-| claude-code | newton-usage-negative-root-finding | 35,118 | 35,006 | +112 | +0.32% | skill 1/1; base 1/1 |
-| codex | All cases | 211,526 | 164,764 | +46,762 | +28.38% | skill 5/5; base 5/5 |
-| codex | newton-usage-context-version | 36,630 | 31,334 | +5,296 | +16.90% | skill 1/1; base 1/1 |
-| codex | newton-usage-explicit-setup | 79,373 | 35,519 | +43,854 | +123.47% | skill 1/1; base 1/1 |
-| codex | newton-usage-implicit-debug | 31,689 | 26,146 | +5,543 | +21.20% | skill 1/1; base 1/1 |
-| codex | newton-usage-negative-contributor-ci | 50,513 | 58,514 | -8,001 | -13.67% | skill 1/1; base 1/1 |
-| codex | newton-usage-negative-root-finding | 13,321 | 13,251 | +70 | +0.53% | skill 1/1; base 1/1 |
-| ALL AGENTS | Dataset aggregate | 607,951 | 451,598 | +156,353 | +34.62% | skill 10/10; base 10/10 |
+| claude-code | All cases | 1,949,770 | 1,396,132 | +553,638 | +39.66% | skill 11/11; base 11/11 |
+| claude-code | newton-usage-context-active-project-selection | 71,542 | 35,686 | +35,856 | +100.48% | skill 1/1; base 1/1 |
+| claude-code | newton-usage-context-assets | 263,422 | 260,069 | +3,353 | +1.29% | skill 1/1; base 1/1 |
+| claude-code | newton-usage-context-example-environment | 108,418 | 35,984 | +72,434 | +201.30% | skill 1/1; base 1/1 |
+| claude-code | newton-usage-context-metadata-only | 142,256 | 141,342 | +914 | +0.65% | skill 1/1; base 1/1 |
+| claude-code | newton-usage-context-preserve-project | 35,671 | 35,394 | +277 | +0.78% | skill 1/1; base 1/1 |
+| claude-code | newton-usage-explicit-setup | 72,060 | 36,513 | +35,547 | +97.35% | skill 1/1; base 1/1 |
+| claude-code | newton-usage-implicit-build | 596,677 | 347,381 | +249,296 | +71.76% | skill 1/1; base 1/1 |
+| claude-code | newton-usage-implicit-debug | 184,459 | 181,388 | +3,071 | +1.69% | skill 1/1; base 1/1 |
+| claude-code | newton-usage-implicit-discovery | 258,454 | 142,381 | +116,073 | +81.52% | skill 1/1; base 1/1 |
+| claude-code | newton-usage-negative-contributor-ci | 181,354 | 144,458 | +36,896 | +25.54% | skill 1/1; base 1/1 |
+| claude-code | newton-usage-negative-root-finding | 35,457 | 35,536 | -79 | -0.22% | skill 1/1; base 1/1 |
+| codex | All cases | 603,294 | 452,177 | +151,117 | +33.42% | skill 11/11; base 11/11 |
+| codex | newton-usage-context-active-project-selection | 27,217 | 13,348 | +13,869 | +103.90% | skill 1/1; base 1/1 |
+| codex | newton-usage-context-assets | 130,446 | 107,101 | +23,345 | +21.80% | skill 1/1; base 1/1 |
+| codex | newton-usage-context-example-environment | 27,460 | 17,837 | +9,623 | +53.95% | skill 1/1; base 1/1 |
+| codex | newton-usage-context-metadata-only | 70,227 | 40,017 | +30,210 | +75.49% | skill 1/1; base 1/1 |
+| codex | newton-usage-context-preserve-project | 13,381 | 13,393 | -12 | -0.09% | skill 1/1; base 1/1 |
+| codex | newton-usage-explicit-setup | 31,555 | 26,236 | +5,319 | +20.27% | skill 1/1; base 1/1 |
+| codex | newton-usage-implicit-build | 61,076 | 39,286 | +21,790 | +55.47% | skill 1/1; base 1/1 |
+| codex | newton-usage-implicit-debug | 102,538 | 41,926 | +60,612 | +144.57% | skill 1/1; base 1/1 |
+| codex | newton-usage-implicit-discovery | 65,623 | 83,240 | -17,617 | -21.16% | skill 1/1; base 1/1 |
+| codex | newton-usage-negative-contributor-ci | 60,394 | 56,460 | +3,934 | +6.97% | skill 1/1; base 1/1 |
+| codex | newton-usage-negative-root-finding | 13,377 | 13,333 | +44 | +0.33% | skill 1/1; base 1/1 |
+| ALL AGENTS | Dataset aggregate | 2,553,064 | 1,848,309 | +704,755 | +38.13% | skill 22/22; base 22/22 |
 
 Prompt tokens include cached reads, so total tokens are `prompt + completion` (cached is not added twice). The Efficiency score uses `(prompt - cached) + completion`. Change is `100 * (with - without) / without`; negative means fewer tokens. N/A comparisons include their reason in the coverage column; coverage is never estimated.
 
@@ -100,21 +112,21 @@ Prompt tokens include cached reads, so total tokens are `prompt + completion` (c
 
 | Tier | Purpose | Status | Evidence |
 |---|---|---|---|
-| Tier 1 | Static validation | **PASSED WITH OBSERVATIONS** | 11 validator(s); 11 finding(s) |
+| Tier 1 | Static validation | **PASSED WITH OBSERVATIONS** | 11 validator(s); 9 finding(s) |
 | Tier 2 | Semantic deduplication | **PASSED** | 2 validator(s); 0 finding(s) |
-| Tier 3 | Live agent evaluation | **PASS** | 2 agent(s); 5 task(s) |
+| Tier 3 | Live agent evaluation | **PASS** | 2 agent(s); 11 task(s) |
 
 ## Findings and Observations
 
 <details>
 <summary>Show detailed findings and successful checks</summary>
 
-- **MEDIUM** QUALITY/quality_correctness: SKILL_SPEC recommended field missing: 'metadata.author' (`skills/newton-usage/SKILL.md`)
 - **MEDIUM** QUALITY/quality_correctness: SKILL_SPEC recommended field missing: 'metadata.tags' (`skills/newton-usage/SKILL.md`)
 - **MEDIUM** SCHEMA/body_recommended_section: Missing recommended section: '## Instructions' (`skills/newton-usage/SKILL.md`)
 - **MEDIUM** SCHEMA/body_recommended_section: Missing recommended section: '## Examples' (`skills/newton-usage/SKILL.md`)
-- **MEDIUM** SCHEMA/author_missing: Author not specified in metadata (`skills/newton-usage/SKILL.md`)
-- 6 additional finding(s) are available in the full evaluation artifacts.
+- **LOW** QUALITY/quality_correctness: No examples provided (`skills/newton-usage/SKILL.md`)
+- **LOW** QUALITY/quality_discoverability: No '## Purpose' section (`skills/newton-usage/SKILL.md`)
+- 4 additional finding(s) are available in the full evaluation artifacts.
 
 </details>
 
