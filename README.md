@@ -18,6 +18,8 @@ synchronized to the NVIDIA Skills Catalog.
 - [newton-performance](skills/newton-performance/SKILL.md): Measure and improve
   the speed of a correct Newton simulation, or review its step loop, using
   Newton's performance documentation.
+- [newton-verify-simulation](skills/newton-verify-simulation/SKILL.md): Assess a
+  simulation claim against trajectory evidence and task-specific criteria.
 
 ## Using the Skills
 

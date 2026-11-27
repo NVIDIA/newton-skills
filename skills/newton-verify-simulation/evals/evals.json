@@ -3,99 +3,97 @@
   "evals": [
     {
       "id": "newton-verify-implicit-sensitivity",
-      "prompt": "The final pose looks right. What evidence would show the result is not an artifact of one timestep or one random seed?",
+      "prompt": "My Newton rollout ends at the expected pose. What evidence would show that the result holds across timestep choices and initial seeds?",
       "expected_skill": "newton-verify-simulation",
-      "expected_script": null,
-      "expected_output": "The response recognizes a verification request, checks the full trajectory, defines timestep/substep and repeated-seed comparisons, and uses fixed acceptance criteria.",
+      "expected_output": "Compares full trajectories at a common physical horizon with fixed criteria, varying timestep and seed separately.",
       "assertions": [
-        "Selects the verification skill.",
+        "Compares runs over the same physical duration.",
         "Does not rely only on the final pose.",
         "Uses sensitivity and repeated-seed evidence when applicable.",
         "Keeps acceptance criteria fixed during comparison."
-      ]
+      ],
+      "files": []
     },
     {
       "id": "newton-verify-displayport-invalid-success",
-      "prompt": "A Newton 1.7 DisplayPort insertion run reports a high success rate, but some trajectories exceed the actuator travel limit or show excessive connector penetration. Verify the simulation result and state what would still be needed for a sim-to-real claim.",
+      "prompt": "Audit the success rate and hardware-transfer claim for our Newton insertion-axis task. The allowed stroke is 0–8.5 mm throughout each attempt, and the final target is 7.9–8.1 mm. Run a check on the supplied insertion.csv trajectories and report the evidence behind each verdict. The accompanying insertion.py can reproduce the data.",
       "expected_skill": "newton-verify-simulation",
-      "expected_script": null,
-      "expected_output": "The response rejects task-success labels that violate physical constraints, checks complete trajectories against fixed travel and penetration bounds, reports simulation validity separately, and requires corresponding hardware evidence for sim-to-real conclusions.",
+      "expected_output": "A passes, B fails. Both flags say success, but B reaches 9 mm at step 3. Valid successes: 1/2. Transfer remains unverified.",
       "assertions": [
-        "Rejects nominal successes that violate actuator or penetration bounds.",
-        "Checks complete trajectories rather than aggregate success alone.",
-        "Separates simulation validity from sim-to-real validity.",
-        "Requires hardware evidence for real-world claims."
+        "Reports that A satisfies both the stroke and endpoint criteria.",
+        "Identifies B's first violation at step 3 (9 mm versus the 8.5 mm maximum), despite its final 8 mm pose and positive flag.",
+        "Counts B as a failed attempt and reports one valid success out of two.",
+        "Leaves hardware transfer unverified because there are no corresponding measurements."
+      ],
+      "files": [
+        "files/insertion.csv",
+        "files/insertion.py"
       ]
     },
     {
       "id": "newton-verify-negative-file-integrity",
-      "prompt": "Verify the SHA-256 checksum of a downloaded archive. It contains no Newton model or simulation result.",
+      "prompt": "I computed the SHA-256 of a downloaded archive. The final digit differs from the published digest. Did the integrity check pass?",
       "expected_skill": null,
-      "expected_script": null,
-      "expected_output": "The response uses ordinary file-integrity verification and does not load a Newton simulation verification skill.",
+      "expected_output": "Reports a failed checksum comparison.",
       "assertions": [
-        "Does not read newton-verify-simulation.",
-        "Keeps the task scoped to checksum verification.",
-        "Does not invent physical acceptance criteria."
-      ]
+        "Recognizes that a one-digit mismatch fails the check."
+      ],
+      "files": []
     },
     {
       "id": "newton-verify-context-finite-without-reference",
       "prompt": "I want to check a Newton rollout only for finite positions and velocities. I have no external reference trajectory. Give me a verification plan and explain what evidence I need; do not run anything.",
       "expected_skill": "newton-verify-simulation",
-      "expected_script": null,
       "expected_output": "Plans complete-trajectory finite-state checks without requiring an unrelated external reference.",
       "assertions": [
         "Does not block finite-state verification on a missing external reference.",
         "Describes checking all required position and velocity samples and separates proposed checks from measured results.",
         "Does not claim parity or physical accuracy from finiteness alone."
-      ]
+      ],
+      "files": []
     },
     {
-      "id": "newton-verify-context-authorized-collection",
-      "prompt": "For a Newton finite-state check in my existing uv project environment, may I explicitly authorize running the current rollout to collect a missing trajectory, or does verification have to stop until I supply a separate reference? Explain the workflow and a metadata probe without executing anything or changing the environment or lockfile.",
+      "id": "newton-verify-contact-reference",
+      "prompt": "Our Newton gripper follows the commanded position on the bench and in simulation. Can we sign off contact fidelity from those position traces, or should we measure something else?",
       "expected_skill": "newton-verify-simulation",
-      "expected_script": null,
-      "expected_output": "Allows explicitly authorized evidence collection from an existing rollout and requires references only when the claim needs comparison.",
+      "expected_output": "Separates tracking from contact fidelity and identifies corresponding contact evidence.",
       "assertions": [
-        "Allows an explicitly authorized run of an existing rollout to collect missing trajectory evidence.",
-        "Does not require an external reference for a finite-state claim.",
-        "Respects this request for explanation only and does not claim to have collected evidence.",
-        "Uses the existing interpreter or non-syncing frozen wrapper for the metadata probe and does not change dependencies or the lockfile."
-      ]
+        "Limits the position comparison to tracking under the measured conditions.",
+        "Identifies relevant contact evidence such as aligned contact onset or force histories and a task-specific criterion.",
+        "Leaves unmeasured contact behavior unverified."
+      ],
+      "files": []
     },
     {
       "id": "newton-verify-negative-construction",
       "prompt": "Create a Newton robot scene with ground contacts and a short joint motion. Pick a supported solver and implement the scene.",
       "expected_skill": null,
-      "expected_script": null,
-      "expected_output": "Handles construction through usage guidance without activating independent claim verification.",
+      "expected_output": "Constructs the requested simulation.",
       "assertions": [
-        "Does not activate newton-verify-simulation solely for construction.",
-        "Does not require the retired newton-build-simulation skill."
-      ]
+        "Addresses scene construction, ground contacts, solver choice, and requested joint motion."
+      ],
+      "files": []
     },
     {
       "id": "newton-verify-negative-debugging",
       "prompt": "My Newton model starts jittering and then explodes when the gripper touches the cube. Find the cause and fix it.",
       "expected_skill": null,
-      "expected_script": null,
       "expected_output": "Treats the task as root-cause diagnosis and repair.",
       "assertions": [
-        "Does not activate newton-verify-simulation as the primary root-cause repair workflow.",
-        "Preserves the reported failure as the repair target."
-      ]
+        "Investigates the contact-triggered failure and offers a way to verify the repair."
+      ],
+      "files": []
     },
     {
       "id": "newton-verify-negative-performance",
       "prompt": "Our Newton rollout takes 80 ms per frame. Profile it and reduce the time while retaining the current trajectory tolerance.",
       "expected_skill": null,
-      "expected_script": null,
       "expected_output": "Treats profiling and speed improvement as performance work.",
       "assertions": [
-        "Does not activate newton-verify-simulation as the primary performance workflow.",
-        "Does not require the retired newton-optimize-simulation skill."
-      ]
+        "Requests the workload, timing context, and trajectory tolerance needed to profile and assess a speedup, or measures them if available.",
+        "Makes a speedup claim only when supported by comparable timings and trajectory checks."
+      ],
+      "files": []
     }
   ]
 }

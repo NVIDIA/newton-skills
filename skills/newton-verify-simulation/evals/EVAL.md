@@ -1,27 +1,25 @@
-# Evaluation Scope
+# Evaluating simulation verification
 
-This suite measures independent verification of Newton simulation claims. It
-checks acceptance criteria, falsifying tests, trajectory/state evidence,
-sensitivity or reference comparisons, and calibrated passed/failed/unverified
-conclusions.
+Score the checks the agent selects, the measurements it obtains, and the
+claims those measurements support. Credit equivalent methods. Score routing
+separately using the expected skill for each case.
 
-## Behaviors
+The insertion case supplies the same CPU rollout and recorded CSV to both
+evaluation arms. The user supplies the travel and endpoint requirements. Run
+a numerical check on the trajectory, including intermediate samples. The
+expected outcomes and first violating step are recorded in the case assertions.
+The fixture models one translation axis. It supplies no contact or hardware
+measurements.
 
-- Separate solver execution, simulation fidelity, parity, and real-world validity.
-- Derive task-specific bounds from requirements or references.
-- Inspect actual model/state evidence over the relevant horizon.
-- Validate checks with known-valid, invalid, and misleading-output controls.
-- Avoid activating when the primary task is building, debugging, or optimization.
-- Use available usage, debugging, migration, or performance workflows with a
-  documentation fallback rather than requiring retired or missing skills.
-- Read every focused documentation route needed by the selected checks.
-- Require references only for comparison claims and allow explicitly authorized
-  evidence collection from an existing rollout when the trajectory is missing.
+To reproduce the recording with the released Newton 1.7.0 wheel, run from
+this directory:
 
-## Notes
+```sh
+python files/insertion.py /tmp/insertion.csv
+diff -u files/insertion.csv /tmp/insertion.csv
+```
 
-Run paired Codex and Claude Code trials with at least three attempts per case.
-Use deterministic executable graders for numerical checks where practical.
-GPU and real-world claims require evidence from the corresponding environment.
-The DisplayPort case evaluates rejection of physically invalid successes and
-claim boundaries; numerical thresholds remain owned by the project workload.
+For claims of improved performance, follow the repository comparison protocol.
+Run at least three paired attempts per case on Codex and Claude Code. Keep the
+input files and environment identical across arms and record per-case
+correctness, elapsed time, total tokens, and variability.
